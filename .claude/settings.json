@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import openpyxl; print\\('ok'\\)\")",
+      "Bash(npm --version)",
+      "Bash(unzip -l \"MP MERCADO Menú - Checklist v2.xlsx\")",
+      "Bash(mkdir -p \"/c/Users/Usuario/AppData/Local/Temp/claude/c--Users-Usuario-Documents-3-Felipe-Lopez-Fuente-MP-MP-Mercado/343cc3c2-e4c1-4262-875f-68dcd62cb5b4/scratchpad/xlsx\")",
+      "Bash(unzip -o \"MP MERCADO Menú - Checklist v2.xlsx\" -d \"/c/Users/Usuario/AppData/Local/Temp/claude/c--Users-Usuario-Documents-3-Felipe-Lopez-Fuente-MP-MP-Mercado/343cc3c2-e4c1-4262-875f-68dcd62cb5b4/scratchpad/xlsx\")",
+      "Bash(SCRATCH=\"/c/Users/Usuario/AppData/Local/Temp/claude/c--Users-Usuario-Documents-3-Felipe-Lopez-Fuente-MP-MP-Mercado/343cc3c2-e4c1-4262-875f-68dcd62cb5b4/scratchpad\" *)",
+      "Bash(node -e ' *)",
+      "Bash(node rawrows.js 9 10 11 13 14 15 16 4)",
+      "Bash(start index.html)",
+      "Bash(node genlist.js)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\Usuario\\AppData\\Local\\Temp\\claude\\c--Users-Usuario-Documents-3-Felipe-Lopez-Fuente-MP-MP-Mercado\\343cc3c2-e4c1-4262-875f-68dcd62cb5b4\\scratchpad"
+    ]
+  }
+}

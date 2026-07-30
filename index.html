@@ -1,0 +1,2641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MP Mercado — Viandas Gourmet | Delivery Zona Norte GBA</title>
+  <meta name="description" content="Viandas gourmet listas para consumir. Cocina casera de calidad profesional. Delivery Zona Norte GBA. Pedí hoy, recibí mañana.">
+  <meta property="og:title" content="MP Mercado — Viandas Gourmet">
+  <meta property="og:description" content="Viandas gourmet listas para consumir. Delivery Zona Norte GBA.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="logo-mp-removebg.png">
+  <link rel="icon" type="image/png" href="logo-mp-removebg.png">
+  <link rel="apple-touch-icon" href="logo-mp-removebg.png">
+  <link rel="canonical" href="https://www.mpmercado.com.ar/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Nunito:wght@300;400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 136px; }
+
+    :root {
+      --negro:        #12101A;
+      --bordo:        #412042;
+      --crema:        #E8D9C0;
+      --dorado:       #C9A96E;
+      --dorado-dark:  #B08D4F;
+      --verde:        #25D366;
+      --fondo:        #F5EFE3;
+      --shadow:       0 1px 4px rgba(18,16,26,.05);
+      --font-display: 'Nunito', system-ui, sans-serif;
+      --font-body:    'Lato', system-ui, sans-serif;
+      --font-title:   'Playfair Display', Georgia, serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 400;
+      background: var(--fondo);
+      color: var(--negro);
+    }
+
+    /* Categoría oculta temporalmente — quitar la clase para volver a mostrarla */
+    .hidden-cat { display: none !important; }
+
+    /* ─── PANTALLA DE BIENVENIDA (welcome screen) ───── */
+    .welcome-screen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 10000;
+      overflow: hidden;
+      background: var(--negro);
+      transition: opacity 1s ease;
+    }
+    .welcome-screen.welcome-hide { opacity: 0; pointer-events: none; }
+
+    .welcome-bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .wb-row {
+      display: flex;
+      flex-direction: row;
+      flex: 1 1 0;
+      min-height: 0;
+    }
+    .wb-tile {
+      flex: 1 1 0;
+      min-width: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      box-sizing: border-box;
+      border: 1px solid #fff;
+    }
+    .welcome-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(18,16,26,.63);
+    }
+
+    .welcome-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      z-index: 4;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(18,16,26,.45);
+      border: 1px solid rgba(255,255,255,.28);
+      color: #fff;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s;
+    }
+    .welcome-close:hover { background: rgba(18,16,26,.75); }
+
+    .welcome-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .welcome-logo-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .welcome-logo-wrap::before {
+      content: "";
+      position: absolute;
+      top: 48.6%;
+      left: 49.7%;
+      width: 73%;
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: var(--crema);
+    }
+    .welcome-logo {
+      position: relative;
+      width: min(240px, 55vw);
+      height: auto;
+      filter: drop-shadow(0 4px 18px rgba(0,0,0,.35));
+    }
+    .welcome-cats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      max-width: 780px;
+    }
+    .welcome-cat-btn {
+      padding: 13px 26px;
+      border-radius: 30px;
+      border: 2px solid var(--bordo);
+      background: var(--crema);
+      color: var(--bordo);
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .welcome-cat-btn:hover { background: var(--dorado); border-color: var(--dorado); color: var(--negro); }
+
+    .welcome-cta {
+      background: var(--bordo);
+      color: var(--dorado);
+      border: none;
+      border-radius: 40px;
+      padding: 24px 48px;
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: .4px;
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(201,169,110,.35), 0 4px 20px rgba(65,32,66,.55);
+      animation: welcomePulse 1.8s ease-in-out infinite;
+    }
+    @keyframes welcomePulse {
+      0%, 100% { transform: scale(1);     box-shadow: 0 8px 30px rgba(201,169,110,.35), 0 4px 20px rgba(65,32,66,.55); }
+      50%      { transform: scale(1.05);  box-shadow: 0 10px 38px rgba(201,169,110,.55), 0 4px 26px rgba(65,32,66,.8); }
+    }
+
+    /* Botón externo, separado visualmente de las categorías y del CTA de delivery */
+    .welcome-quote-wrap {
+      margin-top: 6px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(232,217,192,.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .welcome-quote-label {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(232,217,192,.55);
+    }
+    .welcome-quote-btn {
+      background: #5C2D5E;
+      color: #E8D9C0;
+      border: 1.5px solid #E8D9C0;
+      border-radius: 30px;
+      padding: 14px 34px;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: .3px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      transition: background .2s, transform .2s;
+    }
+    .welcome-quote-btn:hover { background: #74397a; transform: translateY(-2px); }
+
+    @media (max-width: 760px) {
+      .welcome-content { gap: 26px; padding: 32px 18px; }
+      .welcome-logo { width: min(190px, 55vw); }
+      .welcome-cats { gap: 9px; }
+      .welcome-cat-btn { padding: 10px 18px; font-size: 12.5px; }
+      .welcome-cta { padding: 18px 32px; font-size: 16px; }
+      .welcome-quote-btn { padding: 12px 26px; font-size: 13px; }
+    }
+
+    /* ─── TOP BAR ──────────────────────────────────── */
+    .top-bar {
+      background: var(--crema);
+      color: var(--negro);
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: .3px;
+      padding: 8px 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 26px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(18,16,26,.06);
+      text-align: center;
+    }
+    .top-bar-item { display: flex; align-items: center; gap: 6px; color: var(--negro); }
+    .top-bar-item svg { color: var(--dorado-dark); flex-shrink: 0; }
+
+    /* ─── HEADER ───────────────────────────────────── */
+    header {
+      background: #FFFFFF;
+      padding: 6px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 2px 16px rgba(18,16,26,.10);
+    }
+    .logo { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+    .logo-img { height: 112px; width: auto; display: block; }
+    .main-nav { display: flex; align-items: center; gap: 36px; }
+    .main-nav a {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: .2px;
+      color: var(--negro);
+      text-decoration: none;
+      padding-bottom: 3px;
+      border-bottom: 2px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+    .main-nav a:hover { color: var(--dorado-dark); border-color: var(--dorado); }
+    .main-nav a.active { color: var(--dorado-dark); border-color: var(--dorado); }
+    .header-right { display: flex; align-items: center; gap: 28px; }
+    .cart-btn {
+      position: relative;
+      background: transparent;
+      border: none;
+      color: var(--negro);
+      cursor: pointer;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color .2s;
+    }
+    .cart-btn:hover { color: var(--dorado-dark); }
+    .cart-badge {
+      position: absolute;
+      top: -4px; right: -4px;
+      background: var(--bordo);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 700;
+      min-width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3px;
+      line-height: 1;
+    }
+
+    /* ─── HERO CAROUSEL ────────────────────────────────── */
+    .hero-carousel {
+      position: relative;
+      width: 100%;
+      height: 72vh;
+      min-height: 520px;
+      overflow: hidden;
+    }
+    .carousel-track {
+      display: flex;
+      height: 100%;
+      transition: transform .65s cubic-bezier(.4,0,.2,1);
+    }
+    .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide-bg {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1);
+      transition: transform 7s ease;
+    }
+    .carousel-slide.active .slide-bg { transform: scale(1.07); }
+    .slide-overlay {
+      position: absolute; inset: 0;
+      background: rgba(10,6,16,.55);
+    }
+    .slide-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 80px;
+      max-width: 780px;
+    }
+    .slide-eyebrow {
+      font-family: var(--font-body);
+      font-size: 10.5px;
+      font-weight: 400;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--dorado);
+      margin-bottom: 18px;
+      opacity: .85;
+    }
+    .slide-title {
+      font-family: var(--font-title);
+      font-size: clamp(44px, 8vw, 80px);
+      font-weight: 700;
+      color: var(--crema);
+      letter-spacing: .5px;
+      line-height: 1.05;
+      margin-bottom: 38px;
+    }
+    .slide-btn {
+      background: transparent;
+      border: 1.5px solid var(--dorado);
+      color: var(--dorado);
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 13px 36px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background .25s, color .25s;
+    }
+    .slide-btn:hover { background: var(--dorado); color: var(--negro); }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(10,6,16,.32);
+      border: 1px solid rgba(201,169,110,.30);
+      color: var(--dorado);
+      font-size: 36px;
+      line-height: 1;
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 10;
+      transition: background .2s, border-color .2s;
+      padding: 0;
+      font-family: inherit;
+    }
+    .carousel-arrow:hover { background: rgba(201,169,110,.18); border-color: rgba(201,169,110,.65); }
+    .carousel-prev { left: 22px; }
+    .carousel-next { right: 22px; }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 9px;
+      z-index: 10;
+    }
+    .carousel-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: rgba(201,169,110,.32);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background .25s, transform .25s;
+    }
+    .carousel-dot.active { background: var(--dorado); transform: scale(1.4); }
+
+    /* ─── CATALOG INTRO ─────────────────────────────────── */
+    .catalog-intro {
+      text-align: center;
+      padding: 60px 28px 0;
+      font-family: var(--font-body);
+      font-size: clamp(15px, 2.2vw, 19px);
+      font-weight: 300;
+      color: #8a8378;
+      letter-spacing: .2px;
+      line-height: 1.8;
+    }
+    .catalog-intro strong { color: var(--bordo); font-weight: 600; }
+
+    /* ─── FILTER PILLS ─────────────────────────────────── */
+    .section-filters {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 28px 0;
+    }
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .filter-pill {
+      background: transparent;
+      border: 1.5px solid var(--dorado);
+      color: var(--negro);
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      padding: 9px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .filter-pill:hover { background: rgba(201,169,110,.16); }
+    .filter-pill.active { background: var(--dorado); color: var(--negro); border-color: var(--dorado); }
+
+    /* ─── CATALOG SECTIONS ───────────────────────────── */
+    .cat-section { margin-bottom: 72px; scroll-margin-top: 90px; }
+    .cat-section:last-child { margin-bottom: 0; }
+    .cat-section-title {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: var(--negro);
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(201,169,110,.35);
+      text-transform: uppercase;
+    }
+    .cat-section-title:has(+ .cat-section-subtitle) { margin-bottom: 12px; }
+    .cat-section-subtitle {
+      font-family: var(--font-title);
+      font-style: italic;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--dorado-dark);
+      line-height: 1.6;
+      margin-bottom: 24px;
+      max-width: 720px;
+    }
+    .cat-section-empty {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 400;
+      color: #999;
+      font-style: italic;
+      padding: 30px 0;
+      text-align: center;
+    }
+    .cat-section-comingsoon {
+      text-align: center;
+      padding: 64px 20px;
+      font-family: var(--font-title);
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 700;
+      font-style: italic;
+      color: var(--dorado-dark);
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, rgba(201,169,110,.08) 0%, rgba(201,169,110,.02) 100%);
+      border: 1px dashed rgba(201,169,110,.4);
+      border-radius: 12px;
+    }
+
+    /* ─── CATALOG ──────────────────────────────────── */
+    .catalog-wrapper {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 44px 32px 100px;
+    }
+    .catalog {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+
+    /* ─── CARD ─────────────────────────────────────── */
+    .card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(18,16,26,.07);
+      box-shadow: var(--shadow);
+      transition: box-shadow .2s, border-color .2s, transform .2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover { box-shadow: 0 10px 28px rgba(18,16,26,.1); border-color: rgba(201,169,110,.35); transform: translateY(-3px); }
+
+    .card-img {
+      height: 320px;
+      background: linear-gradient(135deg, var(--crema) 0%, #d5c3a0 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .card-img img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .card-img.no-photo {
+      background: #cfcfcf;
+    }
+
+    .card-body { padding: 26px; flex: 1; display: flex; flex-direction: column; }
+    .card-name {
+      font-family: var(--font-display);
+      font-size: 21px;
+      font-weight: 600;
+      letter-spacing: .1px;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .card-content {
+      flex: 1;
+      margin-bottom: 20px;
+    }
+    .card-desc {
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      font-weight: 300;
+      color: #777;
+      line-height: 1.65;
+    }
+    .card-presentacion {
+      display: inline-block;
+      font-family: var(--font-title);
+      font-style: italic;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--dorado-dark);
+      line-height: 1.4;
+      letter-spacing: .2px;
+      margin-top: 10px;
+      padding: 4px 12px;
+      background: rgba(201,169,110,.14);
+      border-radius: 6px;
+    }
+    .card-price {
+      font-family: var(--font-title);
+      font-size: 27px;
+      font-weight: 700;
+      color: var(--bordo);
+      margin-bottom: 20px;
+      letter-spacing: .2px;
+    }
+    .card-price small {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 300;
+      color: #bbb;
+    }
+
+    .qty-row { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .qty-label {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #888;
+    }
+    .qty-controls { display: flex; align-items: center; gap: 12px; }
+    .qty-btn {
+      background: transparent;
+      color: var(--negro);
+      border: 1px solid rgba(18,16,26,.18);
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .15s, background .15s;
+      user-select: none;
+      font-family: var(--font-body);
+    }
+    .qty-btn:hover { border-color: var(--dorado); background: rgba(201,169,110,.12); }
+    .qty-val {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 400;
+      min-width: 22px;
+      text-align: center;
+    }
+
+    .btn-comprar {
+      width: 100%;
+      background: var(--dorado);
+      color: var(--negro);
+      border: none;
+      padding: 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: background .2s;
+      white-space: nowrap;
+    }
+    .btn-comprar:hover { background: var(--dorado-dark); }
+    .btn-comprar:active { transform: scale(.98); }
+
+    /* ─── BOTÓN WHATSAPP FLOTANTE ──────────────────────── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      box-shadow: 0 4px 16px rgba(18,16,26,.28);
+      transition: transform .2s ease;
+      text-decoration: none;
+    }
+    .whatsapp-float:hover { transform: scale(1.08); }
+
+    /* ─── CARRITO (panel tipo dropdown) ──────── */
+    .cart-panel {
+      position: fixed;
+      top: 80px; right: 24px;
+      width: 420px;
+      max-width: 92vw;
+      max-height: 84vh;
+      background: #fff;
+      z-index: 601;
+      display: flex;
+      flex-direction: column;
+      border-radius: 14px;
+      border: 1px solid rgba(18,16,26,.08);
+      box-shadow: 0 16px 48px rgba(18,16,26,.2);
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .cart-panel.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .cart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      border-bottom: 1px solid #eee;
+      flex-shrink: 0;
+    }
+    .cart-header h2 {
+      font-family: var(--font-title);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--negro);
+    }
+    .cart-close {
+      background: none;
+      border: none;
+      font-size: 22px;
+      line-height: 1;
+      color: #bbb;
+      cursor: pointer;
+      padding: 4px 6px;
+      transition: color .2s;
+      font-family: var(--font-body);
+    }
+    .cart-close:hover { color: var(--negro); }
+    .cart-items {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 4px 22px;
+    }
+    .cart-empty {
+      text-align: center;
+      padding: 48px 12px;
+      color: #c0bbb5;
+      font-family: var(--font-body);
+      font-size: 14px;
+    }
+    .cart-empty .icon { font-size: 36px; margin-bottom: 10px; }
+    .cart-item {
+      display: flex;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid #f0ece4;
+    }
+    .cart-item-thumb {
+      width: 56px; height: 56px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--crema) 0%, #d5c3a0 100%);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      font-size: 24px;
+    }
+    .cart-item-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-name {
+      font-family: var(--font-display);
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--negro);
+      margin-bottom: 3px;
+      line-height: 1.3;
+    }
+    .cart-item-price {
+      font-family: var(--font-body);
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 9px;
+    }
+    .cart-item-row-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .cart-item-controls { display: flex; align-items: center; gap: 10px; }
+    .cart-item-controls .qty-btn { width: 26px; height: 26px; font-size: 14px; }
+    .cart-item-controls .qty-val { font-size: 14px; min-width: 16px; }
+    .cart-item-subtotal {
+      font-family: var(--font-display);
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--bordo);
+      white-space: nowrap;
+    }
+    .cart-item-remove {
+      background: none;
+      border: none;
+      color: #c0bbb5;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      padding: 2px 4px;
+      transition: color .2s;
+      font-family: var(--font-body);
+    }
+    .cart-item-remove:hover { color: var(--bordo); }
+    .cart-footer {
+      padding: 16px 22px 22px;
+      border-top: 1px solid #eee;
+      flex-shrink: 0;
+    }
+    .cart-shipping-row:empty { display: none; }
+    .cart-shipping-row { margin-bottom: 10px; }
+    .cart-shipping-row .shipping-cost-row { font-size: 12.5px; }
+    .shipping-cost-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      font-weight: 500;
+      color: #888;
+    }
+    .shipping-cost-row span:last-child { color: var(--negro); font-weight: 700; }
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+      font-family: var(--font-body);
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: #888;
+    }
+    .cart-total-row span:last-child {
+      font-family: var(--font-title);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--negro);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    .cart-confirm-btn {
+      width: 100%;
+      background: var(--dorado);
+      color: var(--negro);
+      border: none;
+      padding: 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: background .2s;
+    }
+    .cart-confirm-btn:hover { background: var(--dorado-dark); }
+    .cart-confirm-btn:disabled { background: #e5e0d6; color: #b4ada0; cursor: not-allowed; }
+
+    /* ─── CHECKOUT (pantalla completa) ────────────────── */
+    .checkout-screen {
+      display: none;
+      position: fixed; inset: 0;
+      background: var(--fondo);
+      z-index: 700;
+      overflow-y: auto;
+    }
+    .checkout-screen.open { display: block; }
+    .checkout-topbar {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      border-bottom: 1px solid rgba(18,16,26,.08);
+      padding: 12px 28px;
+      z-index: 2;
+    }
+    .checkout-back {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .3px;
+      color: var(--negro);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .2s;
+    }
+    .checkout-back:hover { color: var(--dorado-dark); }
+    .checkout-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 26px 28px 50px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .checkout-col h2 {
+      font-family: var(--font-title);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--negro);
+      margin-bottom: 14px;
+    }
+    .checkout-items {
+      margin-bottom: 4px;
+      max-height: 38vh;
+      overflow-y: auto;
+    }
+    .checkout-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0ece4;
+    }
+    .checkout-item:first-child { padding-top: 0; }
+    .checkout-item-thumb {
+      width: 60px; height: 60px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--crema) 0%, #d5c3a0 100%);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      font-size: 26px;
+    }
+    .checkout-item-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .checkout-item-info { flex: 1; min-width: 0; }
+    .checkout-item-name {
+      font-family: var(--font-display);
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--negro);
+      margin-bottom: 3px;
+    }
+    .checkout-item-qty {
+      font-family: var(--font-body);
+      font-size: 12px;
+      color: #999;
+    }
+    .checkout-item-subtotal {
+      font-family: var(--font-display);
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--bordo);
+      white-space: nowrap;
+    }
+    .checkout-confirm-btn {
+      width: 100%;
+      background: var(--dorado);
+      color: var(--negro);
+      border: none;
+      padding: 13px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background .2s;
+      margin-top: 4px;
+    }
+    .checkout-confirm-btn:hover { background: var(--dorado-dark); }
+
+    .order-summary {
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #ece9e3;
+    }
+    .order-summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 400;
+      color: #999;
+      padding: 3px 0;
+    }
+    .order-summary-row:empty { display: none; }
+    .order-summary-row.total {
+      font-family: var(--font-title);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--negro);
+      padding-top: 8px;
+      margin-top: 4px;
+      border-top: 1px dashed #e5e0d6;
+    }
+
+    .delivery-date-select {
+      display: block;
+      width: 100%;
+      margin-bottom: 14px;
+      padding: 9px 34px 9px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--negro);
+      background: #faf9f7 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C9A96E' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 10px center / 15px;
+      appearance: none;
+      -webkit-appearance: none;
+      outline: none;
+      transition: border-color .2s, background-color .2s;
+    }
+    .delivery-date-select:focus,
+    .delivery-date-select:hover {
+      border-color: var(--dorado);
+      background-color: rgba(201,169,110,.08);
+      color: var(--dorado-dark);
+    }
+
+    .wa-note {
+      font-family: var(--font-body);
+      font-size: 11.5px;
+      font-weight: 300;
+      color: #888;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .wa-note a {
+      color: var(--dorado);
+      font-weight: 600;
+      text-decoration: underline;
+    }
+    .wa-note a:hover { color: var(--dorado-dark); }
+
+    .form-group { margin-bottom: 10px; }
+    .form-group label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--negro);
+      outline: none;
+      transition: border-color .2s;
+      background: #faf9f7;
+    }
+    .form-group input::placeholder { color: #c0bbb5; }
+    .form-group input:focus { border-color: var(--dorado); background: white; }
+
+    /* Quick notes (aclaraciones frecuentes) */
+    .quick-notes-group { margin-bottom: 14px; }
+    .quick-notes-label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .quick-notes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px 8px; }
+    .quick-note-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      min-width: 0;
+    }
+    .quick-note-check { width: 12px; height: 12px; accent-color: var(--dorado); cursor: pointer; flex-shrink: 0; }
+    .quick-note-text {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--negro);
+      line-height: 1.25;
+      transition: color .2s;
+    }
+    .quick-note-box:hover .quick-note-text { color: var(--dorado-dark); }
+    .quick-note-box:has(input:checked) .quick-note-text { color: var(--dorado-dark); font-weight: 600; }
+
+    /* Payment method toggle */
+    .payment-label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .payment-opts { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .payment-opt { position: relative; cursor: pointer; }
+    .payment-opt input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .payment-opt-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 13px;
+      border: 1px solid #ddd;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      background: #faf9f7;
+      white-space: nowrap;
+    }
+    .payment-opt input:checked ~ .payment-opt-box {
+      border-color: var(--dorado);
+      background: rgba(201,169,110,.08);
+    }
+    .payment-opt-icon { font-size: 13px; line-height: 1; flex-shrink: 0; }
+    .payment-opt-title {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--negro);
+    }
+    .payment-opt input:checked ~ .payment-opt-box .payment-opt-title { color: var(--dorado-dark); }
+    .payment-opt-sub {
+      font-family: var(--font-body);
+      font-size: 10.5px;
+      font-weight: 400;
+      color: #aaa;
+    }
+    .payment-opt-sub::before { content: "· "; }
+
+    .modal-confirm {
+      width: 100%;
+      background: var(--dorado);
+      color: var(--negro);
+      border: none;
+      padding: 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background .2s;
+    }
+    .modal-confirm:hover { background: var(--dorado-dark); }
+    .modal-confirm:active { transform: scale(.99); }
+
+    /* ─── FOOTER ───────────────────────────────────── */
+    footer {
+      background: var(--negro);
+      color: var(--crema);
+      padding: 52px 28px 26px;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto 36px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 36px;
+    }
+    .footer-col h3 {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--dorado);
+      margin-bottom: 18px;
+    }
+    .footer-col p,
+    .footer-col a {
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      font-weight: 300;
+      color: rgba(232,217,192,.65);
+      line-height: 2;
+      text-decoration: none;
+      display: block;
+      transition: color .2s;
+    }
+    .footer-col a:hover { color: var(--dorado); }
+    .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .footer-logo .badge {
+      background: var(--dorado);
+      color: var(--negro);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 15px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      letter-spacing: 1.5px;
+    }
+    .footer-logo .name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--crema);
+      letter-spacing: 3px;
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 22px;
+      border-top: 1px solid rgba(232,217,192,.10);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(232,217,192,.30);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ─── TOAST ────────────────────────────────────── */
+    .toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: var(--negro);
+      color: var(--crema);
+      padding: 12px 24px;
+      border-radius: 2px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: .3px;
+      z-index: 999;
+      transition: transform .3s ease;
+      border-left: 3px solid var(--dorado);
+      box-shadow: 0 8px 28px rgba(0,0,0,.32);
+      white-space: nowrap;
+    }
+    .toast.visible { transform: translateX(-50%) translateY(0); }
+
+    /* ─── EMPTY STATE ──────────────────────────────── */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 72px 20px;
+      color: #c0bbb5;
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 300;
+    }
+    .empty-state .icon { font-size: 44px; margin-bottom: 16px; }
+
+    /* ─── RESPONSIVE ───────────────────────────────── */
+    @media (max-width: 960px) {
+      .catalog { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .main-nav { gap: 20px; }
+      .checkout-content { grid-template-columns: 1fr; gap: 40px; }
+      .checkout-items { max-height: none; }
+    }
+    @media (max-width: 760px) {
+      .section-filters { padding: 28px 18px 0; }
+    }
+    @media (max-width: 768px) {
+      .logo-img { height: 64px; }
+    }
+    @media (max-width: 680px) {
+      .hero-carousel { height: 60vh; min-height: 420px; }
+      .slide-content { padding: 0 52px; }
+      .carousel-arrow { width: 40px; height: 40px; font-size: 28px; }
+      .carousel-prev { left: 10px; }
+      .carousel-next { right: 10px; }
+      .catalog-intro { padding: 28px 18px 0; }
+      .catalog { grid-template-columns: 1fr; gap: 18px; }
+      .catalog-wrapper { padding: 22px 18px 52px; }
+      .top-bar { font-size: 10px; padding: 7px 16px; gap: 14px; }
+      header { padding: 6px 18px; }
+      .logo-img { height: 76px; }
+      .main-nav { display: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      footer { padding: 38px 18px 20px; }
+      .checkout-topbar { padding: 14px 18px; }
+      .checkout-content { padding: 32px 18px 80px; gap: 32px; }
+      .payment-opt-sub { display: none; }
+      .cart-panel {
+        top: auto !important;
+        right: 0 !important;
+        left: 0;
+        bottom: 0;
+        width: 100vw;
+        max-width: 100vw;
+        max-height: 90vh;
+        border-radius: 18px 18px 0 0;
+        transform: translateY(16px);
+      }
+      .cart-panel.open { transform: translateY(0); }
+      .whatsapp-float { bottom: 20px; right: 16px; }
+      .toast { bottom: 80px; }
+      .product-modal {
+        top: 0; left: 0;
+        transform: none;
+        width: 100vw;
+        height: 100%;
+        max-height: none;
+        border-radius: 0;
+      }
+      .product-modal.open { transform: none; }
+      .product-modal-img { height: 38vh; max-height: none; }
+    }
+
+    /* ─── MODAL DE PRODUCTO (detalle en grande) ─────────── */
+    .product-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(18,16,26,.55);
+      z-index: 800;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+    .product-modal-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .product-modal {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -48%);
+      width: min(560px, 92vw);
+      max-height: 88vh;
+      background: #fff;
+      border-radius: 14px;
+      overflow-y: auto;
+      z-index: 801;
+      box-shadow: 0 24px 64px rgba(18,16,26,.35);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .product-modal.open {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      pointer-events: auto;
+    }
+
+    .product-modal-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(18,16,26,.5);
+      color: #fff;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+      z-index: 2;
+    }
+    .product-modal-close:hover { background: var(--negro); }
+
+    .product-modal-img {
+      height: 50vh;
+      max-height: 380px;
+      background: linear-gradient(135deg, var(--crema) 0%, #d5c3a0 100%);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+    }
+    .product-modal-img img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .product-modal-img.no-photo { background: #cfcfcf; }
+
+    .product-modal-body { padding: 26px 30px 30px; }
+    .product-modal-name {
+      font-family: var(--font-title);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--negro);
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    .product-modal-price {
+      font-family: var(--font-title);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--bordo);
+      margin-bottom: 14px;
+    }
+    .product-modal-price small {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 300;
+      color: #bbb;
+    }
+    .product-modal-desc {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 300;
+      color: #777;
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+    .product-modal-presentacion {
+      display: inline-block;
+      font-family: var(--font-title);
+      font-style: italic;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--dorado-dark);
+      line-height: 1.4;
+      letter-spacing: .2px;
+      padding: 4px 12px;
+      background: rgba(201,169,110,.14);
+      border-radius: 6px;
+      margin-bottom: 22px;
+    }
+    .product-modal-btn {
+      width: 100%;
+      background: var(--dorado);
+      color: var(--negro);
+      border: none;
+      padding: 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: background .2s;
+    }
+    .product-modal-btn:hover { background: var(--dorado-dark); }
+    .product-modal-btn:active { transform: scale(.98); }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: var(--dorado); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- ─── PANTALLA DE BIENVENIDA ──────────────────────── -->
+<div class="welcome-screen" id="welcomeScreen">
+
+  <div class="welcome-bg" id="welcomeBg"></div>
+  <div class="welcome-overlay"></div>
+
+  <button class="welcome-close" onclick="closeWelcomeToCatalog()" aria-label="Cerrar">&times;</button>
+
+  <div class="welcome-content">
+    <div class="welcome-logo-wrap">
+      <img class="welcome-logo" src="Logo MP NUEVO.png" alt="MP Mercado">
+    </div>
+
+    <!-- Si agregás una categoría nueva al catálogo (ALL_CATS/CAT_LABELS), sumala también acá -->
+    <div class="welcome-cats">
+      <button class="welcome-cat-btn" onclick="welcomeGoTo('fingerfood')">Fingerfood</button>
+      <button class="welcome-cat-btn" onclick="welcomeGoTo('calientes')">Platos Calientes</button>
+      <button class="welcome-cat-btn" onclick="welcomeGoTo('entradas')">Entradas</button>
+      <button class="welcome-cat-btn" onclick="welcomeGoTo('postres')">Pastelería y Postres</button>
+      <button class="welcome-cat-btn" onclick="welcomeGoTo('slabcakes')">Slab Cakes</button>
+      <button class="welcome-cat-btn" onclick="welcomeGoTo('fuentes')">Fuentes</button>
+      <button class="welcome-cat-btn" onclick="welcomeGoTo('platosdeldia')">Platos del Día</button>
+      <button class="welcome-cat-btn" onclick="welcomeGoTo('fondue')">Fondue</button>
+    </div>
+
+    <button class="welcome-cta" onclick="welcomeGoTo('platosdeldia')">🍽️ Delivery del Día</button>
+
+    <div class="welcome-quote-wrap">
+      <span class="welcome-quote-label">¿Organizás un evento?</span>
+      <button class="welcome-quote-btn" onclick="window.open('https://marianapages.com/', '_blank')">✨ Cotizá tu evento</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ─── TOP BAR ──────────────────────────────────────── -->
+<div class="top-bar" id="inicio">
+  <span class="top-bar-item">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm1 14.93V17a1 1 0 00-2 0v.93A8.01 8.01 0 014.07 13H5a1 1 0 000-2h-.93A8.01 8.01 0 0111 4.07V5a1 1 0 002 0v-.93A8.01 8.01 0 0119.93 11H19a1 1 0 000 2h.93A8.01 8.01 0 0113 16.93zM12 8a4 4 0 100 8 4 4 0 000-8zm0 6a2 2 0 110-4 2 2 0 010 4z"/></svg>
+    Lun a Vie: 8:00 – 14:00
+  </span>
+  <span class="top-bar-item">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+    Efectivo · Transferencia
+  </span>
+  <span class="top-bar-item">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+    Coordinamos la entrega en CABA y GBA Norte
+  </span>
+</div>
+
+<!-- ─── HEADER ────────────────────────────────────────── -->
+<header>
+  <a href="#inicio" class="logo">
+    <img src="Logo MP NUEVO.png" alt="MP Mercado — Mariana Pages Catering" class="logo-img">
+  </a>
+  <div class="header-right">
+    <nav class="main-nav">
+      <a href="#inicio">Inicio</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <button class="cart-btn" onclick="openCart()" aria-label="Ver carrito">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- ─── HERO CAROUSEL ─────────────────────────────────── -->
+<section class="hero-carousel" id="heroCarousel">
+  <div class="carousel-track" id="carouselTrack">
+
+    <div class="carousel-slide active">
+      <div class="slide-bg" style="background-image:url('Fotos Final/CROQUETAS DE JAMON MARMOL DEF.png')"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <div class="slide-eyebrow">Mercado MP · Catering</div>
+        <h2 class="slide-title">Fingerfood</h2>
+        <button class="slide-btn" onclick="scrollToCat('fingerfood')">Ver platos</button>
+      </div>
+    </div>
+
+    <div class="carousel-slide">
+      <div class="slide-bg" style="background-image:url('Fotos Final/LASAGNA BOLOGNESA MARMOL DEF.png')"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <div class="slide-eyebrow">Mercado MP · Catering</div>
+        <h2 class="slide-title">Platos Calientes</h2>
+        <button class="slide-btn" onclick="scrollToCat('calientes')">Ver platos</button>
+      </div>
+    </div>
+
+    <div class="carousel-slide">
+      <div class="slide-bg" style="background-image:url('Fotos Final/Tiramisú para cuatro personas.jpg')"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <div class="slide-eyebrow">Mercado MP · Catering</div>
+        <h2 class="slide-title">Pastelería y Postres</h2>
+        <button class="slide-btn" onclick="scrollToCat('postres')">Ver platos</button>
+      </div>
+    </div>
+
+    <div class="carousel-slide">
+      <div class="slide-bg" style="background-image:url('Fotos Final/LEMON SLAB MARMOL DEF.png')"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <div class="slide-eyebrow">Mercado MP · Catering</div>
+        <h2 class="slide-title">Slab Cakes</h2>
+        <button class="slide-btn" onclick="scrollToCat('slabcakes')">Ver platos</button>
+      </div>
+    </div>
+
+    <div class="carousel-slide">
+      <div class="slide-bg" style="background-image:url('Fotos Final/CARPACCIO DE LOMO MARMOL DEF.png')"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <div class="slide-eyebrow">Mercado MP · Catering</div>
+        <h2 class="slide-title">Entradas</h2>
+        <button class="slide-btn" onclick="scrollToCat('entradas')">Ver platos</button>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="carousel-arrow carousel-prev" onclick="moveCar(-1)" aria-label="Anterior">&#8249;</button>
+  <button class="carousel-arrow carousel-next" onclick="moveCar(1)" aria-label="Siguiente">&#8250;</button>
+  <div class="carousel-dots" id="carouselDots"></div>
+</section>
+
+<!-- ─── CATALOG INTRO ─────────────────────────────────── -->
+<p class="catalog-intro">Viandas gourmet listas para disfrutar.<br><strong>Cocina casera de calidad profesional.</strong> Coordiná tu pedido.</p>
+
+<!-- ─── FILTROS DE CATEGORÍA ───────────────────────────── -->
+<section class="section-filters" id="catalogo">
+  <div class="filter-pills" id="filterPills">
+    <button class="filter-pill active" data-cat="todos" onclick="setFilter('todos')">Todos</button>
+    <button class="filter-pill" data-cat="fingerfood" onclick="setFilter('fingerfood')">Fingerfood</button>
+    <button class="filter-pill" data-cat="calientes" onclick="setFilter('calientes')">Platos Calientes</button>
+    <button class="filter-pill" data-cat="postres" onclick="setFilter('postres')">Pastelería y Postres</button>
+    <button class="filter-pill" data-cat="slabcakes" onclick="setFilter('slabcakes')">Slab Cakes</button>
+    <button class="filter-pill" data-cat="entradas" onclick="setFilter('entradas')">Entradas</button>
+    <button class="filter-pill" data-cat="platosdeldia" onclick="setFilter('platosdeldia')">Platos del Día</button>
+    <button class="filter-pill" data-cat="fuentes" onclick="setFilter('fuentes')">Fuentes</button>
+    <button class="filter-pill" data-cat="fondue" onclick="setFilter('fondue')">Fondue</button>
+  </div>
+</section>
+
+<!-- ─── CATALOG ───────────────────────────────────────── -->
+<div class="catalog-wrapper">
+  <div id="catalog"></div>
+</div>
+
+<!-- ─── FOOTER ────────────────────────────────────────── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="footer-logo">
+        <img src="logo-mp-removebg.png" alt="MP Mercado" style="height:64px; width:auto; filter:brightness(0) invert(1);">
+      </div>
+      <p>Viandas gourmet elaboradas a diario con ingredientes frescos. La cocina profesional de MP Catering, ahora en tu mesa.</p>
+    </div>
+    <div class="footer-col">
+      <h3>Navegación</h3>
+      <a href="#inicio">Inicio</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="footer-col" id="contacto">
+      <h3>Contacto</h3>
+      <a href="https://wa.me/5491159191399" target="_blank">📱 WhatsApp: +54 9 11 5919-1399</a>
+      <a href="mailto:info@mpcatering.com.ar">✉️ info@mpcatering.com.ar</a>
+      <p>📍 CABA y GBA Norte</p>
+      <p>🕐 Lun–Vie 8–14</p>
+    </div>
+    <div class="footer-col">
+      <h3>Seguinos</h3>
+      <a href="#" target="_blank">📸 Instagram: @mpcatering</a>
+      <a href="#" target="_blank">👍 Facebook: MP Catering</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 MP Mercado · MP Catering. Todos los derechos reservados.</span>
+    <span>Buenos Aires, Argentina</span>
+  </div>
+</footer>
+
+<!-- ─── WHATSAPP FLOTANTE ─────────────────────────────────── -->
+<a class="whatsapp-float" href="https://wa.me/5491159191399" target="_blank" aria-label="Escribinos por WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M12.01 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.33A9.94 9.94 0 0012.01 22C17.53 22 22 17.52 22 12S17.53 2 12.01 2zm0 18.06c-1.66 0-3.2-.47-4.5-1.28l-.32-.19-3 .79.8-2.93-.21-.3A7.98 7.98 0 014.02 12c0-4.42 3.6-8 8-8 4.4 0 8 3.58 8 8s-3.6 8.06-8.01 8.06zm4.4-5.98c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.55.12-.16.24-.62.79-.77.96-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.56.2-1.04.14-1.15-.06-.1-.22-.16-.46-.28z"/></svg>
+</a>
+
+<!-- ─── CARRITO (panel compacto) ─────────────────────────── -->
+<aside class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h2>Tu carrito</h2>
+    <button class="cart-close" onclick="closeCart()" aria-label="Cerrar carrito">×</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="cart-shipping-row" id="cartShippingRow"></div>
+    <div class="cart-total-row">
+      <span>Total</span>
+      <span id="cartTotal">$0</span>
+    </div>
+    <button class="cart-confirm-btn" id="cartConfirmBtn" onclick="irACheckout()" disabled>Finalizar pedido</button>
+  </div>
+</aside>
+
+<!-- ─── PANTALLA: FINALIZAR PEDIDO ───────────────────────── -->
+<div class="checkout-screen" id="checkoutScreen">
+  <div class="checkout-topbar">
+    <button class="checkout-back" onclick="cerrarCheckout()">← Volver al catálogo</button>
+  </div>
+  <div class="checkout-content">
+
+    <div class="checkout-col">
+      <h2>Resumen del pedido</h2>
+      <div class="checkout-items" id="checkoutItems"></div>
+      <div class="order-summary">
+        <div class="order-summary-row">
+          <span id="co-detail"></span>
+          <span id="co-subtotal"></span>
+        </div>
+        <div class="order-summary-row" id="co-shipping-row"></div>
+        <div class="order-summary-row total">
+          <span>Total</span>
+          <span id="co-total"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-col">
+      <h2>Tus datos</h2>
+      <div class="form-group">
+        <label for="f-nombre">Nombre completo</label>
+        <input type="text" id="f-nombre" placeholder="Ej: María González" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label for="f-telefono">Teléfono</label>
+        <input type="tel" id="f-telefono" placeholder="Ej: 11 1234-5678" autocomplete="tel">
+      </div>
+      <div class="form-group">
+        <label for="f-email">Email</label>
+        <input type="email" id="f-email" placeholder="Tu correo electrónico" autocomplete="email" required>
+      </div>
+      <div class="form-group">
+        <label for="f-direccion">Dirección de entrega</label>
+        <input type="text" id="f-direccion" placeholder="Ej: Av. Santa Fe 1234, CABA" autocomplete="street-address">
+      </div>
+      <div class="form-group">
+        <label for="f-aclaracion">Aclaración (opcional)</label>
+        <input type="text" id="f-aclaracion" placeholder="Ej: Piso 3, depto B, timbre roto" autocomplete="off">
+      </div>
+
+      <div class="quick-notes-group">
+        <span class="quick-notes-label">Aclaraciones frecuentes</span>
+        <div class="quick-notes-grid">
+          <label class="quick-note-box">
+            <input type="checkbox" class="quick-note-check" data-text="🔔 Timbre roto, tocar palmas" onchange="toggleAclaracionTag(this)">
+            <span class="quick-note-text">🔔 Timbre roto, tocar palmas</span>
+          </label>
+          <label class="quick-note-box">
+            <input type="checkbox" class="quick-note-check" data-text="🐕 Cuidado con el perro (muerde solo si te lo merecés)" onchange="toggleAclaracionTag(this)">
+            <span class="quick-note-text">🐕 Cuidado con el perro (muerde solo si te lo merecés)</span>
+          </label>
+          <label class="quick-note-box">
+            <input type="checkbox" class="quick-note-check" data-text="🚪 Portero automático no funciona, llamar al cel" onchange="toggleAclaracionTag(this)">
+            <span class="quick-note-text">🚪 Portero automático no funciona, llamar al cel</span>
+          </label>
+          <label class="quick-note-box">
+            <input type="checkbox" class="quick-note-check" data-text="🛗 Sin ascensor, gracias por las piernas" onchange="toggleAclaracionTag(this)">
+            <span class="quick-note-text">🛗 Sin ascensor, gracias por las piernas</span>
+          </label>
+          <label class="quick-note-box">
+            <input type="checkbox" class="quick-note-check" data-text="🏢 Preguntar por [nombre] en recepción" onchange="toggleAclaracionTag(this)">
+            <span class="quick-note-text">🏢 Preguntar por [nombre] en recepción</span>
+          </label>
+          <label class="quick-note-box">
+            <input type="checkbox" class="quick-note-check" data-text="📦 Dejar con el encargado si no hay nadie" onchange="toggleAclaracionTag(this)">
+            <span class="quick-note-text">📦 Dejar con el encargado si no hay nadie</span>
+          </label>
+          <label class="quick-note-box">
+            <input type="checkbox" class="quick-note-check" data-text="🔇 No tocar timbre, bebé durmiendo" onchange="toggleAclaracionTag(this)">
+            <span class="quick-note-text">🔇 No tocar timbre, bebé durmiendo</span>
+          </label>
+          <label class="quick-note-box">
+            <input type="checkbox" class="quick-note-check" data-text="🅿️ Sin lugar para estacionar, parada rápida" onchange="toggleAclaracionTag(this)">
+            <span class="quick-note-text">🅿️ Sin lugar para estacionar, parada rápida</span>
+          </label>
+        </div>
+      </div>
+
+      <p class="wa-note">Por cualquier consulta o eventualidad, escribinos directo por <a href="https://wa.me/5491159191399" target="_blank" rel="noopener">WhatsApp</a></p>
+
+      <span class="payment-label">Método de pago</span>
+      <div class="payment-opts">
+        <label class="payment-opt">
+          <input type="radio" name="metodo-pago" value="efectivo" checked>
+          <span class="payment-opt-box">
+            <span class="payment-opt-icon">💵</span>
+            <span class="payment-opt-title">Efectivo</span>
+            <span class="payment-opt-sub">Coordinamos la entrega</span>
+          </span>
+        </label>
+        <label class="payment-opt">
+          <input type="radio" name="metodo-pago" value="transferencia">
+          <span class="payment-opt-box">
+            <span class="payment-opt-icon">🏦</span>
+            <span class="payment-opt-title">Transferencia</span>
+            <span class="payment-opt-sub">Por WhatsApp</span>
+          </span>
+        </label>
+      </div>
+
+      <span class="payment-label">Fecha de entrega</span>
+      <select class="delivery-date-select" id="deliveryDateOpts"></select>
+
+      <span class="payment-label">Horario de coordinación</span>
+      <select class="delivery-date-select" id="deliveryTimeOpts">
+        <option value="10:00 - 11:00">10:00 - 11:00</option>
+        <option value="11:00 - 12:00">11:00 - 12:00</option>
+        <option value="12:00 - 13:00">12:00 - 13:00</option>
+        <option value="13:00 - 14:00">13:00 - 14:00</option>
+      </select>
+
+      <button class="checkout-confirm-btn" onclick="confirmarPedidoFinal()">Confirmar pedido</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── OVERLAY DEL MODAL DE PRODUCTO ─────────────────────── -->
+<div class="product-modal-overlay" id="productModalOverlay" onclick="cerrarProductModal()"></div>
+
+<!-- ─── MODAL DE PRODUCTO (detalle en grande) ─────────────── -->
+<div class="product-modal" id="productModal">
+  <button class="product-modal-close" onclick="cerrarProductModal()" aria-label="Cerrar">×</button>
+  <div class="product-modal-img" id="productModalImg"></div>
+  <div class="product-modal-body">
+    <div class="product-modal-name" id="productModalName"></div>
+    <div class="product-modal-desc" id="productModalDesc"></div>
+    <div class="product-modal-presentacion" id="productModalPresentacion"></div>
+    <div class="product-modal-price" id="productModalPrice"></div>
+    <button class="product-modal-btn" id="productModalBtn">Agregar al carrito</button>
+  </div>
+</div>
+
+<!-- ─── TOAST ──────────────────────────────────────────── -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+//  👋  PANTALLA DE BIENVENIDA — mosaico de fondo + fade out
+// ══════════════════════════════════════════════════════════
+const WELCOME_FOTOS = [
+  "Fotos Final/ALBONDIGAS MARMOL DEF.png",
+  "Fotos Final/BRUSCHETAS VARIADAS MARMOL DEF.png",
+  "Fotos Final/CANELONES DE ESPINACA MARMOL DEF.png",
+  "Fotos Final/CARPACCIO DE LOMO MARMOL DEF.png",
+  "Fotos Final/CHICKEN TIKKA MARMOL DEF.png",
+  "Fotos Final/CREP DE CHAMPINONES Y RICOTTA MARMOL DEF.png",
+  "Fotos Final/CROQUETAS DE JAMON MARMOL DEF.png",
+  "Fotos Final/CURRY ROJO DE TERNERA CON ARROZ SUELTO MARMOL DEF.png",
+  "Fotos Final/CURRY VERDE THAI  DE POLLO .png",
+  "Fotos Final/Chicken tikka masala.jpg",
+  "Fotos Final/Crumble de peras y arándanos.jpg",
+  "Fotos Final/EMPANADAS SALTENAS EN MARMOL DEF.png",
+  "Fotos Final/FAJITAS DE POLLO MARMOL DEF.png",
+  "Fotos Final/FUENTE DE BURRATINAS MARMOL DEF.png",
+  "Fotos Final/FUENTE DE MORRONES  CONFITADOS MARMOL DEF.png",
+  "Fotos Final/FUENTE DE SALMON CURADO MARMOL DEF.png",
+  "Fotos Final/FUENTE VITEL TONEE MARMOL DEF .png",
+  "Fotos Final/Fuente de ENSALADA CAPRESSE MARMOL DEF.png",
+  "Fotos Final/GUISO DE LENTEJAS MARMOL DEF.png",
+  "Fotos Final/LANGOSTINOS EN PANKO  MARMOL DEF .png",
+  "Fotos Final/LASAGNA BOLOGNESA MARMOL DEF.png",
+  "Fotos Final/LEMON SLAB MARMOL DEF.png",
+  "Fotos Final/MALFATIS GRATINADOS MARMOL DEF.png",
+  "Fotos Final/MARQUISSE DE CHOCOLATE SIN HARINA MARMOL DEF.png",
+  "Fotos Final/MILANESITAS DE BONDIOLA CON PURE DE BONIATOS MARMOL DEF.png",
+  "Fotos Final/MILHOJAS DE MANZANAS MARMOL DEF.png",
+  "Fotos Final/MINI TORTA VASCA MARMOL DEF.png",
+  "Fotos Final/MOUSAKA GRIEGA MARMOL DEF.png",
+  "Fotos Final/MOUSSE DE CHOCOLATE  CON NUECES MARMOL DEF .png",
+  "Fotos Final/Orzotto con panceta, puerros y arvejas.jpg",
+  "Fotos Final/Pastel De Papas Con Carne Cortada A Cuchillo.jpg",
+  "Fotos Final/Pastel de bondiola con puré de batatas.jpg",
+  "Fotos Final/Paté de foie con tostadas de focaccia.jpg",
+  "Fotos Final/Pollo Al Limon Y Hierbas Con Papas.jpg",
+  "Fotos Final/Quesadillas de cerdo desmechado y cheddar con pico de gallo.jpg",
+  "Fotos Final/Quiche lorraine.jpg",
+  "Fotos Final/Satay de cerdo con perfume de limas.jpg",
+  "Fotos Final/Satay de pollo picante.jpg",
+  "Fotos Final/Taquitos de pollo y muzzarella.jpg",
+  "Fotos Final/Ternera al malbec con calabazas al horno.jpg",
+  "Fotos Final/Tiramisú para cuatro personas.jpg",
+  "Fotos Final/Tortilla de papas rellena.jpg",
+  "Fotos Final/Tortillas de espinaca.jpg",
+  "Fotos Final/Trio de pastitas.jpg",
+];
+
+function welcomeGoTo(cat) {
+  closeWelcome();
+  scrollToCat(cat);
+}
+
+function closeWelcomeToCatalog() {
+  closeWelcome();
+  setTimeout(function() {
+    const el = document.getElementById("catalogo");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 30);
+}
+
+function closeWelcome() {
+  const screen = document.getElementById("welcomeScreen");
+  if (!screen || screen.classList.contains("welcome-hide")) return;
+  screen.classList.add("welcome-hide");
+  document.body.style.overflow = "";
+  setTimeout(function() { screen.style.display = "none"; }, 1000);
+}
+
+function initWelcomeScreen() {
+  const screen = document.getElementById("welcomeScreen");
+  const bg     = document.getElementById("welcomeBg");
+  if (!screen || !bg) return;
+
+  // usamos cada una de las fotos de "Fotos Final" exactamente una vez:
+  // la grilla tiene tantos espacios como fotos hay, ni más ni menos
+  const fotos = WELCOME_FOTOS.slice();
+  for (let i = fotos.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [fotos[i], fotos[j]] = [fotos[j], fotos[i]];
+  }
+
+  const total = fotos.length;
+  // cantidad de filas tal que las celdas queden lo más cuadradas posible
+  // según el ancho/alto de la pantalla
+  const rows = Math.max(1, Math.round(Math.sqrt(total * window.innerHeight / window.innerWidth)));
+  const base = Math.floor(total / rows);
+  const extra = total % rows; // las primeras `extra` filas llevan una foto más
+
+  let idx = 0;
+  let html = '';
+  for (let r = 0; r < rows; r++) {
+    const count = base + (r < extra ? 1 : 0);
+    html += '<div class="wb-row">';
+    for (let c = 0; c < count; c++) {
+      html += '<img class="wb-tile" src="' + fotos[idx] + '" alt="" loading="eager">';
+      idx++;
+    }
+    html += '</div>';
+  }
+  bg.innerHTML = html;
+
+  document.body.style.overflow = "hidden";
+}
+
+document.addEventListener("DOMContentLoaded", initWelcomeScreen);
+
+// ══════════════════════════════════════════════════════════
+//  ⚙️  CONFIGURACIÓN — Editá estos valores antes de lanzar
+// ══════════════════════════════════════════════════════════
+const CONFIG = {
+  whatsapp:    "5491159191399",        // Número sin + ni espacios (ej: 5491155667788)
+  emailjs: {
+    serviceId:  "TU_SERVICE_ID",       // Panel emailjs.com → Email Services
+    templateId: "TU_TEMPLATE_ID",      // Panel emailjs.com → Email Templates
+    publicKey:  "TU_PUBLIC_KEY",       // Panel emailjs.com → Account → Public Key
+  },
+  costoEnvio: 15000, // Costo de envío fijo
+};
+
+// ══════════════════════════════════════════════════════════
+//  🍽️  PRODUCTOS — Editá aquí el catálogo completo
+// ══════════════════════════════════════════════════════════
+const PRODUCTOS = [
+  // ── FINGERFOOD ────────────────────────────────────────
+  { id:  1, nombre: "Buñuelos de espinaca con alioli", categoria: "fingerfood", presentacion: "12 u + Dip de salsa", precio: 18000, descripcion: "Buñuelos de espinaca dorados, acompañados con alioli casero.", emoji: "🥬", imagen: "Fotos Final/Buñuelos de espinaca con alioli.jpg" },
+  { id:  2, nombre: "Croquetas de jamón", categoria: "fingerfood", presentacion: "12 u", precio: 20000, descripcion: "Croquetas de jamón cocido, rebozadas y fritas.", emoji: "🍖", imagen: "Fotos Final/CROQUETAS DE JAMON MARMOL DEF.png", imgPos: "100% 68%" },
+  { id:  3, nombre: "Croquetas de mandioca y queso", categoria: "fingerfood", presentacion: "12 u", precio: 18000, descripcion: "Croquetas de mandioca y queso mozzarella fundido.", emoji: "🧀", imagen: "Fotos Final/CROQUETAS DE MANDIOCA MARMOL DEF.png" },
+  { id:  4, nombre: "Empanaditas de copetín de pollo y hongos con mayo de calahorra", categoria: "fingerfood", presentacion: "12 u", precio: 28000, descripcion: "Mini empanadas de pollo y hongos salteados, acompañadas con mayonesa de pimientos asados.", emoji: "🥟", imagen: "Fotos Final/EMPANADITAS DE POLLO Y HONGOS MARMOL DEF .png" },
+  { id:  5, nombre: "Empanaditas salteñas de carne cortada a cuchillo fritas", categoria: "fingerfood", presentacion: "12 u", precio: 36000, descripcion: "Clásicas empanadas salteñas fritas, con carne cortada a cuchillo, papa, huevo y verdeo.", emoji: "🥟", imagen: "Fotos Final/EMPANADAS SALTENAS EN MARMOL DEF.png" },
+  { id:  6, nombre: "Langostinos en panko con salsa ponzu", categoria: "fingerfood", presentacion: "6 u + Dip de salsa", precio: 25000, descripcion: "Langostinos rebozados en panko, extra crocantes, servidos con salsa ponzu.", emoji: "🦐", imagen: "Fotos Final/LANGOSTINOS EN PANKO  MARMOL DEF .png" },
+  { id:  7, nombre: "Trío de pastitas: hummus, babaganoush de remolacha y muhamara", categoria: "fingerfood", presentacion: "250 ml de cada una", precio: 25000, descripcion: "Pasta de garbanzos, pasta de berenjenas y remolacha ahumada, y pasta de morrones asados y nueces.", emoji: "🫙", imagen: "Fotos Final/Trio de pastitas.jpg" },
+  { id:  8, nombre: "Bruschettas variadas", categoria: "fingerfood", presentacion: "20 u", precio: 20000, descripcion: "Tostadas de focaccia artesanal con una selección de ingredientes frescos y sabores mediterráneos.", emoji: "🍞", imagen: "Fotos Final/BRUSCHETAS VARIADAS MARMOL DEF.png" },
+  { id:  9, nombre: "Taquitos de pollo y muzzarella", categoria: "fingerfood", presentacion: "12 u", precio: 28000, descripcion: "Tortillas rellenas de pollo condimentado y muzzarella fundida.", emoji: "🌮", imagen: "Fotos Final/Taquitos de pollo y muzzarella.jpg" },
+
+  // ── PLATOS CALIENTES ──────────────────────────────────
+  { id: 10, nombre: "Albondiguitas picantes", categoria: "calientes", presentacion: "12 u", precio: 15000, descripcion: "Albóndigas caseras de carne cocidas en pomodoro, ligeramente picante.", emoji: "🍅", imagen: "Fotos Final/ALBONDIGAS MARMOL DEF.png" },
+  { id: 11, nombre: "Crepes de ricotta y hongos", categoria: "calientes", presentacion: "1 u", precio: 15000, descripcion: "Delicados crepes rellenos de ricotta y hongos salteados y gratinados.", emoji: "🥞", imagen: "Fotos Final/CREP DE CHAMPINONES Y RICOTTA MARMOL DEF.png" },
+  { id: 12, nombre: "Canelones de espinaca", categoria: "calientes", presentacion: "2 u / 400 g aprox", precio: 15000, descripcion: "Canelones caseros rellenos de espinaca y queso, cubiertos con salsa y gratinados al horno.", emoji: "🥬", imagen: "Fotos Final/CANELONES DE ESPINACA MARMOL DEF.png" },
+  { id: 13, nombre: "Fajitas de pollo con morrones de tres colores", categoria: "calientes", presentacion: "4 u", precio: 15000, descripcion: "Tiras de pollo salteadas con morrones rojos, amarillos y verdes, especias mexicanas y hierbas.", emoji: "🌮", imagen: "Fotos Final/FAJITAS DE POLLO MARMOL DEF.png" },
+  { id: 14, nombre: "Guiso de lentejas criollo", categoria: "calientes", presentacion: "400 g aprox", precio: 18000, descripcion: "Tradicional guiso de lentejas con carnes, vegetales y papa.", emoji: "🍲", imagen: "Fotos Final/GUISO DE LENTEJAS MARMOL DEF.png" },
+  { id: 15, nombre: "Lasagna bolognesa", categoria: "calientes", presentacion: "400 g aprox", precio: 15000, descripcion: "Capas de panqueques finitos, salsa boloñesa, bechamel y queso gratinado.", emoji: "🍝", imagen: "Fotos Final/LASAGNA BOLOGNESA MARMOL DEF.png" },
+  { id: 16, nombre: "Mousaka", categoria: "calientes", presentacion: "400 g aprox", precio: 18000, descripcion: "Clásico plato mediterráneo con berenjenas, carne especiada, salsa blanca y queso gratinado.", emoji: "🍆", imagen: "Fotos Final/MOUSAKA GRIEGA MARMOL DEF.png" },
+  { id: 17, nombre: "Orzotto con hongos", categoria: "calientes", presentacion: "400 g aprox", precio: 18000, descripcion: "Cebada perlada cocida al estilo risotto, con una cremosa mezcla de hongos frescos y queso.", emoji: "🍚", imagen: "Fotos Final/orzotto con hongos.jpg" },
+  { id: 18, nombre: "Orzotto con panceta, puerros y arvejas", categoria: "calientes", presentacion: "400 g aprox", precio: 18000, descripcion: "Cebada perlada cocida al estilo risotto, con panceta crocante, puerros salteados y arvejas tiernas.", emoji: "🍚", imagen: "Fotos Final/Orzotto con panceta, puerros y arvejas.jpg" },
+  { id: 19, nombre: "Pastel de bondiola con puré de batatas", categoria: "calientes", presentacion: "400 g aprox", precio: 20000, descripcion: "Bondiola braseada y desmenuzada, cubierta con un suave puré de batatas gratinado.", emoji: "🥘", imagen: "Fotos Final/Pastel de bondiola con puré de batatas.jpg" },
+  { id: 20, nombre: "Quesadillas de cerdo desmechado y cheddar con pico de gallo", categoria: "calientes", presentacion: "3 u", precio: 15000, descripcion: "Tortillas rellenas de cerdo desmechado y queso cheddar fundido, acompañadas con pico de gallo.", emoji: "🌮", imagen: "Fotos Final/Quesadillas de cerdo desmechado y cheddar con pico de gallo.jpg" },
+  { id: 21, nombre: "Satay de cerdo con perfume de limas", categoria: "calientes", presentacion: "4 u", precio: 16000, descripcion: "Brochettes de cerdo marinadas en especias y leche de coco, grilladas y terminadas con perfume de lima.", emoji: "🍢", imagen: "Fotos Final/Satay de cerdo con perfume de limas.jpg" },
+  { id: 22, nombre: "Satay de pollo picante", categoria: "calientes", presentacion: "4 u", precio: 16000, descripcion: "Pinchos de pollo marinados con especias thai, ligeramente picantes y grillados.", emoji: "🍢", imagen: "Fotos Final/Satay de pollo picante.jpg" },
+  { id: 23, nombre: "Ternera al malbec con calabazas al horno", categoria: "calientes", presentacion: "400 g aprox", precio: 20000, descripcion: "Ternera braseada lentamente en vino Malbec, acompañada de calabazas asadas con hierbas.", emoji: "🍖", imagen: "Fotos Final/Ternera al malbec con calabazas al horno.jpg" },
+  { id: 24, nombre: "Chicken tikka masala", categoria: "calientes", presentacion: "400 g aprox", precio: 18000, descripcion: "Cubos de pollo marinados en yogur y especias, cocidos en salsa de tomate, especias y crema.", emoji: "🍛", imagen: "Fotos Final/CHICKEN TIKKA MARMOL DEF.png" },
+  { id: 25, nombre: "Curry verde thai", categoria: "calientes", presentacion: "400 g aprox", precio: 18000, descripcion: "Tradicional curry tailandés de leche de coco, vegetales y hierbas frescas, de sabor intenso y aromático.", emoji: "🍛", imagen: "Fotos Final/CURRY VERDE THAI  DE POLLO .png" },
+  { id: 26, nombre: "Curry Massaman", categoria: "calientes", presentacion: "400 g aprox", precio: 18000, descripcion: "Curry tailandés con carne tierna, papas, leche de coco, maní, especias y hierbas frescas.", emoji: "🍛", imagen: "Fotos Final/Chicken tikka masala.jpg" },
+  { id: 27, nombre: "Tortillas de espinaca", categoria: "calientes", presentacion: "250 g aprox", precio: 14000, descripcion: "Tortilla casera de espinacas frescas.", emoji: "🥬", imagen: "Fotos Final/Tortillas de espinaca.jpg" },
+  { id: 28, nombre: "Tortilla de papas rellena", categoria: "calientes", presentacion: "600 g aprox", precio: 18000, descripcion: "Tradicional tortilla rellena con jamón y queso fundido.", emoji: "🥔", imagen: "Fotos Final/Tortilla de papas rellena.jpg" },
+  { id: 29, nombre: "Quiche lorraine", categoria: "calientes", presentacion: "600 g aprox", precio: 18000, descripcion: "Tarta francesa de masa artesanal de queso, con panceta, crema, huevos y puerros.", emoji: "🥧", imagen: "Fotos Final/Quiche lorraine.jpg" },
+
+  // ── PASTELERÍA Y POSTRES ──────────────────────────────
+  { id: 30, nombre: "Crumble de manzanas", categoria: "postres", presentacion: "500 g aprox", precio: 15000, descripcion: "Manzanas especiadas horneadas cubiertas con arenado crocante de canela.", emoji: "🍎", imagen: "Fotos Final/Crumble de manzanas.jpg" },
+  { id: 31, nombre: "Crumble de peras y arándanos", categoria: "postres", presentacion: "500 g aprox", precio: 15000, descripcion: "Peras y arándanos horneados con un crumble dorado y crocante.", emoji: "🫐", imagen: "Fotos Final/Crumble de peras y arándanos.jpg" },
+  { id: 32, nombre: "Milhojas de manzanas (sin harina, sin azúcar)", categoria: "postres", presentacion: "200 g aprox", precio: 8000, descripcion: "Finísimas capas de manzana horneadas, naturalmente dulces y livianas, servido con crema montada.", emoji: "🍏", imagen: "Fotos Final/MILHOJAS DE MANZANAS MARMOL DEF.png" },
+  { id: 33, nombre: "Tiramisú para cuatro personas", categoria: "postres", presentacion: "", precio: 20000, descripcion: "El clásico postre italiano en formato para compartir, con mascarpone, café y cacao.", emoji: "🍰", imagen: "Fotos Final/Tiramisú para cuatro personas.jpg" },
+  { id: 34, nombre: "Mini torta vasca", categoria: "postres", presentacion: "150 g aprox", precio: 8000, descripcion: "Delicada tarta de masa mantecosa con cremoso relleno de queso.", emoji: "🍰", imagen: "Fotos Final/MINI TORTA VASCA MARMOL DEF.png" },
+  { id: 35, nombre: "Marquise de chocolate (sin harina)", categoria: "postres", presentacion: "700 g aprox", precio: 30000, descripcion: "Intenso postre de chocolate, húmedo y untuoso, naturalmente libre de harina.", emoji: "🍫", imagen: "Fotos Final/MARQUISSE DE CHOCOLATE SIN HARINA MARMOL DEF.png" },
+  { id: 36, nombre: "Mousse de chocolate para 4", categoria: "postres", presentacion: "", precio: 18000, descripcion: "Mousse aireada de chocolate intenso, con salsa de chocolate y nueces.", emoji: "🍫", imagen: "Fotos Final/MOUSSE DE CHOCOLATE  CON NUECES MARMOL DEF .png" },
+  { id: 37, nombre: "Mousse de cheesecake con frutos rojos", categoria: "postres", presentacion: "150 g aprox", precio: 18000, descripcion: "Suave crema de cheesecake con coulis y frutos rojos.", emoji: "🍓", imagen: "Fotos Final/Mousse de cheesecake con frutos rojos.jpg" },
+
+  // ── SLAB CAKES ────────────────────────────────────────
+  { id: 38, nombre: "Lemon pie", categoria: "slabcakes", presentacion: "500 g aprox", precio: 15000, descripcion: "Base crocante, crema de limón y merengue italiano gratinado.", emoji: "🍋", imagen: "Fotos Final/LEMON SLAB MARMOL DEF.png" },
+  { id: 39, nombre: "Carrot cake con frosting de phila", categoria: "slabcakes", presentacion: "500 g aprox", precio: 15000, descripcion: "Bizcochuelo de zanahorias y especias, cubierto con clásico frosting de queso crema.", emoji: "🥕", imagen: "Fotos Final/CARROTCAKE MARMOL DEF.png" },
+  { id: 40, nombre: "Chocolate slab cake", categoria: "slabcakes", presentacion: "500 g aprox", precio: 18000, descripcion: "Torta húmeda de chocolate con intensa cobertura de ganache.", emoji: "🍫", imagen: "Fotos Final/Chocolate slab cake.jpg" },
+
+  // ── ENTRADAS ──────────────────────────────────────────
+  { id: 42, nombre: "Carpaccio de lomo", categoria: "entradas", presentacion: "100 g aprox", precio: 18000, descripcion: "Finísimas láminas de lomo con aceite de oliva, parmesano, rúcula y alcaparras.", emoji: "🥩", imagen: "Fotos Final/CARPACCIO DE LOMO MARMOL DEF.png" },
+  { id: 43, nombre: "Crab Cakes con mayo de limas", categoria: "entradas", presentacion: "200 g aprox", precio: 15000, descripcion: "Croquetas de cangrejo doradas, acompañadas con mayonesa fresca de lima.", emoji: "🦀", imagen: "Fotos Final/Crab Cakes con mayo de limas.jpg" },
+  { id: 44, nombre: "Paté de foie con tostadas de focaccia", categoria: "entradas", presentacion: "200 g aprox", precio: 10000, descripcion: "Delicado paté de foie servido con tostaditas de focaccia artesanal.", emoji: "🍞", imagen: "Fotos Final/Paté de foie con tostadas de focaccia.jpg" },
+  { id: 45, nombre: "Tiradito de pesca del día con salsa de maracuyá", categoria: "entradas", presentacion: "100 g aprox", precio: 14000, descripcion: "Finas láminas de pesca fresca con una fresca salsa de maracuyá y cítricos.", emoji: "🐟", imagen: "Fotos Final/Tiradito de pesca del día con salsa de maracuyá.jpg" },
+  { id: 46, nombre: "Tiradito de salmón con vinagreta de alcaparras", categoria: "entradas", presentacion: "100 g aprox", precio: 16000, descripcion: "Salmón fresco laminado, acompañado con vinagreta de alcaparras, limón y hierbas.", emoji: "🐟", imagen: "Fotos Final/CARPACCIO DE SALMON MARMOL DEF.png" },
+
+  // ── PLATOS DEL DÍA ────────────────────────────────────
+  { id: 47, nombre: "Pollo al limón y hierbas con papas", categoria: "platosdeldia", presentacion: "", precio: 12000, descripcion: "Pollo horneado con limón, hierbas frescas y papas doradas.", emoji: "🍋", imagen: "Fotos Final/Pollo Al Limon Y Hierbas Con Papas.jpg" },
+  { id: 48, nombre: "Milanesitas de bondiola de cerdo con puré de boniatos", categoria: "platosdeldia", presentacion: "", precio: 12000, descripcion: "Tiernas milanesitas de bondiola acompañadas de un cremoso puré de boniatos.", emoji: "🍖", imagen: "Fotos Final/MILANESITAS DE BONDIOLA CON PURE DE BONIATOS MARMOL DEF.png" },
+  { id: 49, nombre: "Pastel de papas con carne cortada a cuchillo", categoria: "platosdeldia", presentacion: "", precio: 12000, descripcion: "Clásico pastel de papas elaborado con carne vacuna cortada a cuchillo y puré gratinado.", emoji: "🥔", imagen: "Fotos Final/Pastel De Papas Con Carne Cortada A Cuchillo.jpg" },
+  { id: 50, nombre: "Curry rojo de ternera con arroz suelto", categoria: "platosdeldia", presentacion: "", precio: 12000, descripcion: "Ternera cocida en un aromático curry rojo tailandés, servida con arroz blanco.", emoji: "🍛", imagen: "Fotos Final/CURRY ROJO DE TERNERA CON ARROZ SUELTO MARMOL DEF.png" },
+  { id: 51, nombre: "Malfatis de espinacas gratinados", categoria: "platosdeldia", presentacion: "", precio: 12000, descripcion: "Ñoquis de espinaca y ricota gratinados con salsa y abundante queso.", emoji: "🥬", imagen: "Fotos Final/MALFATIS GRATINADOS MARMOL DEF.png" },
+
+  // ── FUENTES ───────────────────────────────────────────
+  { id: 52, nombre: "Fuente de vegetales grillados", categoria: "fuentes", presentacion: "2 KG", precio: 36000, descripcion: "Selección de vegetales de estación grillados con aceite de oliva y hierbas frescas.", emoji: "🥒", imagen: "Fotos Final/Fuente de vegetales grillados.jpg" },
+  { id: 53, nombre: "Fuente de burratinas", categoria: "fuentes", presentacion: "1 kg aprox", precio: 70000, descripcion: "Burratinas frescas acompañadas de jamón crudo, tomates, pesto y aceite de oliva extra virgen.", emoji: "🧀", imagen: "Fotos Final/FUENTE DE BURRATINAS MARMOL DEF.png" },
+  { id: 54, nombre: "Fuente de morrones confitados", categoria: "fuentes", presentacion: "1 KG", precio: 30000, descripcion: "Morrones asados lentamente, confitados en aceite de oliva con ajo y hierbas.", emoji: "🫑", imagen: "Fotos Final/FUENTE DE MORRONES  CONFITADOS MARMOL DEF.png" },
+  { id: 55, nombre: "Fuente vitel toné", categoria: "fuentes", presentacion: "1 KG", precio: 60000, descripcion: "Láminas de peceto con la clásica salsa de atún, anchoas y alcaparras, y un delicado toque de mostaza.", emoji: "🍖", imagen: "Fotos Final/FUENTE VITEL TONEE MARMOL DEF .png" },
+  { id: 56, nombre: "Fuente de salmón curado", categoria: "fuentes", presentacion: "1 KG", precio: 50000, descripcion: "Salmón curado casero, servido con crema de quesos, alcaparras y eneldo.", emoji: "🐟", imagen: "Fotos Final/FUENTE DE SALMON CURADO MARMOL DEF.png" },
+  { id: 57, nombre: "Fuente ensalada capresse", categoria: "fuentes", presentacion: "1 KG", precio: 60000, descripcion: "Tomates frescos, mozzarella fior di latte, albahaca, reducción balsámica y aceite de oliva extra virgen.", emoji: "🍅", imagen: "Fotos Final/Fuente de ENSALADA CAPRESSE MARMOL DEF.png" },
+  { id: 58, nombre: "Fuente de ceviche", categoria: "fuentes", presentacion: "1 KG", precio: 50000, descripcion: null, emoji: "🐟", imagen: "Fotos Final/Fuente de ceviche.jpg" },
+  { id: 59, nombre: "Fuente queso brie con chutney de peras y frutas secas", categoria: "fuentes", presentacion: "1 KG", precio: 50000, descripcion: null, emoji: "🧀", imagen: "Fotos Final/Fuente de queso brie con chutney de peras y frutas secas.jpg" },
+  { id: 60, nombre: "Fuente babaganoush de remolacha", categoria: "fuentes", presentacion: "1 KG", precio: 35000, descripcion: null, emoji: "🍆", imagen: "Fotos Final/Fuente babaganoush de remolacha.jpg" },
+  { id: 61, nombre: "Fuente ensalada de peras y roquefort", categoria: "fuentes", presentacion: "1 KG", precio: 30000, descripcion: null, emoji: "🍐", imagen: "Fotos Final/Fuente ensalada de peras y roquefort.jpg" },
+  { id: 62, nombre: "Fuente de hummus de garbanzos", categoria: "fuentes", presentacion: "1 KG", precio: 35000, descripcion: null, emoji: "🧆", imagen: "Fotos Final/Fuente de hummus de garbanzos.jpg" },
+  { id: 63, nombre: "Fuente de muhamara", categoria: "fuentes", presentacion: "1 KG", precio: 35000, descripcion: null, emoji: "🫑", imagen: "Fotos Final/Fuente de muhamara.jpg" },
+  { id: 64, nombre: "Fuente de gravlax con labneh", categoria: "fuentes", presentacion: "1 KG", precio: 50000, descripcion: null, emoji: "🐟", imagen: "Fotos Final/Fuente de gravlax con labneh.jpg" },
+];
+
+// ══════════════════════════════════════════════════════════
+//  🏷️  ETIQUETAS DE CATEGORÍAS
+// ══════════════════════════════════════════════════════════
+const CAT_LABELS = {
+  todos:        "Todos",
+  fingerfood:   "Fingerfood",
+  calientes:    "Platos Calientes",
+  postres:      "Pastelería y Postres",
+  slabcakes:    "Slab Cakes",
+  entradas:     "Entradas",
+  platosdeldia: "Platos del Día",
+  fuentes:      "Fuentes",
+  fondue:       "Fondue",
+};
+
+// Bajada que aparece debajo del título de ciertas categorías
+const CAT_SUBTITULOS = {
+  fuentes: "Nuestras fuentes son propias y llegan a tu casa listas para presentar. Una vez finalizado el evento, coordinamos juntos la devolución.",
+};
+
+// Contenido a mostrar cuando una categoría no tiene productos todavía
+const CAT_MENSAJE_VACIO = {
+  fondue: '<p class="cat-section-comingsoon">Próximamente</p>',
+};
+
+// ══════════════════════════════════════════════════════════
+//  🔧  ESTADO
+// ══════════════════════════════════════════════════════════
+const cantidades   = {};
+PRODUCTOS.forEach(p => cantidades[p.id] = 1);
+
+const carrito = {}; // { [productoId]: cantidadEnCarrito }
+
+// ══════════════════════════════════════════════════════════
+//  🎨  RENDER CATÁLOGO (agrupado por categoría, con filtro)
+// ══════════════════════════════════════════════════════════
+const ALL_CATS = ['fingerfood', 'calientes', 'postres', 'slabcakes', 'entradas', 'platosdeldia', 'fuentes', 'fondue'];
+const CATEGORIAS_OCULTAS = []; // quitar de esta lista para volver a mostrar la categoría
+const SECCIONES_VACIAS_VISIBLES = ['platosdeldia', 'fondue']; // categorías sin productos que igual muestran su sección (para que el CTA tenga a dónde ir)
+let filtroActual = 'todos';
+
+function renderCatalog() {
+  const CATS = filtroActual === 'todos' ? ALL_CATS : [filtroActual];
+  document.getElementById("catalog").innerHTML = CATS.map(cat => {
+    const lista = PRODUCTOS.filter(p => p.categoria === cat);
+    if (!lista.length && !SECCIONES_VACIAS_VISIBLES.includes(cat)) return '';
+    const oculta = CATEGORIAS_OCULTAS.includes(cat);
+    const contenido = lista.length
+      ? `<div class="catalog">${lista.map(tarjetaHTML).join('')}</div>`
+      : (CAT_MENSAJE_VACIO[cat] || `<p class="cat-section-empty">Muy pronto vamos a sumar platos a esta sección. ¡Volvé a visitarnos pronto!</p>`);
+    return `
+      <div class="cat-section${oculta ? ' hidden-cat' : ''}" id="cat-${cat}">
+        <h2 class="cat-section-title">${CAT_LABELS[cat]}</h2>
+        ${CAT_SUBTITULOS[cat] ? `<p class="cat-section-subtitle">${CAT_SUBTITULOS[cat]}</p>` : ''}
+        ${contenido}
+      </div>`;
+  }).join('');
+}
+
+function setFilter(cat) {
+  filtroActual = cat;
+  renderCatalog();
+  document.querySelectorAll('.filter-pill').forEach(function(pill) {
+    pill.classList.toggle('active', pill.dataset.cat === cat);
+  });
+}
+
+function scrollToCat(cat) {
+  setFilter(cat);
+  setTimeout(function() {
+    const el = document.getElementById('cat-' + cat);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 30);
+}
+
+function tarjetaHTML(p) {
+  const q   = cantidades[p.id];
+  const img = p.imagen
+    ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy"${p.imgPos ? ` style="object-position:${p.imgPos}"` : ''}>`
+    : '';
+
+  return `
+    <article class="card" ondblclick="abrirProductModal(${p.id}, event)">
+      <div class="card-img${p.imagen ? '' : ' no-photo'}">
+        ${img}
+      </div>
+      <div class="card-body">
+        <div class="card-name">${p.nombre}</div>
+        <div class="card-content">
+          ${p.descripcion ? `<div class="card-desc">${p.descripcion}</div>` : ''}
+          ${p.presentacion ? `<div class="card-presentacion">${p.presentacion}</div>` : ''}
+        </div>
+        <div class="card-price">${p.precio > 0 ? `$${fmt(p.precio)} <small>/ porción</small>` : `<span style="font-size:16px;letter-spacing:1px;color:#C9A96E">Consultar precio</span>`}</div>
+        <div class="qty-row">
+          <span class="qty-label">Cantidad</span>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="cambiarQty(${p.id}, -1)" aria-label="Restar">−</button>
+            <span class="qty-val" id="qty-${p.id}">${q}</span>
+            <button class="qty-btn" onclick="cambiarQty(${p.id}, +1)" aria-label="Sumar">+</button>
+          </div>
+        </div>
+        <button class="btn-comprar" onclick="agregarAlCarrito(${p.id}, this)">Agregar al carrito</button>
+      </div>
+    </article>`;
+}
+
+// ══════════════════════════════════════════════════════════
+//  🔢  CANTIDAD
+// ══════════════════════════════════════════════════════════
+function cambiarQty(id, delta) {
+  cantidades[id] = Math.max(1, (cantidades[id] || 1) + delta);
+  const el = document.getElementById("qty-" + id);
+  if (el) el.textContent = cantidades[id];
+}
+
+// ══════════════════════════════════════════════════════════
+//  🛒  CARRITO
+// ══════════════════════════════════════════════════════════
+function agregarAlCarrito(id, btnEl) {
+  const p = PRODUCTOS.find(x => x.id === id);
+  if (!p) return;
+  const qty = cantidades[id] || 1;
+  carrito[id] = (carrito[id] || 0) + qty;
+
+  cantidades[id] = 1;
+  const qtyEl = document.getElementById("qty-" + id);
+  if (qtyEl) qtyEl.textContent = 1;
+
+  actualizarCartBadge();
+  openCart();
+
+  if (btnEl) {
+    const textoOriginal = btnEl.textContent;
+    const fondoOriginal = btnEl.style.background;
+    btnEl.textContent = "¡Agregado! ✓";
+    btnEl.style.background = "#25D366";
+    setTimeout(function() {
+      btnEl.textContent = textoOriginal;
+      btnEl.style.background = fondoOriginal;
+    }, 1000);
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+//  🔍  MODAL DE PRODUCTO (detalle en grande)
+// ══════════════════════════════════════════════════════════
+function abrirProductModal(id, e) {
+  if (e && e.target.closest(".qty-row, .btn-comprar")) return;
+  const p = PRODUCTOS.find(x => x.id === id);
+  if (!p) return;
+
+  const imgEl = document.getElementById("productModalImg");
+  imgEl.className = "product-modal-img" + (p.imagen ? "" : " no-photo");
+  imgEl.innerHTML = p.imagen
+    ? `<img src="${p.imagen}" alt="${p.nombre}"${p.imgPos ? ` style="object-position:${p.imgPos}"` : ''}>`
+    : p.emoji;
+
+  document.getElementById("productModalName").textContent = p.nombre;
+  document.getElementById("productModalPrice").innerHTML = p.precio > 0
+    ? `$${fmt(p.precio)} <small>/ porción</small>`
+    : `<span style="font-size:16px;letter-spacing:1px;color:#C9A96E">Consultar precio</span>`;
+  document.getElementById("productModalDesc").textContent = p.descripcion || '';
+  document.getElementById("productModalDesc").style.display = p.descripcion ? '' : 'none';
+  document.getElementById("productModalPresentacion").textContent = p.presentacion || '';
+  document.getElementById("productModalPresentacion").style.display = p.presentacion ? '' : 'none';
+
+  document.getElementById("productModalBtn").onclick = function() {
+    agregarAlCarrito(p.id, null);
+    toast("¡Agregado al carrito!");
+    cerrarProductModal();
+  };
+
+  document.getElementById("productModalOverlay").classList.add("open");
+  document.getElementById("productModal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function cerrarProductModal() {
+  document.getElementById("productModalOverlay").classList.remove("open");
+  document.getElementById("productModal").classList.remove("open");
+  if (!document.getElementById("checkoutScreen").classList.contains("open") &&
+      !document.getElementById("cartPanel").classList.contains("open")) {
+    document.body.style.overflow = "";
+  }
+}
+
+function totalUnidadesCarrito() {
+  return Object.values(carrito).reduce((sum, qty) => sum + qty, 0);
+}
+
+function totalCarrito() {
+  return Object.keys(carrito).reduce((sum, id) => {
+    const p = PRODUCTOS.find(x => x.id === Number(id));
+    return sum + (p ? p.precio * carrito[id] : 0);
+  }, 0);
+}
+
+function actualizarCartBadge() {
+  document.getElementById("cartBadge").textContent = totalUnidadesCarrito();
+}
+
+function posicionarCartPanel() {
+  const btn   = document.querySelector(".cart-btn");
+  const panel = document.getElementById("cartPanel");
+
+  // en mobile el panel se muestra como una hoja anclada abajo (ver CSS),
+  // no hace falta calcular su posición respecto al botón del carrito
+  if (window.innerWidth <= 680) {
+    panel.style.top   = "";
+    panel.style.right = "";
+    return;
+  }
+
+  const rect = btn.getBoundingClientRect();
+  panel.style.top   = (rect.bottom + 10) + "px";
+  panel.style.right = (window.innerWidth - rect.right) + "px";
+}
+
+function openCart() {
+  renderCart();
+  posicionarCartPanel();
+  document.getElementById("cartPanel").classList.add("open");
+}
+
+function closeCart() {
+  document.getElementById("cartPanel").classList.remove("open");
+}
+
+function renderCart() {
+  const ids          = Object.keys(carrito).filter(id => carrito[id] > 0);
+  const cont         = document.getElementById("cartItems");
+  const confirmBtn   = document.getElementById("cartConfirmBtn");
+  const shippingRow  = document.getElementById("cartShippingRow");
+
+  if (!ids.length) {
+    cont.innerHTML = `<div class="cart-empty"><div class="icon">🛒</div>Tu carrito está vacío</div>`;
+    confirmBtn.disabled = true;
+    shippingRow.innerHTML = '';
+    document.getElementById("cartTotal").textContent = "$0";
+    return;
+  }
+
+  cont.innerHTML = ids.map(id => {
+    const p          = PRODUCTOS.find(x => x.id === Number(id));
+    const qty        = carrito[id];
+    const thumb      = p.imagen ? `<img src="${p.imagen}" alt="${p.nombre}">` : p.emoji;
+    const precioTxt  = p.precio > 0 ? `$${fmt(p.precio)} c/u` : "A consultar";
+    const subtotalTxt = p.precio > 0 ? `$${fmt(p.precio * qty)}` : "—";
+    return `
+      <div class="cart-item">
+        <div class="cart-item-thumb">${thumb}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${p.nombre}</div>
+          <div class="cart-item-price">${precioTxt}</div>
+          <div class="cart-item-row-bottom">
+            <div class="cart-item-controls">
+              <button class="qty-btn" onclick="cambiarCantidadCarrito(${p.id}, -1)" aria-label="Restar">−</button>
+              <span class="qty-val">${qty}</span>
+              <button class="qty-btn" onclick="cambiarCantidadCarrito(${p.id}, +1)" aria-label="Sumar">+</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="cart-item-subtotal">${subtotalTxt}</span>
+              <button class="cart-item-remove" onclick="eliminarDelCarrito(${p.id})" aria-label="Eliminar">×</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+  confirmBtn.disabled = false;
+
+  const subtotal = totalCarrito();
+  const envio    = CONFIG.costoEnvio;
+  shippingRow.innerHTML = `<div class="shipping-cost-row"><span>Envío</span><span>$${fmt(envio)}</span></div>`;
+
+  document.getElementById("cartTotal").textContent = "$" + fmt(subtotal + envio);
+}
+
+function cambiarCantidadCarrito(id, delta) {
+  const nueva = (carrito[id] || 0) + delta;
+  if (nueva <= 0) { delete carrito[id]; } else { carrito[id] = nueva; }
+  renderCart();
+  actualizarCartBadge();
+}
+
+function eliminarDelCarrito(id) {
+  delete carrito[id];
+  renderCart();
+  actualizarCartBadge();
+}
+
+// ══════════════════════════════════════════════════════════
+//  📅  FECHAS DE ENTREGA (martes, jueves y sábado)
+// ══════════════════════════════════════════════════════════
+const DIAS_ENTREGA_SEMANA = [2, 4, 6]; // martes, jueves, sábado (Date.getDay(): domingo=0)
+const NOMBRES_DIA = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+
+function esFinDeSemana(d) {
+  const dow = d.getDay();
+  return dow === 0 || dow === 6;
+}
+
+function siguienteDiaHabil(d) {
+  const nd = new Date(d);
+  do { nd.setDate(nd.getDate() + 1); } while (esFinDeSemana(nd));
+  return nd;
+}
+
+function primerDiaHabil(ahora) {
+  if (esFinDeSemana(ahora)) return siguienteDiaHabil(ahora);
+  if (ahora.getHours() < 14) return new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
+  return siguienteDiaHabil(ahora);
+}
+
+function fechasEntregaDisponibles(cantidad, ahora) {
+  ahora = ahora || new Date();
+  const dia1   = primerDiaHabil(ahora);
+  const dia2   = siguienteDiaHabil(dia1);
+  const fechas = [];
+  const cursor = new Date(dia2);
+  cursor.setDate(cursor.getDate() + 1);
+  while (fechas.length < cantidad) {
+    if (DIAS_ENTREGA_SEMANA.includes(cursor.getDay())) fechas.push(new Date(cursor));
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  return fechas;
+}
+
+function formatFechaEntrega(d) {
+  return NOMBRES_DIA[d.getDay()] + " " + d.toLocaleDateString("es-AR", { day: "numeric", month: "long" });
+}
+
+function fechaISO(d) {
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return d.getFullYear() + "-" + mm + "-" + dd;
+}
+
+function renderFechasEntrega() {
+  const fechas = fechasEntregaDisponibles(4);
+  document.getElementById("deliveryDateOpts").innerHTML = fechas.map((f, i) => {
+    const label = formatFechaEntrega(f);
+    return `<option value="${fechaISO(f)}" data-label="${label}"${i === 0 ? " selected" : ""}>${label}</option>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════════
+//  📦  PANTALLA: FINALIZAR PEDIDO
+// ══════════════════════════════════════════════════════════
+function irACheckout() {
+  if (!totalUnidadesCarrito()) return;
+  closeCart();
+  abrirCheckout();
+}
+
+function renderCheckoutItems() {
+  const ids = Object.keys(carrito).filter(id => carrito[id] > 0);
+  document.getElementById("checkoutItems").innerHTML = ids.map(id => {
+    const p          = PRODUCTOS.find(x => x.id === Number(id));
+    const qty        = carrito[id];
+    const thumb      = p.imagen ? `<img src="${p.imagen}" alt="${p.nombre}">` : p.emoji;
+    const precioTxt  = p.precio > 0 ? (qty + " × $" + fmt(p.precio)) : (qty + " × a consultar");
+    const subtotalTxt = p.precio > 0 ? "$" + fmt(p.precio * qty) : "—";
+    return `
+      <div class="checkout-item">
+        <div class="checkout-item-thumb">${thumb}</div>
+        <div class="checkout-item-info">
+          <div class="checkout-item-name">${p.nombre}</div>
+          <div class="checkout-item-qty">${precioTxt}</div>
+        </div>
+        <div class="checkout-item-subtotal">${subtotalTxt}</div>
+      </div>`;
+  }).join('');
+}
+
+function toggleAclaracionTag(checkbox) {
+  const input = document.getElementById("f-aclaracion");
+  const tags = Array.from(document.querySelectorAll(".quick-note-check:checked")).map(function(cb) { return cb.dataset.text; });
+  input.value = tags.join(", ");
+}
+
+function abrirCheckout() {
+  const items    = Object.keys(carrito).filter(id => carrito[id] > 0).length;
+  const subtotal = totalCarrito();
+  const envio    = CONFIG.costoEnvio;
+
+  renderCheckoutItems();
+  document.getElementById("co-detail").textContent   = "Subtotal (" + items + " producto" + (items > 1 ? "s" : "") + ")";
+  document.getElementById("co-subtotal").textContent = "$" + fmt(subtotal);
+  document.getElementById("co-shipping-row").innerHTML = "<span>Envío</span><span>$" + fmt(envio) + "</span>";
+  document.getElementById("co-total").textContent = "$" + fmt(subtotal + envio);
+  renderFechasEntrega();
+
+  document.getElementById("f-nombre").value     = "";
+  document.getElementById("f-telefono").value   = "";
+  document.getElementById("f-email").value      = "";
+  document.getElementById("f-direccion").value  = "";
+  document.getElementById("f-aclaracion").value = "";
+  document.querySelectorAll(".quick-note-check").forEach(function(cb) { cb.checked = false; });
+  document.querySelector('input[name="metodo-pago"][value="efectivo"]').checked = true;
+
+  document.getElementById("checkoutScreen").classList.add("open");
+  document.body.style.overflow = "hidden";
+  window.scrollTo(0, 0);
+  setTimeout(function() { document.getElementById("f-nombre").focus(); }, 80);
+}
+
+function cerrarCheckout() {
+  document.getElementById("checkoutScreen").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+window.addEventListener("resize", function() {
+  if (document.getElementById("cartPanel").classList.contains("open")) posicionarCartPanel();
+});
+
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") { cerrarCheckout(); cerrarProductModal(); }
+});
+
+// ══════════════════════════════════════════════════════════
+//  ✅  CONFIRMAR PEDIDO
+// ══════════════════════════════════════════════════════════
+function confirmarPedidoFinal() {
+  const nombre     = document.getElementById("f-nombre").value.trim();
+  const telefono   = document.getElementById("f-telefono").value.trim();
+  const email      = document.getElementById("f-email").value.trim();
+  const dir        = document.getElementById("f-direccion").value.trim();
+  const aclaracion = document.getElementById("f-aclaracion").value.trim();
+  const metodo     = document.querySelector('input[name="metodo-pago"]:checked').value;
+  const fechaSelect   = document.getElementById("deliveryDateOpts");
+  const fechaOpt      = fechaSelect.options[fechaSelect.selectedIndex];
+  const fechaEntrega  = fechaOpt ? fechaOpt.dataset.label : "";
+  const horarioEntrega = document.getElementById("deliveryTimeOpts").value;
+
+  if (!nombre)   { toast("Por favor, ingresá tu nombre."); document.getElementById("f-nombre").focus(); return; }
+  if (!/^[\d\s\-\+]{8,}$/.test(telefono)) { toast("Por favor ingresá un teléfono válido (mínimo 8 números)"); document.getElementById("f-telefono").focus(); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast("Por favor ingresá un email válido"); document.getElementById("f-email").focus(); return; }
+  if (!dir)      { toast("Por favor, ingresá la dirección de entrega."); document.getElementById("f-direccion").focus(); return; }
+
+  const carritoSnapshot = JSON.parse(JSON.stringify(carrito));
+
+  const btn              = document.querySelector(".checkout-confirm-btn");
+  const textoBtnOriginal = btn.textContent;
+  btn.textContent = "Enviando...";
+  btn.disabled = true;
+
+  const metodoLabel = metodo === "transferencia" ? "Transferencia" : "Efectivo";
+  const msg = mensajeWA(nombre, telefono, email, dir, aclaracion, metodoLabel, fechaEntrega, horarioEntrega, carritoSnapshot);
+
+  window.open("https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg), "_blank");
+  toast("Abriendo WhatsApp con tu pedido...");
+
+  const subtotal  = totalCarrito();
+  const envio     = CONFIG.costoEnvio;
+  const productos = Object.keys(carritoSnapshot).filter(id => carritoSnapshot[id] > 0)
+    .map(id => PRODUCTOS.find(x => x.id === Number(id)).nombre).join(", ");
+  enviarEmail(nombre, productos, totalUnidadesCarrito(), subtotal + envio, metodoLabel);
+
+  Object.keys(carrito).forEach(id => delete carrito[id]);
+  actualizarCartBadge();
+  cerrarCheckout();
+
+  btn.textContent = textoBtnOriginal;
+  btn.disabled = false;
+}
+
+function mensajeWA(nombre, telefono, email, dir, aclaracion, metodoLabel, fechaEntrega, horarioEntrega, carritoData) {
+  const ids    = Object.keys(carritoData).filter(id => carritoData[id] > 0);
+  const lineas = ids.map(id => {
+    const p         = PRODUCTOS.find(x => x.id === Number(id));
+    const qty       = carritoData[id];
+    const precioTxt = p.precio > 0 ? ("$" + fmt(p.precio) + " c/u = $" + fmt(p.precio * qty)) : "a consultar";
+    return "▪ " + qty + "x " + p.nombre + " — " + precioTxt;
+  });
+
+  const subtotal = ids.reduce((sum, id) => {
+    const p = PRODUCTOS.find(x => x.id === Number(id));
+    return sum + (p ? p.precio * carritoData[id] : 0);
+  }, 0);
+  const envio    = CONFIG.costoEnvio;
+  const total    = subtotal + envio;
+
+  let msg = "¡Hola! Quiero hacer un pedido de *MP Mercado*:\n\n";
+  msg += "👤 Nombre: " + nombre + "\n";
+  msg += "📍 Dirección: " + dir + "\n";
+  if (aclaracion) msg += "📝 Aclaración: " + aclaracion + "\n";
+  msg += "📱 Teléfono: " + telefono + "\n";
+  msg += "✉️ Email: " + email + "\n";
+  msg += "📅 Fecha de entrega: " + fechaEntrega + "\n";
+  msg += "⏰ Horario de coordinación: " + horarioEntrega + "\n\n";
+  msg += "🛒 *Pedido:*\n" + lineas.join("\n") + "\n\n";
+  msg += "Subtotal: $" + fmt(subtotal) + "\n";
+  msg += "Envío: $" + fmt(envio) + "\n";
+  msg += "💰 *Total: $" + fmt(total) + "*\n\n";
+  msg += "💳 Método de pago: " + metodoLabel + "\n\n";
+  msg += "Por favor, confirmen disponibilidad y coordinemos la entrega. ¡Gracias!";
+  return msg;
+}
+
+// ══════════════════════════════════════════════════════════
+//  📧  EMAILJS (silencioso — se activa si configurás las keys)
+// ══════════════════════════════════════════════════════════
+function enviarEmail(nombre, producto, qty, total, metodo) {
+  if (typeof emailjs === "undefined") return;
+  emailjs.send(
+    CONFIG.emailjs.serviceId,
+    CONFIG.emailjs.templateId,
+    { to_name: nombre, producto: producto, cantidad: qty, total: "$" + fmt(total), metodo_pago: metodo },
+    CONFIG.emailjs.publicKey
+  ).catch(function() {});
+}
+
+// ══════════════════════════════════════════════════════════
+//  🔔  TOAST
+// ══════════════════════════════════════════════════════════
+var _toastTimer;
+function toast(msg) {
+  var el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.add("visible");
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(function() { el.classList.remove("visible"); }, 3500);
+}
+
+// ══════════════════════════════════════════════════════════
+//  🔧  HELPERS
+// ══════════════════════════════════════════════════════════
+function fmt(n) { return n.toLocaleString("es-AR"); }
+
+// ══════════════════════════════════════════════════════════
+//  🎠  CARRUSEL
+// ══════════════════════════════════════════════════════════
+var carIdx   = 0;
+var carTimer = null;
+var carSlides, carDots;
+
+function moveCar(dir) {
+  const n = carSlides.length;
+  carIdx = (carIdx + dir + n) % n;
+  applyCar();
+  resetCarTimer();
+}
+
+function gotoCar(idx) {
+  carIdx = idx;
+  applyCar();
+  resetCarTimer();
+}
+
+function applyCar() {
+  document.getElementById('carouselTrack').style.transform = 'translateX(-' + (carIdx * 100) + '%)';
+  carSlides.forEach(function(s, i) { s.classList.toggle('active', i === carIdx); });
+  carDots.forEach(function(d, i)   { d.classList.toggle('active', i === carIdx); });
+}
+
+function resetCarTimer() {
+  clearInterval(carTimer);
+  carTimer = setInterval(function() { moveCar(1); }, 4000);
+}
+
+function initCarousel() {
+  carSlides = Array.from(document.querySelectorAll('.carousel-slide:not(.hidden-cat)'));
+  var dotsEl = document.getElementById('carouselDots');
+  carDots = [];
+  carSlides.forEach(function(_, i) {
+    var d = document.createElement('button');
+    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Slide ' + (i + 1));
+    d.addEventListener('click', function() { gotoCar(i); });
+    dotsEl.appendChild(d);
+    carDots.push(d);
+  });
+  var el = document.getElementById('heroCarousel');
+  el.addEventListener('mouseenter', function() { clearInterval(carTimer); });
+  el.addEventListener('mouseleave', resetCarTimer);
+
+  var touchStartX = 0;
+  var touchEndX   = 0;
+  el.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+    clearInterval(carTimer);
+  });
+  el.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    var diff = touchEndX - touchStartX;
+    if (diff < -50) moveCar(1);
+    else if (diff > 50) moveCar(-1);
+    resetCarTimer();
+  });
+
+  resetCarTimer();
+}
+
+// ══════════════════════════════════════════════════════════
+//  🧭  NAV ACTIVA (IntersectionObserver)
+// ══════════════════════════════════════════════════════════
+function initActiveNav() {
+  const secciones = ['inicio', 'catalogo', 'contacto'];
+  const links = {};
+  secciones.forEach(id => {
+    const link = document.querySelector('.main-nav a[href="#' + id + '"]');
+    if (link) links[id] = link;
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      Object.values(links).forEach(l => l.classList.remove('active'));
+      const link = links[entry.target.id];
+      if (link) link.classList.add('active');
+    });
+  }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+
+  secciones.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+//  🚀  INIT
+// ══════════════════════════════════════════════════════════
+try { emailjs.init(CONFIG.emailjs.publicKey); } catch(e) {}
+
+renderCatalog();
+initCarousel();
+initActiveNav();
+</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FoodEstablishment","name":"MP Mercado","description":"Viandas gourmet listas para consumir","servesCuisine":"Argentine","openingHours":"Mo-Fr","areaServed":"Zona Norte GBA"}</script>
+</body>
+</html>
