@@ -490,6 +490,37 @@
     .filter-pill:hover { background: rgba(201,169,110,.16); }
     .filter-pill.active { background: var(--dorado); color: var(--negro); border-color: var(--dorado); }
 
+    /* ─── SEARCH BAR ────────────────────────────────────── */
+    .search-bar-wrap {
+      max-width: 460px;
+      margin: 0 auto;
+      padding: 32px 28px 0;
+    }
+    .search-input {
+      width: 100%;
+      background: transparent;
+      border: 1.5px solid var(--dorado);
+      color: var(--negro);
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: .2px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      outline: none;
+      transition: border-color .2s, background .2s;
+    }
+    .search-input::placeholder { color: #a39a8c; }
+    .search-input:focus { border-color: var(--dorado-dark); background: rgba(201,169,110,.08); }
+    .search-no-results {
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 300;
+      color: #8a8378;
+      padding: 60px 20px;
+    }
+
     /* ─── CATALOG SECTIONS ───────────────────────────── */
     .cat-section { margin-bottom: 72px; scroll-margin-top: 90px; }
     .cat-section:last-child { margin-bottom: 0; }
@@ -1536,7 +1567,7 @@
       <button class="welcome-cat-btn" onclick="welcomeGoTo('entradas')">Entradas</button>
       <button class="welcome-cat-btn" onclick="welcomeGoTo('postres')">Pastelería y Postres</button>
       <button class="welcome-cat-btn" onclick="welcomeGoTo('slabcakes')">Slab Cakes</button>
-      <button class="welcome-cat-btn" onclick="welcomeGoTo('fuentes')">Fuentes</button>
+      <button class="welcome-cat-btn" onclick="welcomeGoTo('fuentes')">Fuentes para tu Evento</button>
       <button class="welcome-cat-btn" onclick="welcomeGoTo('platosdeldia')">Platos del Día</button>
       <button class="welcome-cat-btn" onclick="welcomeGoTo('fondue')">Fondue</button>
     </div>
@@ -1563,7 +1594,7 @@
   </span>
   <span class="top-bar-item">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
-    Coordinamos la entrega en CABA y GBA Norte
+    Coordinamos tu pedido en CABA y GBA Norte
   </span>
 </div>
 
@@ -1652,6 +1683,11 @@
 <!-- ─── CATALOG INTRO ─────────────────────────────────── -->
 <p class="catalog-intro">Viandas gourmet listas para disfrutar.<br><strong>Cocina casera de calidad profesional.</strong> Coordiná tu pedido.</p>
 
+<!-- ─── BUSCADOR DE PLATOS ──────────────────────────────── -->
+<div class="search-bar-wrap">
+  <input type="text" class="search-input" id="searchInput" placeholder="Buscar platos..." oninput="setBusqueda(this.value)" aria-label="Buscar platos">
+</div>
+
 <!-- ─── FILTROS DE CATEGORÍA ───────────────────────────── -->
 <section class="section-filters" id="catalogo">
   <div class="filter-pills" id="filterPills">
@@ -1662,7 +1698,7 @@
     <button class="filter-pill" data-cat="slabcakes" onclick="setFilter('slabcakes')">Slab Cakes</button>
     <button class="filter-pill" data-cat="entradas" onclick="setFilter('entradas')">Entradas</button>
     <button class="filter-pill" data-cat="platosdeldia" onclick="setFilter('platosdeldia')">Platos del Día</button>
-    <button class="filter-pill" data-cat="fuentes" onclick="setFilter('fuentes')">Fuentes</button>
+    <button class="filter-pill" data-cat="fuentes" onclick="setFilter('fuentes')">Fuentes para tu Evento</button>
     <button class="filter-pill" data-cat="fondue" onclick="setFilter('fondue')">Fondue</button>
   </div>
 </section>
@@ -1830,7 +1866,7 @@
           <span class="payment-opt-box">
             <span class="payment-opt-icon">💵</span>
             <span class="payment-opt-title">Efectivo</span>
-            <span class="payment-opt-sub">Coordinamos la entrega</span>
+            <span class="payment-opt-sub">Coordinamos tu pedido</span>
           </span>
         </label>
         <label class="payment-opt">
@@ -2095,7 +2131,7 @@ const CAT_LABELS = {
   slabcakes:    "Slab Cakes",
   entradas:     "Entradas",
   platosdeldia: "Platos del Día",
-  fuentes:      "Fuentes",
+  fuentes:      "Fuentes para tu Evento",
   fondue:       "Fondue",
 };
 
@@ -2124,12 +2160,22 @@ const ALL_CATS = ['fingerfood', 'calientes', 'postres', 'slabcakes', 'entradas',
 const CATEGORIAS_OCULTAS = []; // quitar de esta lista para volver a mostrar la categoría
 const SECCIONES_VACIAS_VISIBLES = ['platosdeldia', 'fondue']; // categorías sin productos que igual muestran su sección (para que el CTA tenga a dónde ir)
 let filtroActual = 'todos';
+let busquedaActual = '';
+
+function normalizarTexto(str) {
+  return str.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+}
 
 function renderCatalog() {
   const CATS = filtroActual === 'todos' ? ALL_CATS : [filtroActual];
-  document.getElementById("catalog").innerHTML = CATS.map(cat => {
-    const lista = PRODUCTOS.filter(p => p.categoria === cat);
-    if (!lista.length && !SECCIONES_VACIAS_VISIBLES.includes(cat)) return '';
+  const busqueda = normalizarTexto(busquedaActual.trim());
+  let huboResultados = false;
+
+  const html = CATS.map(cat => {
+    let lista = PRODUCTOS.filter(p => p.categoria === cat);
+    if (busqueda) lista = lista.filter(p => normalizarTexto(p.nombre).includes(busqueda));
+    if (!lista.length && (busqueda || !SECCIONES_VACIAS_VISIBLES.includes(cat))) return '';
+    if (lista.length) huboResultados = true;
     const oculta = CATEGORIAS_OCULTAS.includes(cat);
     const contenido = lista.length
       ? `<div class="catalog">${lista.map(tarjetaHTML).join('')}</div>`
@@ -2141,6 +2187,10 @@ function renderCatalog() {
         ${contenido}
       </div>`;
   }).join('');
+
+  document.getElementById("catalog").innerHTML = (busqueda && !huboResultados)
+    ? '<p class="search-no-results">No se encontraron platos</p>'
+    : html;
 }
 
 function setFilter(cat) {
@@ -2149,6 +2199,11 @@ function setFilter(cat) {
   document.querySelectorAll('.filter-pill').forEach(function(pill) {
     pill.classList.toggle('active', pill.dataset.cat === cat);
   });
+}
+
+function setBusqueda(valor) {
+  busquedaActual = valor;
+  renderCatalog();
 }
 
 function scrollToCat(cat) {
@@ -2579,7 +2634,7 @@ function mensajeWA(nombre, telefono, email, dir, aclaracion, metodoLabel, fechaE
   msg += "Envío: $" + fmt(envio) + "\n";
   msg += "💰 *Total: $" + fmt(total) + "*\n\n";
   msg += "💳 Método de pago: " + metodoLabel + "\n\n";
-  msg += "Por favor, confirmen disponibilidad y coordinemos la entrega. ¡Gracias!";
+  msg += "Por favor, confirmen disponibilidad y coordinemos tu pedido. ¡Gracias!";
   return msg;
 }
 
