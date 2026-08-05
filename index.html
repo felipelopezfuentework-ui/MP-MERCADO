@@ -218,6 +218,15 @@
       transition: background .2s, transform .2s;
     }
     .welcome-quote-btn:hover { background: #74397a; transform: translateY(-2px); }
+    .welcome-tagline {
+      margin-top: -20px;
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: .5px;
+      color: var(--crema);
+      opacity: .8;
+    }
 
     @media (max-width: 760px) {
       .welcome-content { gap: 26px; padding: 32px 18px; }
@@ -260,8 +269,20 @@
       z-index: 200;
       box-shadow: 0 2px 16px rgba(18,16,26,.10);
     }
+    .logo-wrap { display: flex; flex-direction: column; gap: 3px; }
     .logo { display: flex; align-items: center; gap: 16px; text-decoration: none; }
     .logo-img { height: 112px; width: auto; display: block; }
+    .logo-credit {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 10.5px;
+      letter-spacing: .4px;
+      color: #bdb6a9;
+      text-decoration: none;
+      padding-left: 2px;
+      transition: color .2s;
+    }
+    .logo-credit:hover { color: var(--dorado-dark); text-decoration: underline; }
     .main-nav { display: flex; align-items: center; gap: 36px; }
     .main-nav a {
       font-family: var(--font-body);
@@ -1148,6 +1169,45 @@
     .modal-confirm:hover { background: var(--dorado-dark); }
     .modal-confirm:active { transform: scale(.99); }
 
+    /* ─── BANNER CATERING ──────────────────────────── */
+    .catering-banner {
+      background: #5C2D5E;
+      padding: 64px 28px;
+      text-align: center;
+    }
+    .catering-banner-text {
+      font-family: var(--font-title);
+      font-style: italic;
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 600;
+      color: #E8D9C0;
+      max-width: 640px;
+      margin: 0 auto 28px;
+      line-height: 1.5;
+    }
+    .catering-banner-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #C9A96E;
+      color: var(--negro);
+      border: none;
+      border-radius: 30px;
+      padding: 14px 38px;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+    .catering-banner-btn:hover { background: var(--dorado-dark); transform: translateY(-2px); }
+    @media (max-width: 680px) {
+      .catering-banner { padding: 46px 22px; }
+    }
+
     /* ─── FOOTER ───────────────────────────────────── */
     footer {
       background: var(--negro);
@@ -1215,6 +1275,21 @@
       flex-wrap: wrap;
       gap: 8px;
     }
+    .footer-catering {
+      max-width: 1200px;
+      margin: 0 auto 22px;
+      text-align: center;
+    }
+    .footer-catering-link {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: .3px;
+      color: var(--dorado);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-catering-link:hover { color: var(--crema); text-decoration: underline; }
 
     /* ─── TOAST ────────────────────────────────────── */
     .toast {
@@ -1452,6 +1527,7 @@
     <div class="welcome-logo-wrap">
       <img class="welcome-logo" src="Logo MP NUEVO.png" alt="MP Mercado">
     </div>
+    <p class="welcome-tagline">Más de 15 años creando experiencias gastronómicas únicas</p>
 
     <!-- Si agregás una categoría nueva al catálogo (ALL_CATS/CAT_LABELS), sumala también acá -->
     <div class="welcome-cats">
@@ -1493,9 +1569,12 @@
 
 <!-- ─── HEADER ────────────────────────────────────────── -->
 <header>
-  <a href="#inicio" class="logo">
-    <img src="Logo MP NUEVO.png" alt="MP Mercado — Mariana Pages Catering" class="logo-img">
-  </a>
+  <div class="logo-wrap">
+    <a href="#inicio" class="logo">
+      <img src="Logo MP NUEVO.png" alt="MP Mercado — Mariana Pages Catering" class="logo-img">
+    </a>
+    <a href="https://marianapages.com/" target="_blank" rel="noopener" class="logo-credit">by Mariana Pagés Catering</a>
+  </div>
   <div class="header-right">
     <nav class="main-nav">
       <a href="#inicio">Inicio</a>
@@ -1593,6 +1672,12 @@
   <div id="catalog"></div>
 </div>
 
+<!-- ─── BANNER CATERING ───────────────────────────────── -->
+<section class="catering-banner">
+  <p class="catering-banner-text">¿Tenés un evento especial? Dejalo en nuestras manos.</p>
+  <a class="catering-banner-btn" href="https://marianapages.com/" target="_blank" rel="noopener">Ver catering</a>
+</section>
+
 <!-- ─── FOOTER ────────────────────────────────────────── -->
 <footer>
   <div class="footer-grid">
@@ -1620,6 +1705,9 @@
       <a href="#" target="_blank">📸 Instagram: @mpcatering</a>
       <a href="#" target="_blank">👍 Facebook: MP Catering</a>
     </div>
+  </div>
+  <div class="footer-catering">
+    <a href="https://marianapages.com/" target="_blank" rel="noopener" class="footer-catering-link">Catering para eventos · marianapages.com</a>
   </div>
   <div class="footer-bottom">
     <span>© 2025 MP Mercado · MP Catering. Todos los derechos reservados.</span>
