@@ -1562,11 +1562,9 @@
 
     <!-- Si agregás una categoría nueva al catálogo (ALL_CATS/CAT_LABELS), sumala también acá -->
     <div class="welcome-cats">
-      <button class="welcome-cat-btn" onclick="welcomeGoTo('fingerfood')">Fingerfood</button>
       <button class="welcome-cat-btn" onclick="welcomeGoTo('calientes')">Platos Calientes</button>
       <button class="welcome-cat-btn" onclick="welcomeGoTo('entradas')">Entradas</button>
-      <button class="welcome-cat-btn" onclick="welcomeGoTo('postres')">Pastelería y Postres</button>
-      <button class="welcome-cat-btn" onclick="welcomeGoTo('slabcakes')">Slab Cakes</button>
+      <button class="welcome-cat-btn" onclick="welcomeGoTo('postres')">Postres</button>
       <button class="welcome-cat-btn" onclick="welcomeGoTo('fuentes')">Fuentes para tu Evento</button>
       <button class="welcome-cat-btn" onclick="welcomeGoTo('platosdeldia')">Platos del Día</button>
       <button class="welcome-cat-btn" onclick="welcomeGoTo('fondue')">Fondue</button>
@@ -1624,16 +1622,6 @@
   <div class="carousel-track" id="carouselTrack">
 
     <div class="carousel-slide active">
-      <div class="slide-bg" style="background-image:url('Fotos Final/CROQUETAS DE JAMON MARMOL DEF.png')"></div>
-      <div class="slide-overlay"></div>
-      <div class="slide-content">
-        <div class="slide-eyebrow">Mercado MP · Catering</div>
-        <h2 class="slide-title">Fingerfood</h2>
-        <button class="slide-btn" onclick="scrollToCat('fingerfood')">Ver platos</button>
-      </div>
-    </div>
-
-    <div class="carousel-slide">
       <div class="slide-bg" style="background-image:url('Fotos Final/LASAGNA BOLOGNESA MARMOL DEF.png')"></div>
       <div class="slide-overlay"></div>
       <div class="slide-content">
@@ -1648,18 +1636,8 @@
       <div class="slide-overlay"></div>
       <div class="slide-content">
         <div class="slide-eyebrow">Mercado MP · Catering</div>
-        <h2 class="slide-title">Pastelería y Postres</h2>
+        <h2 class="slide-title">Postres</h2>
         <button class="slide-btn" onclick="scrollToCat('postres')">Ver platos</button>
-      </div>
-    </div>
-
-    <div class="carousel-slide">
-      <div class="slide-bg" style="background-image:url('Fotos Final/LEMON SLAB MARMOL DEF.png')"></div>
-      <div class="slide-overlay"></div>
-      <div class="slide-content">
-        <div class="slide-eyebrow">Mercado MP · Catering</div>
-        <h2 class="slide-title">Slab Cakes</h2>
-        <button class="slide-btn" onclick="scrollToCat('slabcakes')">Ver platos</button>
       </div>
     </div>
 
@@ -1692,10 +1670,8 @@
 <section class="section-filters" id="catalogo">
   <div class="filter-pills" id="filterPills">
     <button class="filter-pill active" data-cat="todos" onclick="setFilter('todos')">Todos</button>
-    <button class="filter-pill" data-cat="fingerfood" onclick="setFilter('fingerfood')">Fingerfood</button>
     <button class="filter-pill" data-cat="calientes" onclick="setFilter('calientes')">Platos Calientes</button>
-    <button class="filter-pill" data-cat="postres" onclick="setFilter('postres')">Pastelería y Postres</button>
-    <button class="filter-pill" data-cat="slabcakes" onclick="setFilter('slabcakes')">Slab Cakes</button>
+    <button class="filter-pill" data-cat="postres" onclick="setFilter('postres')">Postres</button>
     <button class="filter-pill" data-cat="entradas" onclick="setFilter('entradas')">Entradas</button>
     <button class="filter-pill" data-cat="platosdeldia" onclick="setFilter('platosdeldia')">Platos del Día</button>
     <button class="filter-pill" data-cat="fuentes" onclick="setFilter('fuentes')">Fuentes para tu Evento</button>
@@ -2043,15 +2019,15 @@ const CONFIG = {
 // ══════════════════════════════════════════════════════════
 const PRODUCTOS = [
   // ── FINGERFOOD ────────────────────────────────────────
-  { id:  1, nombre: "Buñuelos de espinaca con alioli", categoria: "fingerfood", presentacion: "12 u + Dip de salsa", precio: 18000, descripcion: "Buñuelos de espinaca dorados, acompañados con alioli casero.", emoji: "🥬", imagen: "Fotos Final/Buñuelos de espinaca con alioli.jpg" },
-  { id:  2, nombre: "Croquetas de jamón", categoria: "fingerfood", presentacion: "12 u", precio: 20000, descripcion: "Croquetas de jamón cocido, rebozadas y fritas.", emoji: "🍖", imagen: "Fotos Final/CROQUETAS DE JAMON MARMOL DEF.png", imgPos: "100% 68%" },
-  { id:  3, nombre: "Croquetas de mandioca y queso", categoria: "fingerfood", presentacion: "12 u", precio: 18000, descripcion: "Croquetas de mandioca y queso mozzarella fundido.", emoji: "🧀", imagen: "Fotos Final/CROQUETAS DE MANDIOCA MARMOL DEF.png" },
-  { id:  4, nombre: "Empanaditas de copetín de pollo y hongos con mayo de calahorra", categoria: "fingerfood", presentacion: "12 u", precio: 28000, descripcion: "Mini empanadas de pollo y hongos salteados, acompañadas con mayonesa de pimientos asados.", emoji: "🥟", imagen: "Fotos Final/EMPANADITAS DE POLLO Y HONGOS MARMOL DEF .png" },
-  { id:  5, nombre: "Empanaditas salteñas de carne cortada a cuchillo fritas", categoria: "fingerfood", presentacion: "12 u", precio: 36000, descripcion: "Clásicas empanadas salteñas fritas, con carne cortada a cuchillo, papa, huevo y verdeo.", emoji: "🥟", imagen: "Fotos Final/EMPANADAS SALTENAS EN MARMOL DEF.png" },
-  { id:  6, nombre: "Langostinos en panko con salsa ponzu", categoria: "fingerfood", presentacion: "6 u + Dip de salsa", precio: 25000, descripcion: "Langostinos rebozados en panko, extra crocantes, servidos con salsa ponzu.", emoji: "🦐", imagen: "Fotos Final/LANGOSTINOS EN PANKO  MARMOL DEF .png" },
-  { id:  7, nombre: "Trío de pastitas: hummus, babaganoush de remolacha y muhamara", categoria: "fingerfood", presentacion: "250 ml de cada una", precio: 25000, descripcion: "Pasta de garbanzos, pasta de berenjenas y remolacha ahumada, y pasta de morrones asados y nueces.", emoji: "🫙", imagen: "Fotos Final/Trio de pastitas.jpg" },
-  { id:  8, nombre: "Bruschettas variadas", categoria: "fingerfood", presentacion: "20 u", precio: 20000, descripcion: "Tostadas de focaccia artesanal con una selección de ingredientes frescos y sabores mediterráneos.", emoji: "🍞", imagen: "Fotos Final/BRUSCHETAS VARIADAS MARMOL DEF.png" },
-  { id:  9, nombre: "Taquitos de pollo y muzzarella", categoria: "fingerfood", presentacion: "12 u", precio: 28000, descripcion: "Tortillas rellenas de pollo condimentado y muzzarella fundida.", emoji: "🌮", imagen: "Fotos Final/Taquitos de pollo y muzzarella.jpg" },
+  { id:  1, nombre: "Buñuelos de espinaca con alioli", categoria: "entradas", presentacion: "12 u + Dip de salsa", precio: 18000, descripcion: "Buñuelos de espinaca dorados, acompañados con alioli casero.", emoji: "🥬", imagen: "Fotos Final/Buñuelos de espinaca con alioli.jpg" },
+  { id:  2, nombre: "Croquetas de jamón", categoria: "entradas", presentacion: "12 u", precio: 20000, descripcion: "Croquetas de jamón cocido, rebozadas y fritas.", emoji: "🍖", imagen: "Fotos Final/CROQUETAS DE JAMON MARMOL DEF.png", imgPos: "100% 68%" },
+  { id:  3, nombre: "Croquetas de mandioca y queso", categoria: "entradas", presentacion: "12 u", precio: 18000, descripcion: "Croquetas de mandioca y queso mozzarella fundido.", emoji: "🧀", imagen: "Fotos Final/CROQUETAS DE MANDIOCA MARMOL DEF.png" },
+  { id:  4, nombre: "Empanaditas de copetín de pollo y hongos con mayo de calahorra", categoria: "entradas", presentacion: "12 u", precio: 28000, descripcion: "Mini empanadas de pollo y hongos salteados, acompañadas con mayonesa de pimientos asados.", emoji: "🥟", imagen: "Fotos Final/EMPANADITAS DE POLLO Y HONGOS MARMOL DEF .png" },
+  { id:  5, nombre: "Empanaditas salteñas de carne cortada a cuchillo fritas", categoria: "entradas", presentacion: "12 u", precio: 36000, descripcion: "Clásicas empanadas salteñas fritas, con carne cortada a cuchillo, papa, huevo y verdeo.", emoji: "🥟", imagen: "Fotos Final/EMPANADAS SALTENAS EN MARMOL DEF.png" },
+  { id:  6, nombre: "Langostinos en panko con salsa ponzu", categoria: "entradas", presentacion: "6 u + Dip de salsa", precio: 25000, descripcion: "Langostinos rebozados en panko, extra crocantes, servidos con salsa ponzu.", emoji: "🦐", imagen: "Fotos Final/LANGOSTINOS EN PANKO  MARMOL DEF .png" },
+  { id:  7, nombre: "Trío de pastitas: hummus, babaganoush de remolacha y muhamara", categoria: "entradas", presentacion: "250 ml de cada una", precio: 25000, descripcion: "Pasta de garbanzos, pasta de berenjenas y remolacha ahumada, y pasta de morrones asados y nueces.", emoji: "🫙", imagen: "Fotos Final/Trio de pastitas.jpg" },
+  { id:  8, nombre: "Bruschettas variadas", categoria: "entradas", presentacion: "20 u", precio: 20000, descripcion: "Tostadas de focaccia artesanal con una selección de ingredientes frescos y sabores mediterráneos.", emoji: "🍞", imagen: "Fotos Final/BRUSCHETAS VARIADAS MARMOL DEF.png" },
+  { id:  9, nombre: "Taquitos de pollo y muzzarella", categoria: "entradas", presentacion: "12 u", precio: 28000, descripcion: "Tortillas rellenas de pollo condimentado y muzzarella fundida.", emoji: "🌮", imagen: "Fotos Final/Taquitos de pollo y muzzarella.jpg" },
 
   // ── PLATOS CALIENTES ──────────────────────────────────
   { id: 10, nombre: "Albondiguitas picantes", categoria: "calientes", presentacion: "12 u", precio: 15000, descripcion: "Albóndigas caseras de carne cocidas en pomodoro, ligeramente picante.", emoji: "🍅", imagen: "Fotos Final/ALBONDIGAS MARMOL DEF.png" },
@@ -2086,9 +2062,9 @@ const PRODUCTOS = [
   { id: 37, nombre: "Mousse de cheesecake con frutos rojos", categoria: "postres", presentacion: "150 g aprox", precio: 18000, descripcion: "Suave crema de cheesecake con coulis y frutos rojos.", emoji: "🍓", imagen: "Fotos Final/Mousse de cheesecake con frutos rojos.jpg" },
 
   // ── SLAB CAKES ────────────────────────────────────────
-  { id: 38, nombre: "Lemon pie", categoria: "slabcakes", presentacion: "500 g aprox", precio: 15000, descripcion: "Base crocante, crema de limón y merengue italiano gratinado.", emoji: "🍋", imagen: "Fotos Final/LEMON SLAB MARMOL DEF.png" },
-  { id: 39, nombre: "Carrot cake con frosting de phila", categoria: "slabcakes", presentacion: "500 g aprox", precio: 15000, descripcion: "Bizcochuelo de zanahorias y especias, cubierto con clásico frosting de queso crema.", emoji: "🥕", imagen: "Fotos Final/CARROTCAKE MARMOL DEF.png" },
-  { id: 40, nombre: "Chocolate slab cake", categoria: "slabcakes", presentacion: "500 g aprox", precio: 18000, descripcion: "Torta húmeda de chocolate con intensa cobertura de ganache.", emoji: "🍫", imagen: "Fotos Final/Chocolate slab cake.jpg" },
+  { id: 38, nombre: "Lemon pie", categoria: "postres", presentacion: "500 g aprox", precio: 15000, descripcion: "Base crocante, crema de limón y merengue italiano gratinado.", emoji: "🍋", imagen: "Fotos Final/LEMON SLAB MARMOL DEF.png" },
+  { id: 39, nombre: "Carrot cake con frosting de phila", categoria: "postres", presentacion: "500 g aprox", precio: 15000, descripcion: "Bizcochuelo de zanahorias y especias, cubierto con clásico frosting de queso crema.", emoji: "🥕", imagen: "Fotos Final/CARROTCAKE MARMOL DEF.png" },
+  { id: 40, nombre: "Chocolate slab cake", categoria: "postres", presentacion: "500 g aprox", precio: 18000, descripcion: "Torta húmeda de chocolate con intensa cobertura de ganache.", emoji: "🍫", imagen: "Fotos Final/Chocolate slab cake.jpg" },
 
   // ── ENTRADAS ──────────────────────────────────────────
   { id: 42, nombre: "Carpaccio de lomo", categoria: "entradas", presentacion: "100 g aprox", precio: 18000, descripcion: "Finísimas láminas de lomo con aceite de oliva, parmesano, rúcula y alcaparras.", emoji: "🥩", imagen: "Fotos Final/CARPACCIO DE LOMO MARMOL DEF.png" },
@@ -2098,11 +2074,11 @@ const PRODUCTOS = [
   { id: 46, nombre: "Tiradito de salmón con vinagreta de alcaparras", categoria: "entradas", presentacion: "100 g aprox", precio: 16000, descripcion: "Salmón fresco laminado, acompañado con vinagreta de alcaparras, limón y hierbas.", emoji: "🐟", imagen: "Fotos Final/CARPACCIO DE SALMON MARMOL DEF.png" },
 
   // ── PLATOS DEL DÍA ────────────────────────────────────
-  { id: 47, nombre: "Pollo al limón y hierbas con papas", categoria: "platosdeldia", presentacion: "", precio: 12000, descripcion: "Pollo horneado con limón, hierbas frescas y papas doradas.", emoji: "🍋", imagen: "Fotos Final/Pollo Al Limon Y Hierbas Con Papas.jpg" },
-  { id: 48, nombre: "Milanesitas de bondiola de cerdo con puré de boniatos", categoria: "platosdeldia", presentacion: "", precio: 12000, descripcion: "Tiernas milanesitas de bondiola acompañadas de un cremoso puré de boniatos.", emoji: "🍖", imagen: "Fotos Final/MILANESITAS DE BONDIOLA CON PURE DE BONIATOS MARMOL DEF.png" },
-  { id: 49, nombre: "Pastel de papas con carne cortada a cuchillo", categoria: "platosdeldia", presentacion: "", precio: 12000, descripcion: "Clásico pastel de papas elaborado con carne vacuna cortada a cuchillo y puré gratinado.", emoji: "🥔", imagen: "Fotos Final/Pastel De Papas Con Carne Cortada A Cuchillo.jpg" },
-  { id: 50, nombre: "Curry rojo de ternera con arroz suelto", categoria: "platosdeldia", presentacion: "", precio: 12000, descripcion: "Ternera cocida en un aromático curry rojo tailandés, servida con arroz blanco.", emoji: "🍛", imagen: "Fotos Final/CURRY ROJO DE TERNERA CON ARROZ SUELTO MARMOL DEF.png" },
-  { id: 51, nombre: "Malfatis de espinacas gratinados", categoria: "platosdeldia", presentacion: "", precio: 12000, descripcion: "Ñoquis de espinaca y ricota gratinados con salsa y abundante queso.", emoji: "🥬", imagen: "Fotos Final/MALFATIS GRATINADOS MARMOL DEF.png" },
+  { id: 47, nombre: "Pollo al limón y hierbas con papas", categoria: "platosdeldia", presentacion: "", precio: 15000, descripcion: "Pollo horneado con limón, hierbas frescas y papas doradas.", emoji: "🍋", imagen: "Fotos Final/Pollo Al Limon Y Hierbas Con Papas.jpg" },
+  { id: 48, nombre: "Milanesitas de bondiola de cerdo con puré de boniatos", categoria: "platosdeldia", presentacion: "", precio: 15000, descripcion: "Tiernas milanesitas de bondiola acompañadas de un cremoso puré de boniatos.", emoji: "🍖", imagen: "Fotos Final/MILANESITAS DE BONDIOLA CON PURE DE BONIATOS MARMOL DEF.png" },
+  { id: 49, nombre: "Pastel de papas con carne cortada a cuchillo", categoria: "platosdeldia", presentacion: "", precio: 15000, descripcion: "Clásico pastel de papas elaborado con carne vacuna cortada a cuchillo y puré gratinado.", emoji: "🥔", imagen: "Fotos Final/Pastel De Papas Con Carne Cortada A Cuchillo.jpg" },
+  { id: 50, nombre: "Curry rojo de ternera con arroz suelto", categoria: "platosdeldia", presentacion: "", precio: 15000, descripcion: "Ternera cocida en un aromático curry rojo tailandés, servida con arroz blanco.", emoji: "🍛", imagen: "Fotos Final/CURRY ROJO DE TERNERA CON ARROZ SUELTO MARMOL DEF.png" },
+  { id: 51, nombre: "Malfatis de espinacas gratinados", categoria: "platosdeldia", presentacion: "", precio: 15000, descripcion: "Ñoquis de espinaca y ricota gratinados con salsa y abundante queso.", emoji: "🥬", imagen: "Fotos Final/MALFATIS GRATINADOS MARMOL DEF.png" },
 
   // ── FUENTES ───────────────────────────────────────────
   { id: 52, nombre: "Fuente de vegetales grillados", categoria: "fuentes", presentacion: "2 KG", precio: 36000, descripcion: "Selección de vegetales de estación grillados con aceite de oliva y hierbas frescas.", emoji: "🥒", imagen: "Fotos Final/Fuente de vegetales grillados.jpg" },
@@ -2118,6 +2094,9 @@ const PRODUCTOS = [
   { id: 62, nombre: "Fuente de hummus de garbanzos", categoria: "fuentes", presentacion: "", precio: 35000, descripcion: "Puré de garbanzos, tahini, limón y pimientos", emoji: "🧆", imagen: "Fotos Final/Fuente de hummus de garbanzos.jpg" },
   { id: 63, nombre: "Fuente de muhamara", categoria: "fuentes", presentacion: "", precio: 35000, descripcion: "Puré de morrones asados, nueces y oliva", emoji: "🫑", imagen: "Fotos Final/Fuente de muhamara.jpg" },
   { id: 64, nombre: "Fuente de gravlax con labneh", categoria: "fuentes", presentacion: "", precio: 50000, descripcion: "Salmón curado al estilo nórdico, queso cremoso, limón y eneldo", emoji: "🐟", imagen: "Fotos Final/Fuente de gravlax con labneh.jpg" },
+  { id: 65, nombre: "Fuente de hongos grillados con tomillo", categoria: "fuentes", presentacion: "", precio: 35000, descripcion: "Hongos grillados con aceite de oliva y tomillo fresco", emoji: "🍄", imagen: "Fotos Final/HONGS GRILLADOS CON TOMILLO .png" },
+  { id: 66, nombre: "Fuente de ensalada de melón con jamón", categoria: "fuentes", presentacion: "", precio: 60000, descripcion: "Melón fresco en láminas con jamón crudo", emoji: "🍈", imagen: "Fotos Final/FUENTE DE ENSALADA DE MELON CON JAMON MARMOL DEF.png" },
+  { id: 67, nombre: "Fuente de labneh con cherrys confitados", categoria: "fuentes", presentacion: "", precio: 50000, descripcion: "Queso labneh cremoso con tomates cherry confitados y aceite de oliva", emoji: "🍅", imagen: "Fotos Final/FUENTE DE LABNEH CON CHERRYS CONFITADOS MARMOL F DEF.png" },
 ];
 
 // ══════════════════════════════════════════════════════════
@@ -2125,10 +2104,8 @@ const PRODUCTOS = [
 // ══════════════════════════════════════════════════════════
 const CAT_LABELS = {
   todos:        "Todos",
-  fingerfood:   "Fingerfood",
   calientes:    "Platos Calientes",
-  postres:      "Pastelería y Postres",
-  slabcakes:    "Slab Cakes",
+  postres:      "Postres",
   entradas:     "Entradas",
   platosdeldia: "Platos del Día",
   fuentes:      "Fuentes para tu Evento",
@@ -2156,7 +2133,7 @@ const carrito = {}; // { [productoId]: cantidadEnCarrito }
 // ══════════════════════════════════════════════════════════
 //  🎨  RENDER CATÁLOGO (agrupado por categoría, con filtro)
 // ══════════════════════════════════════════════════════════
-const ALL_CATS = ['fingerfood', 'calientes', 'postres', 'slabcakes', 'entradas', 'platosdeldia', 'fuentes', 'fondue'];
+const ALL_CATS = ['calientes', 'postres', 'entradas', 'platosdeldia', 'fuentes', 'fondue'];
 const CATEGORIAS_OCULTAS = []; // quitar de esta lista para volver a mostrar la categoría
 const SECCIONES_VACIAS_VISIBLES = ['platosdeldia', 'fondue']; // categorías sin productos que igual muestran su sección (para que el CTA tenga a dónde ir)
 let filtroActual = 'todos';
