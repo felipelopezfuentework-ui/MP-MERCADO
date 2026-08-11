@@ -163,6 +163,16 @@
       transition: background .2s, color .2s, border-color .2s;
     }
     .welcome-cat-btn:hover { background: var(--dorado); border-color: var(--dorado); color: var(--negro); }
+    .welcome-cat-btn.cat-btn-mp {
+      background-image: linear-gradient(rgba(18,16,26,.45), rgba(18,16,26,.45)), url('Fotos Final/mp.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+    }
+    .welcome-cat-btn.cat-btn-mp:hover {
+      background-image: linear-gradient(rgba(18,16,26,.2), rgba(18,16,26,.2)), url('Fotos Final/mp.jpg');
+      color: #fff;
+    }
 
     .welcome-cta {
       background: var(--bordo);
@@ -489,6 +499,16 @@
     }
     .filter-pill:hover { background: rgba(201,169,110,.16); }
     .filter-pill.active { background: var(--dorado); color: var(--negro); border-color: var(--dorado); }
+    .filter-pill.cat-btn-mp {
+      background-image: linear-gradient(rgba(18,16,26,.45), rgba(18,16,26,.45)), url('Fotos Final/mp.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+    }
+    .filter-pill.cat-btn-mp:hover {
+      background-image: linear-gradient(rgba(18,16,26,.2), rgba(18,16,26,.2)), url('Fotos Final/mp.jpg');
+      color: #fff;
+    }
 
     /* ─── SEARCH BAR ────────────────────────────────────── */
     .search-bar-wrap {
@@ -535,7 +555,9 @@
       border-bottom: 1px solid rgba(201,169,110,.35);
       text-transform: uppercase;
     }
-    .cat-section-title:has(+ .cat-section-subtitle) { margin-bottom: 12px; }
+    .cat-section-title:has(+ .cat-section-subtitle),
+    .cat-section-title:has(+ .cat-section-tagline) { margin-bottom: 12px; }
+    .cat-section-tagline:has(+ .cat-section-subtitle) { margin-bottom: 12px; }
     .cat-section-subtitle {
       font-family: var(--font-title);
       font-style: italic;
@@ -545,6 +567,17 @@
       line-height: 1.6;
       margin-bottom: 24px;
       max-width: 720px;
+    }
+    .cat-section-tagline {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 14.5px;
+      color: #8a8378;
+      text-align: center;
+      letter-spacing: .3px;
+      line-height: 1.7;
+      margin-bottom: 24px;
     }
     .cat-section-empty {
       font-family: var(--font-body);
@@ -1568,6 +1601,7 @@
       <button class="welcome-cat-btn" onclick="welcomeGoTo('fuentes')">Fuentes para tu Evento</button>
       <button class="welcome-cat-btn" onclick="welcomeGoTo('platosdeldia')">Platos del Día</button>
       <button class="welcome-cat-btn" onclick="welcomeGoTo('fondue')">Fondue</button>
+      <button class="welcome-cat-btn cat-btn-mp" onclick="window.open('https://marianapages.com/', '_blank')">Mariana Pagés</button>
     </div>
 
     <button class="welcome-cta" onclick="welcomeGoTo('platosdeldia')">🍽️ Delivery del Día</button>
@@ -1676,6 +1710,7 @@
     <button class="filter-pill" data-cat="platosdeldia" onclick="setFilter('platosdeldia')">Platos del Día</button>
     <button class="filter-pill" data-cat="fuentes" onclick="setFilter('fuentes')">Fuentes para tu Evento</button>
     <button class="filter-pill" data-cat="fondue" onclick="setFilter('fondue')">Fondue</button>
+    <button class="filter-pill cat-btn-mp" onclick="window.open('https://marianapages.com/', '_blank')">Mariana Pagés</button>
   </div>
 </section>
 
@@ -2112,6 +2147,11 @@ const CAT_LABELS = {
   fondue:       "Fondue",
 };
 
+// Texto fino y elegante que aparece debajo del título de ciertas categorías, antes de los platos
+const CAT_TAGLINES = {
+  fuentes: "Asesoramos en la planificación y presentación de tu evento. Consultanos para diseñar una propuesta a medida.",
+};
+
 // Bajada que aparece debajo del título de ciertas categorías
 const CAT_SUBTITULOS = {
   fuentes: "Nuestras fuentes son propias y llegan a tu casa listas para presentar. Una vez finalizado el evento, coordinamos juntos la devolución.",
@@ -2160,6 +2200,7 @@ function renderCatalog() {
     return `
       <div class="cat-section${oculta ? ' hidden-cat' : ''}" id="cat-${cat}">
         <h2 class="cat-section-title">${CAT_LABELS[cat]}</h2>
+        ${CAT_TAGLINES[cat] ? `<p class="cat-section-tagline">${CAT_TAGLINES[cat]}</p>` : ''}
         ${CAT_SUBTITULOS[cat] ? `<p class="cat-section-subtitle">${CAT_SUBTITULOS[cat]}</p>` : ''}
         ${contenido}
       </div>`;
@@ -2206,7 +2247,7 @@ function tarjetaHTML(p) {
         <div class="card-name">${p.nombre}</div>
         <div class="card-content">
           ${p.descripcion ? `<div class="card-desc">${p.descripcion}</div>` : ''}
-          ${p.presentacion ? `<div class="card-presentacion">${p.presentacion}</div>` : ''}
+          ${p.presentacion ? `<div class="card-presentacion">Presentación: ${p.presentacion}</div>` : ''}
         </div>
         <div class="card-price">${p.precio > 0 ? `$${fmt(p.precio)} <small>/ porción</small>` : `<span style="font-size:16px;letter-spacing:1px;color:#C9A96E">Consultar precio</span>`}</div>
         <div class="qty-row">
@@ -2279,7 +2320,7 @@ function abrirProductModal(id, e) {
     : `<span style="font-size:16px;letter-spacing:1px;color:#C9A96E">Consultar precio</span>`;
   document.getElementById("productModalDesc").textContent = p.descripcion || '';
   document.getElementById("productModalDesc").style.display = p.descripcion ? '' : 'none';
-  document.getElementById("productModalPresentacion").textContent = p.presentacion || '';
+  document.getElementById("productModalPresentacion").textContent = p.presentacion ? `Presentación: ${p.presentacion}` : '';
   document.getElementById("productModalPresentacion").style.display = p.presentacion ? '' : 'none';
 
   document.getElementById("productModalBtn").onclick = function() {
