@@ -163,15 +163,28 @@
       transition: background .2s, color .2s, border-color .2s;
     }
     .welcome-cat-btn:hover { background: var(--dorado); border-color: var(--dorado); color: var(--negro); }
-    .welcome-cat-btn.cat-btn-mp {
-      background-image: linear-gradient(rgba(18,16,26,.45), rgba(18,16,26,.45)), url('Fotos Final/mp.jpg');
-      background-size: cover;
-      background-position: center;
-      color: #fff;
+    .cat-btn-mp {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
-    .welcome-cat-btn.cat-btn-mp:hover {
-      background-image: linear-gradient(rgba(18,16,26,.2), rgba(18,16,26,.2)), url('Fotos Final/mp.jpg');
-      color: #fff;
+    .cat-btn-mp-logo {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+    }
+    .welcome-cat-btn.cat-btn-mp {
+      padding: 6px 26px;
+      gap: 4px;
+    }
+    .welcome-cat-btn.cat-btn-mp .cat-btn-mp-logo {
+      width: 18px;
+      height: 18px;
     }
 
     .welcome-cta {
@@ -499,16 +512,6 @@
     }
     .filter-pill:hover { background: rgba(201,169,110,.16); }
     .filter-pill.active { background: var(--dorado); color: var(--negro); border-color: var(--dorado); }
-    .filter-pill.cat-btn-mp {
-      background-image: linear-gradient(rgba(18,16,26,.45), rgba(18,16,26,.45)), url('Fotos Final/mp.jpg');
-      background-size: cover;
-      background-position: center;
-      color: #fff;
-    }
-    .filter-pill.cat-btn-mp:hover {
-      background-image: linear-gradient(rgba(18,16,26,.2), rgba(18,16,26,.2)), url('Fotos Final/mp.jpg');
-      color: #fff;
-    }
 
     /* ─── SEARCH BAR ────────────────────────────────────── */
     .search-bar-wrap {
@@ -1601,7 +1604,10 @@
       <button class="welcome-cat-btn" onclick="welcomeGoTo('fuentes')">Fuentes para tu Evento</button>
       <button class="welcome-cat-btn" onclick="welcomeGoTo('platosdeldia')">Platos del Día</button>
       <button class="welcome-cat-btn" onclick="welcomeGoTo('fondue')">Fondue</button>
-      <button class="welcome-cat-btn cat-btn-mp" onclick="window.open('https://marianapages.com/', '_blank')">Mariana Pagés</button>
+      <button class="welcome-cat-btn cat-btn-mp" onclick="window.open('https://marianapages.com/', '_blank')">
+        <img class="cat-btn-mp-logo" src="Fotos Final/mp.jpg" alt="" loading="lazy">
+        Mariana Pagés
+      </button>
     </div>
 
     <button class="welcome-cta" onclick="welcomeGoTo('platosdeldia')">🍽️ Delivery del Día</button>
@@ -1710,7 +1716,10 @@
     <button class="filter-pill" data-cat="platosdeldia" onclick="setFilter('platosdeldia')">Platos del Día</button>
     <button class="filter-pill" data-cat="fuentes" onclick="setFilter('fuentes')">Fuentes para tu Evento</button>
     <button class="filter-pill" data-cat="fondue" onclick="setFilter('fondue')">Fondue</button>
-    <button class="filter-pill cat-btn-mp" onclick="window.open('https://marianapages.com/', '_blank')">Mariana Pagés</button>
+    <button class="filter-pill cat-btn-mp" onclick="window.open('https://marianapages.com/', '_blank')">
+      <img class="cat-btn-mp-logo" src="Fotos Final/mp.jpg" alt="" loading="lazy">
+      Mariana Pagés
+    </button>
   </div>
 </section>
 
