@@ -245,11 +245,17 @@
       margin: 12px 0 20px;
       font-family: var(--font-title);
       font-weight: 700;
-      font-size: clamp(11px, 2.6vw, 28px);
+      font-size: clamp(15px, 2.6vw, 28px);
       letter-spacing: .3px;
       color: #FFFFFF;
       text-shadow: 0 2px 8px rgba(0,0,0,.7);
-      white-space: nowrap;
+      text-align: center;
+    }
+    .welcome-tagline-line2 {
+      display: block;
+      margin-top: 6px;
+      font-size: .78em;
+      font-style: italic;
     }
 
     @media (max-width: 760px) {
@@ -1596,7 +1602,7 @@
     <div class="welcome-logo-wrap">
       <img class="welcome-logo" src="Logo MP NUEVO.png" alt="MP Mercado">
     </div>
-    <p class="welcome-tagline">El mercado de comida real que estabas necesitando para tu día a día y para ocasiones especiales</p>
+    <p class="welcome-tagline">El mercado de comida real que estabas necesitando para tu día a día<span class="welcome-tagline-line2">y para ocasiones especiales</span></p>
 
     <!-- Si agregás una categoría nueva al catálogo (ALL_CATS/CAT_LABELS), sumala también acá -->
     <div class="welcome-cats">
