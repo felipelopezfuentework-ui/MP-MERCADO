@@ -242,18 +242,20 @@
     }
     .welcome-quote-btn:hover { background: #74397a; transform: translateY(-2px); }
     .welcome-tagline {
-      margin-top: -20px;
+      margin: 12px 0 20px;
       font-family: var(--font-body);
       font-weight: 300;
-      font-size: 13px;
+      font-size: 22px;
       letter-spacing: .5px;
-      color: var(--crema);
-      opacity: .8;
+      color: #FFFFFF;
+      text-shadow: 0 2px 8px rgba(0,0,0,.7);
+      max-width: 640px;
     }
 
     @media (max-width: 760px) {
       .welcome-content { gap: 26px; padding: 32px 18px; }
       .welcome-logo { width: min(190px, 55vw); }
+      .welcome-tagline { font-size: 17px; margin: 8px 0 14px; }
       .welcome-cats { gap: 9px; }
       .welcome-cat-btn { padding: 10px 18px; font-size: 12.5px; }
       .welcome-cta { padding: 18px 32px; font-size: 16px; }
@@ -1594,7 +1596,7 @@
     <div class="welcome-logo-wrap">
       <img class="welcome-logo" src="Logo MP NUEVO.png" alt="MP Mercado">
     </div>
-    <p class="welcome-tagline">Más de 15 años creando experiencias gastronómicas únicas</p>
+    <p class="welcome-tagline">El mercado de comida real que estabas necesitando para tu día a día y para ocasiones especiales</p>
 
     <!-- Si agregás una categoría nueva al catálogo (ALL_CATS/CAT_LABELS), sumala también acá -->
     <div class="welcome-cats">
