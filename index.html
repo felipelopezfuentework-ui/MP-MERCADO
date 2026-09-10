@@ -54,6 +54,9 @@
       overflow: hidden;
       background: var(--negro);
       transition: opacity 1s ease;
+      --splash-bordo: #5C2D5E;
+      --splash-dorado: #C9A96E;
+      --splash-crema: #E8D9C0;
     }
     .welcome-screen.welcome-hide { opacity: 0; pointer-events: none; }
 
@@ -83,7 +86,7 @@
     .welcome-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(18,16,26,.63);
+      background: rgba(18,16,26,.68);
     }
 
     .welcome-close {
@@ -107,23 +110,42 @@
     }
     .welcome-close:hover { background: rgba(18,16,26,.75); }
 
+    /* ─── layout de dos mitades ───── */
     .welcome-content {
       position: relative;
       z-index: 2;
       height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      overflow-y: auto;
+    }
+    .welcome-half {
+      flex: 1 1 50%;
+      min-width: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 36px;
-      padding: 40px 24px;
+      padding: 48px 32px;
       text-align: center;
     }
+    .welcome-half-left { justify-content: center; }
+    .welcome-half-right { justify-content: space-evenly; gap: 22px; }
+    .welcome-divider {
+      width: 1px;
+      align-self: stretch;
+      background: rgba(232,217,192,.3);
+      flex-shrink: 0;
+    }
+
+    /* ─── logo, mitad izquierda ───── */
     .welcome-logo-wrap {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
+      width: min(640px, 68%);
+      aspect-ratio: 1;
     }
     .welcome-logo-wrap::before {
       content: "";
@@ -138,33 +160,90 @@
     }
     .welcome-logo {
       position: relative;
-      width: min(293px, 67vw);
-      height: auto;
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
       clip-path: circle(41% at 49.8% 48.2%);
-      filter: drop-shadow(0 4px 18px rgba(0,0,0,.35));
+      filter: drop-shadow(0 4px 22px rgba(0,0,0,.4));
     }
+
+    /* ─── mitad derecha: bloques + pills ───── */
+    .welcome-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .welcome-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 38px;
+      border-radius: 999px;
+      border: 1.5px solid var(--splash-dorado);
+      background: transparent;
+      color: var(--splash-crema);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: .4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .25s, color .25s, transform .2s;
+    }
+    .welcome-pill:hover { background: var(--splash-dorado); color: var(--negro); transform: translateY(-2px); }
+    .welcome-pill-mercado {
+      background: var(--splash-bordo);
+      border-color: var(--splash-bordo);
+      color: var(--splash-crema);
+      font-weight: 800;
+      font-size: 18px;
+      padding: 19px 48px;
+      box-shadow: 0 10px 30px rgba(92,45,94,.5);
+    }
+    .welcome-pill-mercado:hover { background: #74397a; border-color: #74397a; color: #fff; }
+
+    .welcome-subtext {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 15px;
+      color: #fff;
+      letter-spacing: .2px;
+      max-width: 320px;
+      line-height: 1.4;
+    }
+    .welcome-subtext-small {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 12px;
+      color: rgba(255,255,255,.8);
+      max-width: 280px;
+      line-height: 1.4;
+    }
+
+    /* Si agregás una categoría nueva al catálogo (ALL_CATS/CAT_LABELS), sumala también acá */
     .welcome-cats {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 12px;
-      max-width: 780px;
+      gap: 10px;
+      max-width: 460px;
+      margin-top: 4px;
     }
     .welcome-cat-btn {
-      padding: 13px 26px;
+      padding: 12px 22px;
       border-radius: 30px;
-      border: 2px solid var(--bordo);
-      background: var(--crema);
-      color: var(--bordo);
+      border: 1.5px solid var(--splash-dorado);
+      background: transparent;
+      color: var(--splash-crema);
       font-family: var(--font-body);
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       letter-spacing: .2px;
       cursor: pointer;
       transition: background .2s, color .2s, border-color .2s;
     }
-    .welcome-cat-btn:hover { background: var(--dorado); border-color: var(--dorado); color: var(--negro); }
+    .welcome-cat-btn:hover { background: var(--splash-dorado); border-color: var(--splash-dorado); color: var(--negro); }
     .cat-btn-mp {
       display: inline-flex;
       flex-direction: column;
@@ -180,56 +259,11 @@
       display: block;
       flex-shrink: 0;
     }
-    .welcome-cat-btn.cat-btn-mp {
-      padding: 6px 26px;
-      gap: 4px;
-    }
-    .welcome-cat-btn.cat-btn-mp .cat-btn-mp-logo {
-      width: 18px;
-      height: 18px;
-    }
 
-    .welcome-cta {
-      background: var(--bordo);
-      color: var(--dorado);
-      border: none;
-      border-radius: 40px;
-      padding: 24px 48px;
-      font-family: var(--font-body);
-      font-weight: 800;
-      font-size: 20px;
-      letter-spacing: .4px;
-      cursor: pointer;
-      box-shadow: 0 8px 30px rgba(201,169,110,.35), 0 4px 20px rgba(65,32,66,.55);
-      animation: welcomePulse 1.8s ease-in-out infinite;
-    }
-    @keyframes welcomePulse {
-      0%, 100% { transform: scale(1);     box-shadow: 0 8px 30px rgba(201,169,110,.35), 0 4px 20px rgba(65,32,66,.55); }
-      50%      { transform: scale(1.05);  box-shadow: 0 10px 38px rgba(201,169,110,.55), 0 4px 26px rgba(65,32,66,.8); }
-    }
-
-    /* Botón externo, separado visualmente de las categorías y del CTA de delivery */
-    .welcome-quote-wrap {
-      margin-top: 6px;
-      padding-top: 22px;
-      border-top: 1px solid rgba(232,217,192,.25);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-    .welcome-quote-label {
-      font-family: var(--font-body);
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(232,217,192,.55);
-    }
     .welcome-quote-btn {
-      background: #5C2D5E;
-      color: #E8D9C0;
-      border: 1.5px solid #E8D9C0;
+      background: var(--splash-bordo);
+      color: var(--splash-crema);
+      border: 1.5px solid var(--splash-crema);
       border-radius: 30px;
       padding: 14px 34px;
       font-family: var(--font-body);
@@ -237,36 +271,25 @@
       font-size: 14px;
       letter-spacing: .3px;
       cursor: pointer;
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 9px;
       transition: background .2s, transform .2s;
     }
     .welcome-quote-btn:hover { background: #74397a; transform: translateY(-2px); }
-    .welcome-tagline {
-      margin: 12px 0 20px;
-      font-family: var(--font-title);
-      font-weight: 700;
-      font-size: clamp(15px, 2.6vw, 28px);
-      letter-spacing: .3px;
-      color: #FFFFFF;
-      text-shadow: 0 2px 8px rgba(0,0,0,.7);
-      text-align: center;
-    }
-    .welcome-tagline-line2 {
-      display: block;
-      margin-top: 6px;
-      font-size: .78em;
-      font-style: italic;
-    }
 
-    @media (max-width: 760px) {
-      .welcome-content { gap: 26px; padding: 32px 18px; }
-      .welcome-logo { width: min(232px, 67vw); }
-      .welcome-tagline { margin: 8px 0 14px; }
-      .welcome-cats { gap: 9px; }
+    @media (max-width: 860px) {
+      .welcome-content { flex-direction: column; }
+      .welcome-divider { display: none; }
+      .welcome-half { flex: none; width: 100%; padding: 36px 22px; }
+      .welcome-half-left { padding-bottom: 6px; }
+      .welcome-half-right { justify-content: flex-start; gap: 30px; padding-top: 18px; }
+      .welcome-logo-wrap { width: min(280px, 62%); }
+      .welcome-cats { gap: 8px; max-width: 100%; }
       .welcome-cat-btn { padding: 10px 18px; font-size: 12.5px; }
-      .welcome-cta { padding: 18px 32px; font-size: 16px; }
+      .welcome-pill { padding: 13px 32px; font-size: 14px; }
+      .welcome-pill-mercado { padding: 16px 40px; font-size: 16px; }
       .welcome-quote-btn { padding: 12px 26px; font-size: 13px; }
     }
 
@@ -1618,31 +1641,45 @@
   <button class="welcome-close" onclick="closeWelcomeToCatalog()" aria-label="Cerrar">&times;</button>
 
   <div class="welcome-content">
-    <div class="welcome-logo-wrap">
-      <img class="welcome-logo" src="Logo Daily M .png" alt="Daily M">
-    </div>
-    <p class="welcome-tagline">El mercado de comida real que estabas necesitando para tu día a día<span class="welcome-tagline-line2">y para ocasiones especiales</span></p>
 
-    <!-- Si agregás una categoría nueva al catálogo (ALL_CATS/CAT_LABELS), sumala también acá -->
-    <div class="welcome-cats">
-      <button class="welcome-cat-btn" onclick="welcomeGoTo('calientes')">Platos Calientes</button>
-      <button class="welcome-cat-btn" onclick="welcomeGoTo('entradas')">Entradas</button>
-      <button class="welcome-cat-btn" onclick="welcomeGoTo('postres')">Postres</button>
-      <button class="welcome-cat-btn" onclick="welcomeGoTo('fuentes')">Fuentes para tu Evento</button>
-      <button class="welcome-cat-btn" onclick="welcomeGoTo('platosdeldia')">Platos del Día</button>
-      <button class="welcome-cat-btn" onclick="welcomeGoTo('fondue')">Fondue</button>
-      <button class="welcome-cat-btn cat-btn-mp" onclick="window.open('https://marianapages.com/', '_blank')">
-        <img class="cat-btn-mp-logo" src="Fotos Final/mp.jpg" alt="" loading="lazy">
-        Mariana Pagés
-      </button>
+    <div class="welcome-half welcome-half-left">
+      <div class="welcome-logo-wrap">
+        <img class="welcome-logo" src="Logo Daily M .png" alt="Daily M">
+      </div>
     </div>
 
-    <button class="welcome-cta" onclick="welcomeGoTo('platosdeldia')">🍽️ Delivery del Día</button>
+    <div class="welcome-divider" aria-hidden="true"></div>
 
-    <div class="welcome-quote-wrap">
-      <span class="welcome-quote-label">¿Organizás un evento?</span>
-      <button class="welcome-quote-btn" onclick="window.open('https://marianapages.com/', '_blank')">✨ Cotizá tu evento</button>
+    <div class="welcome-half welcome-half-right">
+
+      <div class="welcome-block">
+        <a href="#" class="welcome-pill">Viandas Corpo</a>
+        <p class="welcome-subtext">una nueva manera de comer todos los días</p>
+      </div>
+
+      <div class="welcome-block">
+        <button class="welcome-pill welcome-pill-mercado" onclick="closeWelcomeToCatalog()">Mercado</button>
+        <p class="welcome-subtext-small">la comida real que estabas necesitando para tu casa</p>
+
+        <!-- Si agregás una categoría nueva al catálogo (ALL_CATS/CAT_LABELS), sumala también acá -->
+        <div class="welcome-cats">
+          <button class="welcome-cat-btn" onclick="welcomeGoTo('calientes')">Platos Calientes</button>
+          <button class="welcome-cat-btn" onclick="welcomeGoTo('entradas')">Entradas</button>
+          <button class="welcome-cat-btn" onclick="welcomeGoTo('postres')">Postres</button>
+          <button class="welcome-cat-btn" onclick="welcomeGoTo('fuentes')">Fuentes para tu Evento</button>
+          <button class="welcome-cat-btn" onclick="welcomeGoTo('platosdeldia')">Platos del Día</button>
+          <button class="welcome-cat-btn" onclick="welcomeGoTo('fondue')">Fondue</button>
+        </div>
+      </div>
+
+      <div class="welcome-block">
+        <a href="https://marianapages.com/" target="_blank" rel="noopener" class="welcome-pill">Mariana Pagés</a>
+        <p class="welcome-subtext">Eventos sociales y corporativo</p>
+        <a href="https://marianapages.com/" target="_blank" rel="noopener" class="welcome-quote-btn">Cotizá tu evento</a>
+      </div>
+
     </div>
+
   </div>
 
 </div>
