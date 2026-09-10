@@ -351,6 +351,10 @@
       line-height: 1.7;
     }
     .vianda-placeholder-grid { grid-template-columns: repeat(4, 1fr); }
+    .catalog.vianda-corpo-grid { grid-template-columns: repeat(5, 1fr); }
+    @media (max-width: 680px) {
+      .catalog.vianda-corpo-grid { grid-template-columns: 1fr; }
+    }
     .vianda-placeholder {
       aspect-ratio: 1;
       border: 1.5px dashed var(--dorado);
@@ -1877,7 +1881,7 @@
   </header>
   <div class="vianda-page-body">
     <h1 class="vianda-page-title">Viandas Corpo</h1>
-    <div class="catalog" id="viandaCorpoGrid"></div>
+    <div class="catalog vianda-corpo-grid" id="viandaCorpoGrid"></div>
   </div>
 </div>
 
