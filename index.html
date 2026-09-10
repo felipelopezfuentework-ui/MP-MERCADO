@@ -350,21 +350,9 @@
       font-size: 16px;
       line-height: 1.7;
     }
-    .vianda-placeholder-grid { grid-template-columns: repeat(4, 1fr); }
     .catalog.vianda-corpo-grid { grid-template-columns: repeat(5, 1fr); }
     @media (max-width: 680px) {
       .catalog.vianda-corpo-grid { grid-template-columns: 1fr; }
-    }
-    .vianda-placeholder {
-      aspect-ratio: 1;
-      border: 1.5px dashed var(--dorado);
-      border-radius: 12px;
-      background: rgba(201,169,110,.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--dorado-dark);
-      font-size: 36px;
     }
     .vianda-contact-wrap { text-align: center; margin-top: 12px; }
     .vianda-contact-btn { display: inline-block; width: auto; padding: 16px 46px; }
@@ -386,7 +374,6 @@
     }
 
     @media (max-width: 760px) {
-      .vianda-placeholder-grid { grid-template-columns: repeat(2, 1fr); }
       .vianda-page-body { padding: 40px 20px 80px; }
     }
 
@@ -1918,16 +1905,7 @@
   <div class="vianda-page-body">
     <h1 class="vianda-page-title">Viandas Alta Gama</h1>
     <p class="vianda-page-intro">Selección de platos de autor. Consultanos para conocer la propuesta del momento.</p>
-    <div class="catalog vianda-placeholder-grid">
-      <div class="vianda-placeholder">🍽️</div>
-      <div class="vianda-placeholder">🍽️</div>
-      <div class="vianda-placeholder">🍽️</div>
-      <div class="vianda-placeholder">🍽️</div>
-      <div class="vianda-placeholder">🍽️</div>
-      <div class="vianda-placeholder">🍽️</div>
-      <div class="vianda-placeholder">🍽️</div>
-      <div class="vianda-placeholder">🍽️</div>
-    </div>
+    <div class="catalog" id="viandaAltaGamaGrid"></div>
     <div class="vianda-contact-wrap">
       <button class="btn-comprar vianda-contact-btn" onclick="contactarWhatsApp('Viandas Alta Gama')">Contactanos</button>
     </div>
@@ -3138,6 +3116,37 @@ function renderViandaCorpo() {
 }
 
 // ══════════════════════════════════════════════════════════
+//  💎  VIANDAS ALTA GAMA — solo foto, nombre y contacto
+// ══════════════════════════════════════════════════════════
+const VIANDAS_ALTA_GAMA = [
+  { nombre: "Ternera al malbec con calabazas al horno", imagen: "Fotos Final/Ternera al malbec con calabazas al horno.jpg" },
+  { nombre: "Langostinos en panko con salsa ponzu", imagen: "Fotos Final/LANGOSTINOS EN PANKO  MARMOL DEF .png" },
+  { nombre: "Crab Cakes con mayo de limas", imagen: "Fotos Final/Crab Cakes con mayo de limas.jpg" },
+  { nombre: "Carpaccio de lomo", imagen: "Fotos Final/CARPACCIO DE LOMO MARMOL DEF.png" },
+  { nombre: "Tiradito de salmón con vinagreta de alcaparras", imagen: "Fotos Final/CARPACCIO DE SALMON MARMOL DEF.png" },
+  { nombre: "Fuente de burratinas", imagen: "Fotos Final/FUENTE DE BURRATINAS MARMOL DEF.png" },
+];
+
+function tarjetaViandaAltaGamaHTML(p) {
+  return `
+    <article class="card">
+      <div class="card-img">
+        <img src="${p.imagen}" alt="${p.nombre}" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-name">${p.nombre}</div>
+        <div class="card-content"></div>
+        <button class="btn-comprar" onclick="contactarWhatsApp('${p.nombre.replace(/'/g, "\\'")}')">Contactanos</button>
+      </div>
+    </article>`;
+}
+
+function renderViandaAltaGama() {
+  const grid = document.getElementById('viandaAltaGamaGrid');
+  if (grid) grid.innerHTML = VIANDAS_ALTA_GAMA.map(tarjetaViandaAltaGamaHTML).join('');
+}
+
+// ══════════════════════════════════════════════════════════
 //  🍴  VIANDAS PLUS — menú fijo + plato del día automático
 // ══════════════════════════════════════════════════════════
 const VIANDAS_PLUS_DIA = {
@@ -3202,6 +3211,7 @@ try { emailjs.init(CONFIG.emailjs.publicKey); } catch(e) {}
 
 renderCatalog();
 renderViandaCorpo();
+renderViandaAltaGama();
 renderViandaPlus();
 initCarousel();
 initActiveNav();
