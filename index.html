@@ -364,6 +364,22 @@
     }
     .vianda-contact-wrap { text-align: center; margin-top: 12px; }
     .vianda-contact-btn { display: inline-block; width: auto; padding: 16px 46px; }
+    .vianda-day-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 2;
+      background: var(--bordo);
+      color: #fff;
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      border-radius: 20px;
+      box-shadow: 0 3px 10px rgba(18,16,26,.3);
+    }
 
     @media (max-width: 760px) {
       .vianda-placeholder-grid { grid-template-columns: repeat(2, 1fr); }
@@ -3087,18 +3103,18 @@ function contactarWhatsApp(nombre) {
 //  🥡  VIANDAS CORPO — grilla sin precio, contacto directo
 // ══════════════════════════════════════════════════════════
 const VIANDAS_CORPO = [
-  { nombre: "Moussaka", presentacion: "400 g aprox", descripcion: "Clásico plato mediterráneo con berenjenas, carne especiada, salsa blanca y queso gratinado.", imagen: "Fotos Final/MOUSAKA GRIEGA MARMOL DEF.png" },
-  { nombre: "Chicken Tikka Masala", presentacion: "400 g aprox", descripcion: "Cubos de pollo marinados en yogur y especias, cocidos en salsa de tomate, especias y crema.", imagen: "Fotos Final/CHICKEN TIKKA MARMOL DEF.png" },
-  { nombre: "Tortilla de papas rellena", presentacion: "600 g aprox", descripcion: "Tradicional tortilla rellena con jamón y queso fundido.", imagen: "Fotos Final/Tortilla de papas rellena.jpg" },
-  { nombre: "Canelones de espinaca", presentacion: "2 u / 400 g aprox", descripcion: "Canelones caseros rellenos de espinaca y queso, cubiertos con salsa y gratinados al horno.", imagen: "Fotos Final/CANELONES DE ESPINACA MARMOL DEF.png" },
-  { nombre: "Pollo con papas", presentacion: "", descripcion: "Pollo horneado con papas doradas.", imagen: "Fotos Final/Pollo Al Limon Y Hierbas Con Papas.jpg" },
-  { nombre: "Pollo con limón y hierbas con papas", presentacion: "", descripcion: "Pollo horneado con limón, hierbas frescas y papas doradas.", imagen: "Fotos Final/Pollo Al Limon Y Hierbas Con Papas.jpg" },
+  { dia: "Lunes",    nombre: "Moussaka", presentacion: "400 g aprox", descripcion: "Clásico plato mediterráneo con berenjenas, carne especiada, salsa blanca y queso gratinado.", imagen: "Fotos Final/MOUSAKA GRIEGA MARMOL DEF.png" },
+  { dia: "Martes",   nombre: "Chicken Tikka Masala", presentacion: "400 g aprox", descripcion: "Cubos de pollo marinados en yogur y especias, cocidos en salsa de tomate, especias y crema.", imagen: "Fotos Final/CHICKEN TIKKA MARMOL DEF.png" },
+  { dia: "Miércoles", nombre: "Tortilla de papas rellena", presentacion: "600 g aprox", descripcion: "Tradicional tortilla rellena con jamón y queso fundido.", imagen: "Fotos Final/Tortilla de papas rellena.jpg" },
+  { dia: "Jueves",   nombre: "Canelones de espinaca", presentacion: "2 u / 400 g aprox", descripcion: "Canelones caseros rellenos de espinaca y queso, cubiertos con salsa y gratinados al horno.", imagen: "Fotos Final/CANELONES DE ESPINACA MARMOL DEF.png" },
+  { dia: "Viernes",  nombre: "Pollo con limón y hierbas con papas", presentacion: "", descripcion: "Pollo horneado con limón, hierbas frescas y papas doradas.", imagen: "Fotos Final/Pollo Al Limon Y Hierbas Con Papas.jpg" },
 ];
 
 function tarjetaViandaCorpoHTML(p) {
   return `
     <article class="card">
       <div class="card-img">
+        ${p.dia ? `<span class="vianda-day-badge">${p.dia}</span>` : ''}
         <img src="${p.imagen}" alt="${p.nombre}" loading="lazy">
       </div>
       <div class="card-body">
@@ -3125,7 +3141,7 @@ const VIANDAS_PLUS_DIA = {
   2: "Chicken Tikka Masala",  // martes
   3: "Tortilla de papa",      // miércoles
   4: "Canelones de espinaca", // jueves
-  5: "Pollo con papas",       // viernes
+  5: "Pollo con limón y hierbas con papas", // viernes
 };
 
 function renderViandaPlus() {
