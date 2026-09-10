@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MP Mercado — Viandas Gourmet | Delivery Zona Norte GBA</title>
+  <title>Daily M — Viandas Gourmet | Delivery Zona Norte GBA</title>
   <meta name="description" content="Viandas gourmet listas para consumir. Cocina casera de calidad profesional. Delivery Zona Norte GBA. Pedí hoy, recibí mañana.">
-  <meta property="og:title" content="MP Mercado — Viandas Gourmet">
+  <meta property="og:title" content="Daily M — Viandas Gourmet">
   <meta property="og:description" content="Viandas gourmet listas para consumir. Delivery Zona Norte GBA.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="logo-mp-removebg.png">
-  <link rel="icon" type="image/png" href="logo-mp-removebg.png">
-  <link rel="apple-touch-icon" href="logo-mp-removebg.png">
+  <meta property="og:image" content="Logo Daily M .png">
+  <link rel="icon" type="image/png" href="Logo Daily M .png">
+  <link rel="apple-touch-icon" href="Logo Daily M .png">
   <link rel="canonical" href="https://www.mpmercado.com.ar/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -138,8 +138,10 @@
     }
     .welcome-logo {
       position: relative;
-      width: min(240px, 55vw);
+      width: min(293px, 67vw);
       height: auto;
+      border-radius: 50%;
+      clip-path: circle(41% at 49.8% 48.2%);
       filter: drop-shadow(0 4px 18px rgba(0,0,0,.35));
     }
     .welcome-cats {
@@ -260,7 +262,7 @@
 
     @media (max-width: 760px) {
       .welcome-content { gap: 26px; padding: 32px 18px; }
-      .welcome-logo { width: min(190px, 55vw); }
+      .welcome-logo { width: min(232px, 67vw); }
       .welcome-tagline { margin: 8px 0 14px; }
       .welcome-cats { gap: 9px; }
       .welcome-cat-btn { padding: 10px 18px; font-size: 12.5px; }
@@ -1617,7 +1619,7 @@
 
   <div class="welcome-content">
     <div class="welcome-logo-wrap">
-      <img class="welcome-logo" src="Logo MP NUEVO.png" alt="MP Mercado">
+      <img class="welcome-logo" src="Logo Daily M .png" alt="Daily M">
     </div>
     <p class="welcome-tagline">El mercado de comida real que estabas necesitando para tu día a día<span class="welcome-tagline-line2">y para ocasiones especiales</span></p>
 
@@ -1665,7 +1667,7 @@
 <header>
   <div class="logo-wrap">
     <a href="#inicio" class="logo">
-      <img src="Logo MP NUEVO.png" alt="MP Mercado — Mariana Pages Catering" class="logo-img">
+      <img src="Logo Daily M .png" alt="Daily M — Mariana Pages Catering" class="logo-img">
     </a>
     <a href="https://marianapages.com/" target="_blank" rel="noopener" class="logo-credit">by Mariana Pagés Catering</a>
   </div>
@@ -1690,7 +1692,7 @@
       <div class="slide-bg" style="background-image:url('Fotos Final/LASAGNA BOLOGNESA MARMOL DEF.png')"></div>
       <div class="slide-overlay"></div>
       <div class="slide-content">
-        <div class="slide-eyebrow">Mercado MP · Catering</div>
+        <div class="slide-eyebrow">Daily M · Catering</div>
         <h2 class="slide-title">Platos Calientes</h2>
         <button class="slide-btn" onclick="scrollToCat('calientes')">Ver platos</button>
       </div>
@@ -1700,7 +1702,7 @@
       <div class="slide-bg" style="background-image:url('Fotos Final/Tiramisú para cuatro personas.jpg')"></div>
       <div class="slide-overlay"></div>
       <div class="slide-content">
-        <div class="slide-eyebrow">Mercado MP · Catering</div>
+        <div class="slide-eyebrow">Daily M · Catering</div>
         <h2 class="slide-title">Postres</h2>
         <button class="slide-btn" onclick="scrollToCat('postres')">Ver platos</button>
       </div>
@@ -1710,7 +1712,7 @@
       <div class="slide-bg" style="background-image:url('Fotos Final/CARPACCIO DE LOMO MARMOL DEF.png')"></div>
       <div class="slide-overlay"></div>
       <div class="slide-content">
-        <div class="slide-eyebrow">Mercado MP · Catering</div>
+        <div class="slide-eyebrow">Daily M · Catering</div>
         <h2 class="slide-title">Entradas</h2>
         <button class="slide-btn" onclick="scrollToCat('entradas')">Ver platos</button>
       </div>
@@ -1764,7 +1766,7 @@
   <div class="footer-grid">
     <div class="footer-col">
       <div class="footer-logo">
-        <img src="logo-mp-removebg.png" alt="MP Mercado" style="height:64px; width:auto; filter:brightness(0) invert(1);">
+        <img src="Logo Daily M .png" alt="Daily M" style="height:64px; width:auto;">
       </div>
       <p>Viandas gourmet elaboradas a diario con ingredientes frescos. La cocina profesional de MP Catering, ahora en tu mesa.</p>
     </div>
@@ -1791,7 +1793,7 @@
     <a href="https://marianapages.com/" target="_blank" rel="noopener" class="footer-catering-link">Catering para eventos · marianapages.com</a>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 MP Mercado · MP Catering. Todos los derechos reservados.</span>
+    <span>© 2025 Daily M · MP Catering. Todos los derechos reservados.</span>
     <span>Buenos Aires, Argentina</span>
   </div>
 </footer>
@@ -2674,7 +2676,7 @@ function mensajeWA(nombre, telefono, email, dir, aclaracion, metodoLabel, fechaE
   const envio    = CONFIG.costoEnvio;
   const total    = subtotal + envio;
 
-  let msg = "¡Hola! Quiero hacer un pedido de *MP Mercado*:\n\n";
+  let msg = "¡Hola! Quiero hacer un pedido de *Daily M*:\n\n";
   msg += "👤 Nombre: " + nombre + "\n";
   msg += "📍 Dirección: " + dir + "\n";
   if (aclaracion) msg += "📝 Aclaración: " + aclaracion + "\n";
@@ -2820,6 +2822,6 @@ renderCatalog();
 initCarousel();
 initActiveNav();
 </script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FoodEstablishment","name":"MP Mercado","description":"Viandas gourmet listas para consumir","servesCuisine":"Argentine","openingHours":"Mo-Fr","areaServed":"Zona Norte GBA"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FoodEstablishment","name":"Daily M","description":"Viandas gourmet listas para consumir","servesCuisine":"Argentine","openingHours":"Mo-Fr","areaServed":"Zona Norte GBA"}</script>
 </body>
 </html>
