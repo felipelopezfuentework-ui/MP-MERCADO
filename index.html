@@ -110,42 +110,32 @@
     }
     .welcome-close:hover { background: rgba(18,16,26,.75); }
 
-    /* ─── layout de dos mitades ───── */
+    /* ─── layout centrado, una sola columna ───── */
     .welcome-content {
       position: relative;
       z-index: 2;
       height: 100%;
       width: 100%;
       display: flex;
-      flex-direction: row;
-      overflow-y: auto;
-    }
-    .welcome-half {
-      flex: 1 1 50%;
-      min-width: 0;
-      display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 48px 32px;
+      justify-content: center;
+      justify-content: safe center;
+      gap: 32px;
+      padding: 40px 28px;
+      overflow-y: auto;
       text-align: center;
     }
-    .welcome-half-left { justify-content: center; }
-    .welcome-half-right { justify-content: space-evenly; gap: 22px; }
-    .welcome-divider {
-      width: 1px;
-      align-self: stretch;
-      background: rgba(232,217,192,.3);
-      flex-shrink: 0;
-    }
 
-    /* ─── logo, mitad izquierda ───── */
+    /* ─── logo ───── */
     .welcome-logo-wrap {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: min(640px, 68%);
+      width: min(300px, 60vw);
       aspect-ratio: 1;
+      flex-shrink: 0;
     }
     .welcome-logo-wrap::before {
       content: "";
@@ -167,12 +157,32 @@
       filter: drop-shadow(0 4px 22px rgba(0,0,0,.4));
     }
 
-    /* ─── mitad derecha: bloques + pills ───── */
+    /* ─── fila de botones principales + frases ───── */
+    .welcome-pills-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      width: 100%;
+      max-width: 1100px;
+    }
     .welcome-block {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      flex: 1 1 260px;
+      max-width: 320px;
+    }
+
+    /* ─── subcategorías: una fila por sección ───── */
+    .welcome-subcats {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      width: 100%;
     }
     .welcome-pill {
       display: inline-flex;
@@ -274,13 +284,12 @@
     }
     .welcome-quote-btn:hover { background: var(--dorado-dark); border-color: var(--dorado-dark); transform: translateY(-2px); }
 
-    @media (max-width: 860px) {
-      .welcome-content { flex-direction: column; }
-      .welcome-divider { display: none; }
-      .welcome-half { flex: none; width: 100%; padding: 36px 22px; }
-      .welcome-half-left { padding-bottom: 6px; }
-      .welcome-half-right { justify-content: flex-start; gap: 30px; padding-top: 18px; }
-      .welcome-logo-wrap { width: min(280px, 62%); }
+    @media (max-width: 760px) {
+      .welcome-content { gap: 24px; padding: 32px 20px; }
+      .welcome-logo-wrap { width: min(220px, 55vw); }
+      .welcome-pills-row { flex-direction: column; gap: 26px; }
+      .welcome-block { max-width: 100%; }
+      .welcome-subcats { gap: 16px; }
       .welcome-cats { gap: 8px; max-width: 100%; }
       .welcome-cat-btn { padding: 10px 18px; font-size: 12.5px; }
       .welcome-pill { padding: 15px 36px; font-size: 15px; }
@@ -1813,44 +1822,47 @@
 
   <div class="welcome-content">
 
-    <div class="welcome-half welcome-half-left">
-      <div class="welcome-logo-wrap">
-        <img class="welcome-logo" src="Logo Daily M .png" alt="Daily M">
-      </div>
+    <div class="welcome-logo-wrap">
+      <img class="welcome-logo" src="Logo Daily M .png" alt="Daily M">
     </div>
 
-    <div class="welcome-divider" aria-hidden="true"></div>
-
-    <div class="welcome-half welcome-half-right">
+    <div class="welcome-pills-row">
 
       <div class="welcome-block">
         <a href="#" class="welcome-pill" onclick="abrirViandaPage('viandaCorpoPage'); return false;">Viandas Corpo</a>
         <p class="welcome-subtext">una nueva manera de comer todos los días</p>
-
-        <div class="welcome-cats">
-          <a href="#" class="welcome-cat-btn" onclick="abrirViandaPage('viandaCorpoPage'); return false;">Viandas Corpo</a>
-          <a href="#" class="welcome-cat-btn" onclick="abrirViandaPage('viandaPlusPage'); return false;">Viandas Plus</a>
-          <a href="#" class="welcome-cat-btn" onclick="abrirViandaPage('viandaAltaGamaPage'); return false;">Viandas Alta Gama</a>
-        </div>
       </div>
 
       <div class="welcome-block">
         <button class="welcome-pill" onclick="closeWelcomeToCatalog()">Mercado</button>
         <p class="welcome-subtext-small">la comida real que estabas necesitando para tu casa</p>
-
-        <!-- Si agregás una categoría nueva al catálogo (ALL_CATS/CAT_LABELS), sumala también acá -->
-        <div class="welcome-cats">
-          <button class="welcome-cat-btn" onclick="welcomeGoTo('calientes')">Platos Calientes</button>
-          <button class="welcome-cat-btn" onclick="welcomeGoTo('entradas')">Entradas</button>
-          <button class="welcome-cat-btn" onclick="welcomeGoTo('postres')">Postres</button>
-          <button class="welcome-cat-btn" onclick="welcomeGoTo('fuentes')">Fuentes para tu Evento</button>
-          <button class="welcome-cat-btn" onclick="welcomeGoTo('fondue')">Fondue</button>
-        </div>
       </div>
 
       <div class="welcome-block">
         <a href="https://marianapages.com/" target="_blank" rel="noopener" class="welcome-pill">Mariana Pagés</a>
         <p class="welcome-subtext">Eventos sociales y corporativo</p>
+      </div>
+
+    </div>
+
+    <div class="welcome-subcats">
+
+      <div class="welcome-cats">
+        <a href="#" class="welcome-cat-btn" onclick="abrirViandaPage('viandaCorpoPage'); return false;">Vianda Corpo</a>
+        <a href="#" class="welcome-cat-btn" onclick="abrirViandaPage('viandaPlusPage'); return false;">Vianda Plus</a>
+        <a href="#" class="welcome-cat-btn" onclick="abrirViandaPage('viandaAltaGamaPage'); return false;">Vianda Alta Gama</a>
+      </div>
+
+      <!-- Si agregás una categoría nueva al catálogo (ALL_CATS/CAT_LABELS), sumala también acá -->
+      <div class="welcome-cats">
+        <button class="welcome-cat-btn" onclick="welcomeGoTo('calientes')">Platos Calientes</button>
+        <button class="welcome-cat-btn" onclick="welcomeGoTo('entradas')">Entradas</button>
+        <button class="welcome-cat-btn" onclick="welcomeGoTo('postres')">Postres</button>
+        <button class="welcome-cat-btn" onclick="welcomeGoTo('fuentes')">Fuentes para tu Evento</button>
+        <button class="welcome-cat-btn" onclick="welcomeGoTo('fondue')">Fondue</button>
+      </div>
+
+      <div class="welcome-cats">
         <a href="https://marianapages.com/" target="_blank" rel="noopener" class="welcome-quote-btn">Cotizá tu evento</a>
       </div>
 
@@ -1938,7 +1950,7 @@
   </div>
   <div class="header-right">
     <nav class="main-nav">
-      <a href="#inicio">Inicio</a>
+      <a href="#" onclick="volverAlSplash(); return false;">Inicio</a>
       <a href="#catalogo">Catálogo</a>
       <a href="#contacto">Contacto</a>
     </nav>
