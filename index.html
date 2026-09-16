@@ -157,33 +157,25 @@
       filter: drop-shadow(0 4px 22px rgba(0,0,0,.4));
     }
 
-    /* ─── fila de botones principales + frases ───── */
+    /* ─── tres bloques (Corpo / Mercado / Mariana Pagés) en fila ───── */
     .welcome-pills-row {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       align-items: flex-start;
-      gap: 40px;
+      gap: 64px;
       width: 100%;
-      max-width: 1100px;
+      max-width: 1200px;
     }
     .welcome-block {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      flex: 1 1 260px;
-      max-width: 320px;
+      gap: 16px;
+      flex: 0 1 340px;
+      max-width: 340px;
     }
-
-    /* ─── subcategorías: una fila por sección ───── */
-    .welcome-subcats {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 18px;
-      width: 100%;
-    }
+    .welcome-block .welcome-cats { margin-top: 6px; }
     .welcome-pill {
       display: inline-flex;
       align-items: center;
@@ -287,9 +279,8 @@
     @media (max-width: 760px) {
       .welcome-content { gap: 24px; padding: 32px 20px; }
       .welcome-logo-wrap { width: min(220px, 55vw); }
-      .welcome-pills-row { flex-direction: column; gap: 26px; }
+      .welcome-pills-row { flex-direction: column; gap: 36px; }
       .welcome-block { max-width: 100%; }
-      .welcome-subcats { gap: 16px; }
       .welcome-cats { gap: 8px; max-width: 100%; }
       .welcome-cat-btn { padding: 10px 18px; font-size: 12.5px; }
       .welcome-pill { padding: 15px 36px; font-size: 15px; }
@@ -1831,39 +1822,32 @@
       <div class="welcome-block">
         <a href="#" class="welcome-pill" onclick="abrirViandaPage('viandaCorpoPage'); return false;">Viandas Corpo</a>
         <p class="welcome-subtext">una nueva manera de comer todos los días</p>
+        <div class="welcome-cats">
+          <a href="#" class="welcome-cat-btn" onclick="abrirViandaPage('viandaCorpoPage'); return false;">Vianda Corpo</a>
+          <a href="#" class="welcome-cat-btn" onclick="abrirViandaPage('viandaPlusPage'); return false;">Vianda Plus</a>
+          <a href="#" class="welcome-cat-btn" onclick="abrirViandaPage('viandaAltaGamaPage'); return false;">Vianda Alta Gama</a>
+        </div>
       </div>
 
       <div class="welcome-block">
         <button class="welcome-pill" onclick="closeWelcomeToCatalog()">Mercado</button>
         <p class="welcome-subtext-small">la comida real que estabas necesitando para tu casa</p>
+        <!-- Si agregás una categoría nueva al catálogo (ALL_CATS/CAT_LABELS), sumala también acá -->
+        <div class="welcome-cats">
+          <button class="welcome-cat-btn" onclick="welcomeGoTo('calientes')">Platos Calientes</button>
+          <button class="welcome-cat-btn" onclick="welcomeGoTo('entradas')">Entradas</button>
+          <button class="welcome-cat-btn" onclick="welcomeGoTo('postres')">Postres</button>
+          <button class="welcome-cat-btn" onclick="welcomeGoTo('fuentes')">Fuentes para tu Evento</button>
+          <button class="welcome-cat-btn" onclick="welcomeGoTo('fondue')">Fondue</button>
+        </div>
       </div>
 
       <div class="welcome-block">
         <a href="https://marianapages.com/" target="_blank" rel="noopener" class="welcome-pill">Mariana Pagés</a>
         <p class="welcome-subtext">Eventos sociales y corporativo</p>
-      </div>
-
-    </div>
-
-    <div class="welcome-subcats">
-
-      <div class="welcome-cats">
-        <a href="#" class="welcome-cat-btn" onclick="abrirViandaPage('viandaCorpoPage'); return false;">Vianda Corpo</a>
-        <a href="#" class="welcome-cat-btn" onclick="abrirViandaPage('viandaPlusPage'); return false;">Vianda Plus</a>
-        <a href="#" class="welcome-cat-btn" onclick="abrirViandaPage('viandaAltaGamaPage'); return false;">Vianda Alta Gama</a>
-      </div>
-
-      <!-- Si agregás una categoría nueva al catálogo (ALL_CATS/CAT_LABELS), sumala también acá -->
-      <div class="welcome-cats">
-        <button class="welcome-cat-btn" onclick="welcomeGoTo('calientes')">Platos Calientes</button>
-        <button class="welcome-cat-btn" onclick="welcomeGoTo('entradas')">Entradas</button>
-        <button class="welcome-cat-btn" onclick="welcomeGoTo('postres')">Postres</button>
-        <button class="welcome-cat-btn" onclick="welcomeGoTo('fuentes')">Fuentes para tu Evento</button>
-        <button class="welcome-cat-btn" onclick="welcomeGoTo('fondue')">Fondue</button>
-      </div>
-
-      <div class="welcome-cats">
-        <a href="https://marianapages.com/" target="_blank" rel="noopener" class="welcome-quote-btn">Cotizá tu evento</a>
+        <div class="welcome-cats">
+          <a href="https://marianapages.com/" target="_blank" rel="noopener" class="welcome-quote-btn">Cotizá tu evento</a>
+        </div>
       </div>
 
     </div>
