@@ -18,7 +18,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; scroll-padding-top: 136px; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(136px + var(--topbar-h)); }
 
     :root {
       --negro:        #12101A;
@@ -32,6 +32,7 @@
       --font-display: 'Nunito', system-ui, sans-serif;
       --font-body:    'Lato', system-ui, sans-serif;
       --font-title:   'Playfair Display', Georgia, serif;
+      --topbar-h:     41px; /* fallback estático; se ajusta con precisión por JS */
     }
 
     body {
@@ -466,6 +467,11 @@
 
     /* ─── TOP BAR ──────────────────────────────────── */
     .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 300;
       background: var(--crema);
       color: var(--negro);
       font-family: var(--font-body);
@@ -492,7 +498,8 @@
       justify-content: space-between;
       align-items: center;
       position: sticky;
-      top: 0;
+      top: var(--topbar-h);
+      margin-top: var(--topbar-h);
       z-index: 200;
       box-shadow: 0 2px 16px rgba(18,16,26,.10);
     }
@@ -749,7 +756,7 @@
     }
 
     /* ─── CATALOG SECTIONS ───────────────────────────── */
-    .cat-section { margin-bottom: 72px; scroll-margin-top: 90px; }
+    .cat-section { margin-bottom: 72px; scroll-margin-top: calc(90px + var(--topbar-h)); }
     .cat-section:last-child { margin-bottom: 0; }
     .cat-section-title {
       font-family: var(--font-display);
@@ -1628,6 +1635,7 @@
       .logo-img { height: 64px; }
     }
     @media (max-width: 680px) {
+      :root { --topbar-h: 35px; }
       .hero-carousel { height: 60vh; min-height: 420px; }
       .slide-content { padding: 0 52px; }
       .carousel-arrow { width: 40px; height: 40px; font-size: 28px; }
@@ -3201,6 +3209,21 @@ function volverAlSplash() {
 }
 
 // ══════════════════════════════════════════════════════════
+//  📏  ALTO REAL DE LA TOP BAR (fixed) → offset del header y contenido
+// ══════════════════════════════════════════════════════════
+function ajustarTopbarHeight() {
+  const bar = document.querySelector('.top-bar');
+  if (bar) document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px');
+}
+const topbarEl = document.querySelector('.top-bar');
+if (topbarEl && 'ResizeObserver' in window) {
+  // Se vuelve a medir solo ante cambios reales de tamaño (carga de fuentes, resize, texto que envuelve a otra línea)
+  new ResizeObserver(ajustarTopbarHeight).observe(topbarEl);
+} else {
+  window.addEventListener('resize', ajustarTopbarHeight);
+}
+
+// ══════════════════════════════════════════════════════════
 //  🚀  INIT
 // ══════════════════════════════════════════════════════════
 try { emailjs.init(CONFIG.emailjs.publicKey); } catch(e) {}
@@ -3211,6 +3234,7 @@ renderViandaAltaGama();
 renderViandaPlus();
 initCarousel();
 initActiveNav();
+ajustarTopbarHeight();
 </script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FoodEstablishment","name":"Daily M","description":"Viandas gourmet listas para consumir","servesCuisine":"Argentine","openingHours":"Mo-Fr","areaServed":"Zona Norte GBA"}</script>
 </body>
