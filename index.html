@@ -864,7 +864,8 @@
     .checkout-item-thumb img[src*="Pastel De Papas Con Carne Cortada A Cuchillo.jpg"] {
       object-fit: cover;
       object-position: center;
-      transform: scale(1.6);
+      transform: scale(2.1);
+      transform-origin: 50% 55%;
     }
     .card-img.no-photo {
       background: #cfcfcf;
@@ -1844,9 +1845,9 @@
         <div class="welcome-cats">
           <button class="welcome-cat-btn" onclick="welcomeGoTo('calientes')">Platos Calientes</button>
           <button class="welcome-cat-btn" onclick="welcomeGoTo('entradas')">Entradas</button>
-          <button class="welcome-cat-btn" onclick="welcomeGoTo('postres')">Postres</button>
           <button class="welcome-cat-btn" onclick="welcomeGoTo('fuentes')">Fuentes para tu Evento</button>
           <button class="welcome-cat-btn" onclick="welcomeGoTo('fondue')">Fondue</button>
+          <button class="welcome-cat-btn" onclick="welcomeGoTo('postres')">Postres</button>
         </div>
       </div>
 
@@ -2007,10 +2008,10 @@
   <div class="filter-pills" id="filterPills">
     <button class="filter-pill active" data-cat="todos" onclick="setFilter('todos')">Todos</button>
     <button class="filter-pill" data-cat="calientes" onclick="setFilter('calientes')">Platos Calientes</button>
-    <button class="filter-pill" data-cat="postres" onclick="setFilter('postres')">Postres</button>
     <button class="filter-pill" data-cat="entradas" onclick="setFilter('entradas')">Entradas</button>
     <button class="filter-pill" data-cat="fuentes" onclick="setFilter('fuentes')">Fuentes para tu Evento</button>
     <button class="filter-pill" data-cat="fondue" onclick="setFilter('fondue')">Fondue</button>
+    <button class="filter-pill" data-cat="postres" onclick="setFilter('postres')">Postres</button>
     <button class="filter-pill cat-btn-mp" onclick="window.open('https://marianapages.com/', '_blank')">
       <img class="cat-btn-mp-logo" src="Fotos Final/mp.jpg" alt="" loading="lazy">
       Mariana Pagés
@@ -2370,7 +2371,8 @@ const PRODUCTOS = [
 
   // ── PLATOS CALIENTES ──────────────────────────────────
   { id: 10, nombre: "Albondiguitas picantes", categoria: "calientes", presentacion: "12 u", precio: 15000, descripcion: "Albóndigas caseras de carne cocidas en pomodoro, ligeramente picante.", emoji: "🍅", imagen: "Fotos Final/ALBONDIGAS MARMOL DEF.png", packaging: "Bolsa de vacío" },
-  { id: 11, nombre: "Crepes de ricotta y hongos", categoria: "calientes", presentacion: "1 u", precio: 15000, descripcion: "Delicados crepes rellenos de ricotta y hongos salteados y gratinados.", emoji: "🥞", imagen: "Fotos Final/CREP DE CHAMPINONES Y RICOTTA MARMOL DEF.png", packaging: "Bandeja biodegradable" },
+  { id: 11, nombre: "Crepes de ricotta y hongos", categoria: "calientes", presentacion: "1 u", precio: 20000, descripcion: "Delicados crepes rellenos de ricotta y hongos salteados y gratinados.", emoji: "🥞", imagen: "Fotos Final/CREP DE CHAMPINONES Y RICOTTA MARMOL DEF.png", packaging: "Bandeja biodegradable" },
+  { id: 69, nombre: "Crepes de espinaca", categoria: "calientes", presentacion: "1 u", precio: 18000, descripcion: "Delicados crepes rellenos de espinaca y queso, gratinados al horno.", emoji: "🥞", imagen: "", packaging: "Bandeja biodegradable" },
   { id: 12, nombre: "Canelones de espinaca", categoria: "calientes", presentacion: "2 u / 400 g aprox", precio: 15000, descripcion: "Canelones caseros rellenos de espinaca y queso, cubiertos con salsa y gratinados al horno.", emoji: "🥬", imagen: "Fotos Final/CANELONES DE ESPINACA MARMOL DEF.png", packaging: "Bandeja biodegradable" },
   { id: 13, nombre: "Fajitas de pollo con morrones de tres colores", categoria: "calientes", presentacion: "4 u", precio: 15000, descripcion: "Tiras de pollo salteadas con morrones rojos, amarillos y verdes, especias mexicanas y hierbas.", emoji: "🌮", imagen: "Fotos Final/FAJITAS DE POLLO MARMOL DEF.png", packaging: "Bolsa de vacío" },
   { id: 14, nombre: "Guiso de lentejas criollo", categoria: "calientes", presentacion: "400 g aprox", precio: 18000, descripcion: "Tradicional guiso de lentejas con carnes, vegetales y papa.", emoji: "🍲", imagen: "Fotos Final/GUISO DE LENTEJAS MARMOL DEF.png", packaging: "Bolsa de vacío" },
@@ -2386,8 +2388,9 @@ const PRODUCTOS = [
   { id: 24, nombre: "Chicken tikka masala", categoria: "calientes", presentacion: "400 g aprox", precio: 18000, descripcion: "Cubos de pollo marinados en yogur y especias, cocidos en salsa de tomate, especias y crema.", emoji: "🍛", imagen: "Fotos Final/CHICKEN TIKKA MARMOL DEF.png", packaging: "Bolsa de vacío" },
   { id: 25, nombre: "Curry verde thai", categoria: "calientes", presentacion: "400 g aprox", precio: 18000, descripcion: "Tradicional curry tailandés de leche de coco, vegetales y hierbas frescas, de sabor intenso y aromático.", emoji: "🍛", imagen: "Fotos Final/CURRY VERDE THAI  DE POLLO .png", packaging: "Bolsa de vacío" },
   { id: 26, nombre: "Curry Massaman", categoria: "calientes", presentacion: "400 g aprox", precio: 18000, descripcion: "Curry tailandés con carne tierna, papas, leche de coco, maní, especias y hierbas frescas.", emoji: "🍛", imagen: "Fotos Final/Chicken tikka masala.jpg", packaging: "Bolsa de vacío" },
-  { id: 27, nombre: "Tortillas de espinaca", categoria: "calientes", presentacion: "250 g aprox", precio: 14000, descripcion: "Tortilla casera de espinacas frescas.", emoji: "🥬", imagen: "Fotos Final/Tortillas de espinaca.jpg", packaging: "Bolsa de vacío" },
-  { id: 28, nombre: "Tortilla de papas rellena", categoria: "calientes", presentacion: "600 g aprox", precio: 18000, descripcion: "Tradicional tortilla rellena con jamón y queso fundido.", emoji: "🥔", imagen: "Fotos Final/Tortilla de papas rellena.jpg", packaging: "Bolsa de vacío" },
+  { id: 27, nombre: "Tortillas de espinaca", categoria: "calientes", presentacion: "400 g aprox", precio: 18000, descripcion: "Tortilla casera de espinacas frescas.", emoji: "🥬", imagen: "Fotos Final/Tortillas de espinaca.jpg", packaging: "Bolsa de vacío" },
+  { id: 28, nombre: "Tortilla de papas rellena", categoria: "calientes", presentacion: "400 g aprox", precio: 18000, descripcion: "Tradicional tortilla rellena con jamón y queso fundido.", emoji: "🥔", imagen: "Fotos Final/Tortilla de papas rellena.jpg", packaging: "Bolsa de vacío" },
+  { id: 68, nombre: "Tortilla de papas y cebolla", categoria: "calientes", presentacion: "400 g aprox", precio: 16000, descripcion: "Tradicional tortilla de papas con cebolla, jugosa por dentro.", emoji: "🥔", imagen: "Fotos Final/Tortilla de papas rellena.jpg", packaging: "Bolsa de vacío" },
   { id: 29, nombre: "Quiche lorraine", categoria: "calientes", presentacion: "600 g aprox", precio: 18000, descripcion: "Tarta francesa de masa artesanal de queso, con panceta, crema, huevos y puerros.", emoji: "🥧", imagen: "Fotos Final/Quiche lorraine.jpg", packaging: "Bandeja de aluminio" },
   { id: 48, nombre: "Milanesitas de bondiola de cerdo con puré de boniatos", categoria: "calientes", presentacion: "", precio: 15000, descripcion: "Tiernas milanesitas de bondiola acompañadas de un cremoso puré de boniatos.", emoji: "🍖", imagen: "Fotos Final/MILANESITAS DE BONDIOLA CON PURE DE BONIATOS MARMOL DEF.png", packaging: "Bandeja biodegradable" },
   { id: 49, nombre: "Pastel de papas con carne cortada a cuchillo", categoria: "calientes", presentacion: "", precio: 15000, descripcion: "Clásico pastel de papas elaborado con carne vacuna cortada a cuchillo y puré gratinado.", emoji: "🥔", imagen: "Fotos Final/Pastel De Papas Con Carne Cortada A Cuchillo.jpg", packaging: "Bandeja biodegradable" },
@@ -2412,7 +2415,7 @@ const PRODUCTOS = [
   // ── ENTRADAS ──────────────────────────────────────────
   { id: 42, nombre: "Carpaccio de lomo", categoria: "entradas", presentacion: "100 g aprox", precio: 18000, descripcion: "Finísimas láminas de lomo con aceite de oliva, parmesano, rúcula y alcaparras.", emoji: "🥩", imagen: "Fotos Final/CARPACCIO DE LOMO MARMOL DEF.png", packaging: "Bolsa de vacío" },
   { id: 43, nombre: "Crab Cakes con mayo de limas", categoria: "entradas", presentacion: "200 g aprox", precio: 15000, descripcion: "Croquetas de cangrejo doradas, acompañadas con mayonesa fresca de lima.", emoji: "🦀", imagen: "Fotos Final/Crab Cakes con mayo de limas.jpg", packaging: "Bandeja + recipiente de salsa" },
-  { id: 44, nombre: "Paté de foie con tostadas de focaccia", categoria: "entradas", presentacion: "200 g aprox", precio: 10000, descripcion: "Delicado paté de foie servido con tostaditas de focaccia artesanal.", emoji: "🍞", imagen: "Fotos Final/Paté de foie con tostadas de focaccia.jpg" },
+  { id: 44, nombre: "Paté de foie con tostadas de focaccia", categoria: "entradas", presentacion: "200 g aprox", precio: 15000, descripcion: "Delicado paté de foie servido con tostaditas de focaccia artesanal.", emoji: "🍞", imagen: "Fotos Final/Paté de foie con tostadas de focaccia.jpg" },
   { id: 45, nombre: "Tiradito de pesca del día con salsa de maracuyá", categoria: "entradas", presentacion: "100 g aprox", precio: 14000, descripcion: "Finas láminas de pesca fresca con una fresca salsa de maracuyá y cítricos.", emoji: "🐟", imagen: "Fotos Final/Tiradito de pesca del día con salsa de maracuyá.jpg", packaging: "Bolsa de vacío" },
   { id: 46, nombre: "Tiradito de salmón con vinagreta de alcaparras", categoria: "entradas", presentacion: "100 g aprox", precio: 16000, descripcion: "Salmón fresco laminado, acompañado con vinagreta de alcaparras, limón y hierbas.", emoji: "🐟", imagen: "Fotos Final/CARPACCIO DE SALMON MARMOL DEF.png", packaging: "Bolsa de vacío" },
 
@@ -2441,10 +2444,10 @@ const PRODUCTOS = [
 const CAT_LABELS = {
   todos:        "Todos",
   calientes:    "Platos Calientes",
-  postres:      "Postres",
   entradas:     "Entradas",
   fuentes:      "Fuentes para tu Evento",
   fondue:       "Fondue",
+  postres:      "Postres",
 };
 
 // Texto fino y elegante que aparece debajo del título de ciertas categorías, antes de los platos
@@ -2473,7 +2476,7 @@ const carrito = {}; // { [productoId]: cantidadEnCarrito }
 // ══════════════════════════════════════════════════════════
 //  🎨  RENDER CATÁLOGO (agrupado por categoría, con filtro)
 // ══════════════════════════════════════════════════════════
-const ALL_CATS = ['calientes', 'postres', 'entradas', 'fuentes', 'fondue'];
+const ALL_CATS = ['calientes', 'entradas', 'fuentes', 'fondue', 'postres'];
 const CATEGORIAS_OCULTAS = []; // quitar de esta lista para volver a mostrar la categoría
 const SECCIONES_VACIAS_VISIBLES = ['fondue']; // categorías sin productos que igual muestran su sección (para que el CTA tenga a dónde ir)
 let filtroActual = 'todos';
@@ -3091,7 +3094,7 @@ function contactarWhatsApp(nombre) {
 const VIANDAS_CORPO = [
   { dia: "Lunes",    nombre: "Moussaka", presentacion: "400 g aprox", descripcion: "Clásico plato mediterráneo con berenjenas, carne especiada, salsa blanca y queso gratinado.", imagen: "Fotos Final/MOUSAKA GRIEGA MARMOL DEF.png" },
   { dia: "Martes",   nombre: "Chicken Tikka Masala", presentacion: "400 g aprox", descripcion: "Cubos de pollo marinados en yogur y especias, cocidos en salsa de tomate, especias y crema.", imagen: "Fotos Final/CHICKEN TIKKA MARMOL DEF.png" },
-  { dia: "Miércoles", nombre: "Tortilla de papas rellena", presentacion: "600 g aprox", descripcion: "Tradicional tortilla rellena con jamón y queso fundido.", imagen: "Fotos Final/Tortilla de papas rellena.jpg" },
+  { dia: "Miércoles", nombre: "Tortilla de papas rellena", presentacion: "400 g aprox", descripcion: "Tradicional tortilla rellena con jamón y queso fundido.", imagen: "Fotos Final/Tortilla de papas rellena.jpg" },
   { dia: "Jueves",   nombre: "Canelones de espinaca", presentacion: "2 u / 400 g aprox", descripcion: "Canelones caseros rellenos de espinaca y queso, cubiertos con salsa y gratinados al horno.", imagen: "Fotos Final/CANELONES DE ESPINACA MARMOL DEF.png" },
   { dia: "Viernes",  nombre: "Pollo con limón y hierbas con papas", presentacion: "", descripcion: "Pollo horneado con limón, hierbas frescas y papas doradas.", imagen: "Fotos Final/Pollo Al Limon Y Hierbas Con Papas.jpg" },
 ];
