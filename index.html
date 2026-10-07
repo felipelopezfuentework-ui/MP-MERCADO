@@ -2613,7 +2613,7 @@
       text-transform: uppercase;
       color: var(--dorado-dark);
       opacity: 0;
-      animation: ii-fade-up .7s ease 2.05s forwards;
+      animation: ii-fade-up 1.05s ease 3.07s forwards;
       text-align: center;
       padding: 0 20px;
     }
@@ -2633,18 +2633,18 @@
     }
 
     /* brillo dorado de fondo */
-    .ii-glow { opacity: 0; transform-origin: 100px 100px; animation: ii-glow 1.6s ease .9s forwards; }
+    .ii-glow { opacity: 0; transform-origin: 100px 100px; animation: ii-glow 2.4s ease 1.35s forwards; }
     @keyframes ii-glow { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: scale(1); } }
 
     /* aros que se dibujan */
-    .ii-ring { fill: none; stroke-dasharray: 1; stroke-dashoffset: 1; animation: ii-draw 1s cubic-bezier(.6,0,.3,1) forwards; }
+    .ii-ring { fill: none; stroke-dasharray: 1; stroke-dashoffset: 1; animation: ii-draw 1.5s cubic-bezier(.6,0,.3,1) forwards; }
     .ii-ring-gold { stroke: var(--dorado); stroke-width: 1.2; }
-    .ii-ring-bordo { stroke: var(--bordo); stroke-width: 3.4; animation-delay: .2s; }
+    .ii-ring-bordo { stroke: var(--bordo); stroke-width: 3.4; animation-delay: 0.3s; }
     /* al terminar se pasa a trazo continuo para que no quede la marca del inicio del dash */
     @keyframes ii-draw { 99% { stroke-dashoffset: 0; stroke-dasharray: 1; } 100% { stroke-dashoffset: 0; stroke-dasharray: none; } }
 
     /* la M llega en dos mitades */
-    .ii-m { fill: var(--bordo); opacity: 0; animation: .7s cubic-bezier(.2,.8,.2,1) .7s forwards; }
+    .ii-m { fill: var(--bordo); opacity: 0; animation: 1.05s cubic-bezier(.2,.8,.2,1) 1.05s forwards; }
     .ii-m-top { transform: translateY(-34px); animation-name: ii-join; }
     .ii-m-bottom { transform: translateY(34px); animation-name: ii-join; }
     @keyframes ii-join { to { opacity: 1; transform: translateY(0); } }
@@ -2654,14 +2654,14 @@
       fill: var(--bordo);
       opacity: 0;
       transform: translateY(7px);
-      animation: ii-fade-up .45s ease forwards;
-      animation-delay: calc(1.15s + var(--i) * .08s);
+      animation: ii-fade-up 0.68s ease forwards;
+      animation-delay: calc(1.72s + var(--i) * 0.12s);
     }
 
     /* bajada, línea dorada y firma */
-    .ii-bajada { fill: var(--bordo); opacity: 0; animation: ii-fade-up .6s ease 1.6s forwards; }
-    .ii-line { stroke: var(--dorado); stroke-width: 1; transform-box: fill-box; transform-origin: center; transform: scaleX(0); animation: ii-grow .5s ease 1.75s forwards; }
-    .ii-by { fill: var(--bordo); opacity: 0; animation: ii-fade-up .6s ease 1.85s forwards; }
+    .ii-bajada { fill: var(--bordo); opacity: 0; animation: ii-fade-up 0.9s ease 2.4s forwards; }
+    .ii-line { stroke: var(--dorado); stroke-width: 1; transform-box: fill-box; transform-origin: center; transform: scaleX(0); animation: ii-grow 0.75s ease 2.62s forwards; }
+    .ii-by { fill: var(--bordo); opacity: 0; animation: ii-fade-up 0.9s ease 2.78s forwards; }
     @keyframes ii-fade-up { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes ii-grow { to { transform: scaleX(1); } }
 
@@ -2674,10 +2674,10 @@
       stroke-linejoin: round;
       stroke-dasharray: 1;
       stroke-dashoffset: 1;
-      animation: ii-draw .9s ease forwards;
+      animation: ii-draw 1.35s ease forwards;
     }
-    .ii-icon { opacity: 0; animation: ii-icon-in .4s ease forwards; }
-    .ii-icon, .ii-icon path { animation-delay: calc(1.2s + var(--i) * .12s); }
+    .ii-icon { opacity: 0; animation: ii-icon-in 0.6s ease forwards; }
+    .ii-icon, .ii-icon path { animation-delay: calc(1.8s + var(--i) * 0.18s); }
     @keyframes ii-icon-in { to { opacity: .85; } }
 
     /* vapor que sube */
@@ -2690,7 +2690,7 @@
       stroke-dashoffset: 1;
       opacity: 0;
       animation: ii-steam 2.2s ease-in-out infinite;
-      animation-delay: calc(1.5s + var(--i) * .35s);
+      animation-delay: calc(2.25s + var(--i) * 0.52s);
     }
     @keyframes ii-steam {
       0%   { stroke-dashoffset: 1; opacity: 0; transform: translateY(6px); }
@@ -2796,7 +2796,7 @@
     };
     function intentarCerrar() { if (animacionLista && paginaCargada) window.cerrarIntro(); }
     var reducida = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setTimeout(function() { animacionLista = true; intentarCerrar(); }, reducida ? 900 : 3400);
+    setTimeout(function() { animacionLista = true; intentarCerrar(); }, reducida ? 900 : 5400);
     window.addEventListener("load", function() { paginaCargada = true; intentarCerrar(); });
   })();
 </script>
